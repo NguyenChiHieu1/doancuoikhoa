@@ -1,0 +1,188 @@
+/* Container Styles */
+.view-order-detail-container {
+  background-color: #ffffff;
+  box-shadow: 0 4px 4px 6px rgba(159, 155, 155, 0.1);
+  border-radius: 6px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header Styles */
+.view-order-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.view-order-detail-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  color: #ffffff;
+  padding: 8px 12px;
+  background-color: #5588f4;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  font-size: 16px;
+}
+
+.back-button:hover {
+  background-color: #2563eb;
+}
+
+.view-order-detail-title h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #1e293b;
+}
+
+/* Error Message */
+.error-message {
+  color: #ef4444;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Grid Layout */
+.order-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 32px;
+}
+
+/* Section Titles */
+.customer-info-section h4,
+.order-info-section h4,
+.shipping-info-section h4,
+.product-list-section h4 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+/* Info Sections */
+.customer-info-section,
+.order-info-section,
+.shipping-info-section {
+  background-color: #f3f4f6;
+  padding: 16px;
+  border-radius: 6px;
+}
+
+.customer-info-section span,
+.order-info-section span,
+.shipping-info-section span {
+  display: inline-flex;
+  font-size: 14px;
+  color: #334155;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+/* Specific Text Styles */
+.total-amount {
+  color: #dc2626;
+  font-size: 16px;
+}
+
+.payment-method {
+  text-transform: uppercase;
+}
+
+.order-status {
+  color: #dc2626;
+  text-transform: uppercase;
+}
+
+.delivery-date {
+  color: #dc2626;
+}
+
+/* Product List Section */
+.product-list-section {
+  margin-bottom: 32px;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.product-table thead {
+  background-color: #e2e8f0;
+}
+
+.product-table th,
+.product-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+  color: #334155;
+}
+
+.product-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.product-table tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.product-image-order {
+  /* width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%; */
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out;
+}
+.product-image-order:hover {
+  transform: scale(1.5); /* Phóng to ảnh 1.5 lần */
+}
+.td-order-name-product {
+  width: 35%;
+}
+.td-order-color-product > div {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 1px solid #5f6062;
+}
+/*  */
+.print-bill-order-user {
+  /* width: 100%;
+  display: flex;
+  justify-content: center; */
+  /* text-align: center; */
+}
+.print-bill-order-user > button {
+  border: 1px solid #2563eb;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background-color: #3a76f8;
+  color: #fff;
+  font-size: 1.1rem;
+}
+.print-bill-order-user > button:hover {
+  background-color: #165aec;
+}

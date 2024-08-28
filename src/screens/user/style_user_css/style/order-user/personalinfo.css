@@ -1,0 +1,197 @@
+.personal-info-container {
+  display: flex;
+  flex-direction: row;
+}
+.profileContainer {
+  margin-right: 20px;
+  padding: 20px;
+  /* background-color: #f4f4f4; */
+  border: 1px solid #bcbbbb;
+
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  align-items: center;
+  /* border: 1px solid #a19f9f; */
+  border-radius: 9px;
+}
+
+.profileSection {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+  grid-column: span 2;
+}
+
+.profileSection > input {
+  visibility: hidden;
+}
+.profileSection > label {
+  font-size: 14px;
+  padding: 5px 15px;
+  background-color: bisque;
+  color: rgb(84, 85, 86);
+  border-radius: 16px;
+}
+.profileSection > label:hover {
+  background-color: rgb(245, 243, 240);
+  cursor: pointer;
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+/* ------------ */
+.profileDetails {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Chia thành 2 cột có kích thước bằng nhau */
+  gap: 20px; /* Khoảng cách giữa các cột */
+  width: 100%;
+}
+
+.profileDetails_column1,
+.profileDetails_column2 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  grid-column: span 1;
+}
+
+.profileDetails_column1 > input,
+.profileDetails_column2 > input,
+.profileDetails_column2 > .profile-select {
+  border: 1px solid #bcbbbb;
+  border-radius: 5px;
+  height: 30px;
+  width: 100%;
+  padding-left: 5px;
+}
+
+.profileDetails_column2 {
+  grid-column: span 1;
+}
+.saveButtonContainer {
+  grid-column: span 2; /* Kéo dài phần tử qua cả 2 cột */
+  text-align: center; /* Căn giữa nút lưu */
+  margin-top: 20px;
+  /* width: 100%; */
+}
+.saveButtonContainer > button {
+  padding: 10px 30px;
+  background-color: rgb(104, 104, 253);
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.saveButtonContainer > button:hover {
+  /* padding: 5px 30px; */
+  background-color: rgb(179, 191, 239);
+  color: #1c1c1d;
+  /* border-radius: 14px; */
+  /* box-shadow: 2px 2px 3px 2px #fc8f8f; */
+}
+
+/* -----------------doi mat khau------------------- */
+.changePassword-deleteAcc {
+  /* margin-top: 1rem; */
+  width: 40%;
+  /* background-color: #f4f4f4; */
+}
+.changePasswordSection {
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.changePasswordSection h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+}
+
+.changePasswordSection label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.changePasswordSection input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.changePasswordSection > div {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+/*  */
+.changePasswordButton {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.changePasswordButton:hover {
+  background-color: #45a049;
+}
+
+/* Nút xóa tài khoản */
+.deleteAccountSection {
+  margin-top: 30px;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+
+.deleteAccountButton {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.deleteAccountButton:hover {
+  background-color: #d32f2f;
+}
+/* ------ */
+.passwordConfim {
+  /* width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.passwordConfim > .eye {
+  position: relative;
+  right: 25px;
+  font-size: 20px;
+  top: -5px;
+}
+.passwordConfim > .eye:hover {
+  color: #f83636;
+  cursor: pointer;
+}

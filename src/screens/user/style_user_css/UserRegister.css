@@ -1,0 +1,137 @@
+/* Container */
+.container_register {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6; /* bg-gray-100 */
+}
+
+/* Card */
+.card_register {
+  background-color: #ffffff; /* bg-white */
+  padding: 2rem; /* p-8 */
+  border-radius: 0.375rem; /* rounded */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow-md */
+  width: 100%;
+  max-width: 28rem; /* max-w-md */
+  /* text-align: center; */
+}
+.card_register > div:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.return_login {
+  margin-right: 5rem;
+}
+/* Title */
+.title_register {
+  font-size: 1.5rem;
+  font-weight: 700;
+  /* margin-bottom: 1.5rem;  */
+  text-align: center;
+}
+
+/* Form Group */
+.form_group_register {
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.label_register {
+  display: block;
+  color: #4a5568; /* text-gray-700 */
+}
+
+.input_register {
+  margin-top: 0.25rem; /* mt-1 */
+  width: 100%;
+  padding: 0.5rem 0.75rem; /* px-3 py-2 */
+  border: 1px solid #e2e8f0; /* border-gray-300 */
+  border-radius: 0.375rem; /* rounded-md */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow-sm */
+  color: #4a5568; /* placeholder-gray-400 */
+}
+
+.input_register:focus {
+  outline: none;
+  border-color: #4c51bf; /* focus:border-indigo-500 */
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5); /* focus:ring-indigo-500 */
+}
+
+/* Footer */
+.footer_register {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.forgot_password_register {
+  font-size: 0.875rem; /* text-sm */
+}
+
+.forgot_password_link_register {
+  font-weight: 500; /* font-medium */
+  color: #4c51bf; /* text-indigo-600 */
+}
+
+.forgot_password_link_register:hover {
+  color: #434190; /* hover:text-indigo-500 */
+}
+
+/* Submit Button */
+.submit_register {
+  margin-top: 1.5rem; /* mt-6 */
+}
+
+.submit_button_register {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 1rem; /* py-2 px-4 */
+  border: none;
+  border-radius: 0.375rem; /* rounded-md */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* shadow-sm */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: #ffffff; /* text-white */
+  background-color: #4c51bf; /* bg-indigo-600 */
+}
+
+.submit_button_register:hover {
+  background-color: #434190; /* hover:bg-indigo-700 */
+}
+
+.submit_button_register:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5); /* focus:ring-indigo-500 */
+}
+/*  */
+/* Return to Login Button */
+.return_login {
+  /* margin-top: 1.5rem; */
+  text-align: left;
+  /* float: left; */
+  /* height: 2rem; */
+}
+
+.return_login i {
+  font-size: 1.5rem; /* text-sm */
+  color: #4c51bf; /* text-indigo-600 */
+  font-weight: 500; /* font-medium */
+  background: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: auto;
+  opacity: 0.5;
+  padding: 5px 10px;
+}
+
+.return_login:hover i {
+  color: #4b47be; /* hover:text-indigo-500 */
+  background-color: antiquewhite;
+}
+.error_message {
+  color: red;
+  text-align: center;
+}

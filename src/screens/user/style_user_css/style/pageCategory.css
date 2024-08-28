@@ -1,0 +1,377 @@
+.page_cateproduct {
+  width: 100%;
+  height: auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.page_cateproduct_breadcrumb {
+  width: 80%;
+  text-align: left;
+}
+.page_cateproduct_content {
+  width: 80%;
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+/*  */
+.not-found-product {
+  font-size: 18px;
+  color: #5b5454;
+  font-weight: 600;
+  text-align: center;
+  margin: 2rem 0px;
+}
+/* content-left-condition */
+.page_cateproduct_condition {
+  width: 22%;
+  height: auto;
+  max-height: 28rem;
+  background-color: #ffffff;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  /* position: fixed; */
+}
+.page_cateproduct_condition hr {
+  color: #ff3333;
+  border: 2px solid;
+}
+.content_category {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+.content_category > div:first-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.content_top p {
+  width: auto;
+  font-size: 1.2rem;
+  color: #ff3333;
+  font-weight: 600;
+  margin: 0;
+}
+
+.content_top i {
+  font-size: 1.6rem;
+  border: 1px solid #ffffff;
+  color: #ff3333;
+}
+.content_top i:hover {
+  background-color: antiquewhite;
+  cursor: pointer;
+}
+
+/* --------------- */
+.list_catepro {
+  display: flex;
+  /* gap: 0.5rem; */
+  flex-direction: column;
+  height: 14rem;
+  width: 230px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.list_catepro > div {
+  border: 1px solid #cdcbcb;
+}
+.namecate_chil {
+  display: flex;
+  flex-direction: column;
+  /* padding: 0 4px; */
+}
+.namecate_chil > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 3px;
+}
+.namecate_chil > div:first-child:hover {
+  /* background-color: #e4854e; */
+}
+.namecate_chil > div:first-child:hover > p {
+  color: #ff3333;
+}
+.namecate_chil > div:first-child > p {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  margin-left: 5px;
+  /* float: left; */
+  display: -webkit-box; /* Đặt phần tử hiển thị dưới dạng hộp linh hoạt */
+  -webkit-box-orient: vertical; /* Đặt hướng của hộp là dọc */
+  overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
+  text-overflow: ellipsis; /* Thay thế phần bị cắt bằng dấu chấm lửng */
+  -webkit-line-clamp: 2; /* Giới hạn số dòng hiển thị */
+  line-height: 1.1rem; /* Đặt chiều cao dòng */
+  max-height: 2.5rem; /* Giới hạn chiều cao tối đa để hiển thị hai dòng */
+  word-wrap: break-word;
+  color: rgb(106, 97, 97);
+}
+.downcate_chil > i {
+  font-size: 0.9rem;
+  color: #070707;
+  font-weight: 900;
+}
+.namecate_chil > div:first-child:hover > .downcate_chil > i {
+  /* font-size: 1.3rem; */
+  color: #fb2a2a;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.namecate_chil_item {
+  display: flex;
+  flex-direction: column;
+
+  /*price padding: 0.5rem; */
+}
+.namecate_chil_item > div {
+  width: 100%;
+  padding: 8px 0 8px 12px;
+  border: 1px solid #ffffff;
+  /* margin-left: 4px; */
+}
+.namecate_chil_item > div:hover {
+  color: #ff2e2e;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #ddd;
+}
+.namecate_chil_item > div > span {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+/* ------------------------ */
+.condition-price {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.condition-price > div:first-child > p {
+  width: auto;
+  font-size: 1.2rem;
+  color: #fd4747;
+  font-weight: 600;
+  margin: 0;
+}
+.price_change_condition,
+.price_change_condition div {
+  /* flex-direction: row; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 1rem; */
+}
+.price_change_condition input {
+  font-size: 0.8rem;
+  width: 65%;
+  padding: 2px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+.price_change_condition label {
+  font-size: 1rem;
+}
+.price_change_condition > span {
+  font-size: 1rem;
+  width: auto;
+}
+
+/* -------------------------------------- */
+.page_cateproduct_list {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  width: 75%;
+  /* overflow: hidden; */
+  /* margin-left: 29%; */
+}
+.breakcrumd p {
+  width: auto;
+  font-size: 1.2rem;
+  color: #fd6868;
+  font-weight: 600;
+  margin: 0;
+  padding: 1rem;
+}
+.arrange_hr {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+.arrange_hr div hr {
+  width: 43rem;
+  color: #ff3333;
+  border: 2px solid #ff3333;
+}
+.select_arrange {
+}
+.select_arrange > select {
+  /* padding: 0 5px; */
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px 5px;
+  width: 9rem;
+  font-size: 16px;
+  border-radius: 5px;
+  /* w */
+}
+/* -------------------//////////////////////////- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0.5rem;
+}
+
+.cateproduct_iteam {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  height: 25rem;
+}
+.cateproduct_iteam > div {
+  text-decoration: none;
+  font-size: 12px;
+  color: #302e2e;
+}
+.cateproduct_iteam:hover {
+  transform: translateY(-5px);
+}
+.cateroduct_stock_img {
+  height: 15rem;
+  position: relative;
+}
+.cateroduct_stock_img img {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+.cateroduct_stock_img img:hover {
+  transform: scale(1.2); /* Phóng to ảnh 1.5 lần */
+}
+.catepro-showcase-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transform: translateX(50px);
+  transition: var(--transition-timing);
+  z-index: 3;
+  /* opacity: 0; */
+}
+
+.btn-action-catepro {
+  background: #fff;
+  border: 1px solid #f8cbcb;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+}
+.btn-action-catepro i {
+  color: rgb(248, 0, 0);
+}
+.btn-action-catepro:hover {
+  background-color: #f08181;
+}
+.btn-action-catepro:hover i {
+  color: rgb(251, 248, 248);
+}
+.cateroduct_stock_img:hover .catepro-showcase-actions {
+  transform: translateX(0);
+  opacity: 1;
+}
+/*  ----------*/
+.cate_lpro_discount {
+  padding: 5px;
+  height: 10rem;
+}
+.cate_lpro_discount p {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  margin-left: 5px;
+  /* float: left; */
+  display: -webkit-box; /* Đặt phần tử hiển thị dưới dạng hộp linh hoạt */
+  -webkit-box-orient: vertical; /* Đặt hướng của hộp là dọc */
+  overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
+  text-overflow: ellipsis; /* Thay thế phần bị cắt bằng dấu chấm lửng */
+  -webkit-line-clamp: 2; /* Giới hạn số dòng hiển thị */
+  line-height: 1.4rem; /* Đặt chiều cao dòng */
+  max-height: 2.5rem; /* Giới hạn chiều cao tối đa để hiển thị hai dòng */
+  word-wrap: break-word;
+  height: 40px;
+}
+
+.cateproduct_iteam_price {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+.cateproduct_iteam_price > div:first-child {
+  color: #f71919;
+  font-size: 1.3rem;
+  margin-bottom: 0;
+}
+.money_prices_decrease_cate {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.money_prices_decrease_cate div:first-child {
+  font-size: 14px;
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+.money_prices_decrease_cate > div:nth-child(2) {
+  background-color: #ff2c2c;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 2px 5px;
+  font-size: 12px;
+  top: -10px;
+}
+
+.cateproduct_review {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+/*  */
+.button-page-cate-loc {
+  /* padding: auto; */
+  /* text-align: center; */
+  width: 100%;
+  margin-top: 20px;
+}
+.button-page-cate-loc > button {
+  margin: auto;
+  padding: 5px 20px;
+  background-color: #ff4f4f;
+  color: #fff;
+  border-radius: 5px;
+  /* border: #415aec; */
+  font-size: 16px;
+}
+.button-page-cate-loc > button:hover {
+  background-color: #ff1b1b;
+}

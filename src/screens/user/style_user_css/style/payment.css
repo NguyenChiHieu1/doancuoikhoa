@@ -1,0 +1,164 @@
+/* Overlay để form nằm trên tất cả các giao diện khác */
+.order-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Định dạng container của form */
+.order-form-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+}
+
+/* Định dạng nút đóng form */
+.order-form-close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.order-form-close-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Định dạng nội dung của form */
+.order-form-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tiêu đề của form */
+.order-form-title {
+  text-align: center;
+  color: #3c35ff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Căn chỉnh các trường trong form */
+.order-form-label {
+  margin-bottom: 5px;
+  color: #2134fb;
+  font-weight: 600;
+}
+.order-form-label.bank {
+  margin-bottom: 5px;
+  color: #2134fb;
+  font-weight: 600;
+  width: 200px;
+}
+
+.order-form-input,
+.order-form-select,
+.order-form-textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  height: 40px;
+  color: #555555;
+}
+/* Định dạng nút submit */
+.order-form-submit-button-s {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-form-submit-button-s > button {
+  width: 200px;
+  background-color: #4caf50;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.order-form-submit-button-s > button:hover {
+  background-color: #45a049;
+}
+
+/* Checkbox group */
+.order-form-checkbox-group {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.order-form-checkbox {
+  width: 10%;
+}
+
+.order-form-checkbox-label {
+  color: #4f54f1;
+}
+
+/* Định dạng cho lựa chọn thêm địa chỉ mới */
+.order-form-select-addressnew {
+  color: #f60e0e;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.order-form-select-addressnew:hover {
+  text-decoration: underline;
+}
+
+/* Grid container để chia thành 2 cột */
+.order-form-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Định dạng mỗi cột */
+
+.order-form-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Thêm định dạng cho thẻ p để ghi yêu cầu */
+.order-form-requirements {
+  color: #ff5722;
+  font-style: italic;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.bank_checkout_order {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #555555;
+  padding: 10px;
+  color: #050505;
+  width: 250px;
+}

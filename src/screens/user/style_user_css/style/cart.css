@@ -1,0 +1,333 @@
+/* Container chính cho giỏ hàng */
+.cart-container {
+  max-width: 1345px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  /* background-color: #f6f9fc; */
+}
+
+/* Tiêu đề giỏ hàng */
+.cart-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #f43b3b;
+  font-size: 800;
+  /* box-shadow: 5px 5px 10px #fb4747; */
+}
+
+/* Khi giỏ hàng rỗng */
+.cart-empty {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+}
+
+/* Container chính chứa bảng và phần tổng tiền */
+.cart-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Container chứa bảng dữ liệu giỏ hàng */
+.cart-table-container {
+  flex: 0 0 65%;
+}
+
+/* Bảng giỏ hàng */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Header của bảng */
+.cart-table-header {
+  background-color: #77a9fa;
+  color: #ffffff;
+}
+
+.cart-table-header-cell {
+  padding: 12px;
+  text-align: left;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+/* Body của bảng */
+.cart-table-row {
+  border-bottom: 1px solid #343232;
+}
+
+.cart-table-row:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.cart-table-cell {
+  padding: 12px;
+  font-size: 14px;
+  color: #2d3748;
+}
+.cart-table-cell .quantity {
+  display: flex;
+  flex-direction: row;
+  color: #38a169;
+}
+/* Nút hành động */
+.cart-item-button {
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cart-item-button:hover {
+  background-color: #93c5fa;
+}
+
+/* Ô nhập mã giảm giá */
+/* .coupon-input {
+  padding: 5px;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  margin-right: 5px;
+} */
+
+/* Container chứa tổng tiền và nút thanh toán */
+.cart-summary-container {
+  flex: 0 0 30%;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Số lượng sản phẩm */
+.quantity-value {
+  margin: 0 10px;
+  font-size: 14px;
+  color: #2d3748;
+}
+
+/* Đảm bảo nút + và - hiển thị đúng */
+.cart-item-button {
+  background-color: #3182ce;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  margin: 0 5px; /* Khoảng cách giữa các nút */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cart-item-button:hover {
+  background-color: #eceeef;
+  color: #333;
+}
+.quantity-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+/*  */
+.coupons-code {
+  /* padding: 10px; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+.coupons-code > input {
+  text-transform: uppercase;
+  width: 65%;
+  font-size: 14x;
+
+  border: 1px solid #ccc; /* Đặt đường viền mặc định */
+  padding: 5px;
+  border-radius: 4px; /* Tùy chọn, để làm bo góc cho input */
+  background-color: #ffffff; /* Màu nền tùy chọn */
+}
+
+.coupons-code > input:focus {
+  /* border: none;  */
+  outline: none;
+}
+.coupons-code > button {
+  padding: 5px;
+  background-color: #117cf6;
+  color: #ffffff;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.coupons-code > button:hover {
+  cursor: pointer;
+  background-color: #c2daf4;
+  color: #353434;
+}
+/* // */
+.check-out-div {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}
+/* ----------------tieu de------------ */
+/* //////// */
+.title-cart-summary > h2 {
+  font-size: 24px;
+  color: #fb4747;
+  font-weight: 500;
+}
+.title-cart-summary > hr {
+  /* border: none; */
+  border: 1px solid #fb4747;
+  margin-bottom: 1rem;
+}
+/* Tổng số lượng và tổng tiền */
+.cart-total-items,
+.cart-total-price {
+  font-size: 16px;
+  color: #333;
+  /* text-align: left; */
+  /* margin: 5px 0; */
+  /* left: 0; */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.number-total,
+.number-price {
+  color: #fa1212;
+  font-size: 18px;
+  font-size: 800;
+}
+/* Nút Checkout */
+.cart-checkout-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.cart-checkout-button:hover {
+  background-color: #38a169;
+}
+
+.cart-table-checkbox > input {
+  /* width: auto; */
+  /* max-width: 10px; */
+  align-items: center;
+  margin-left: 5px;
+  font-size: 16px;
+}
+.cart-table-checkbox > input:hover {
+  cursor: pointer;
+}
+/* .method_pay_div {
+
+} */
+.payment_method {
+  /* display: none; */
+  font-size: 16px;
+}
+#payment_method {
+  border: #8e8e92 1px solid;
+  font-size: 16px;
+  padding: 5px;
+  /* text-align: right; */
+  /* margin-left: 10px; */
+}
+
+/* Kết thúc giao diện CARD dến giao diện thanh toán */
+
+/* Định dạng container của form */
+.order-form-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Định dạng tiêu đề của form */
+.order-form-title {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* Định dạng cho tất cả các label trong form */
+.order-form-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555555;
+}
+
+/* Định dạng cho tất cả các input, select, textarea trong form */
+.order-form-input,
+.order-form-select,
+.order-form-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+/* Định dạng cho checkbox và nhãn của nó */
+.order-form-checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.order-form-checkbox {
+  margin-right: 8px;
+}
+
+.order-form-checkbox-label {
+  color: #555555;
+}
+
+/* Định dạng nút submit */
+.order-form-submit-button {
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.order-form-submit-button:hover {
+  background-color: #45a049;
+}
+
+/* ----------------------form-payment------ */

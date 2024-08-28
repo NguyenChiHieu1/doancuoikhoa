@@ -1,0 +1,233 @@
+img,
+span,
+a,
+label {
+  user-select: none;
+}
+.containe_detail_product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Màu nền nửa trong suốt để nổi bật */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1999;
+}
+.close_button_pro_buy {
+  width: 100%;
+  /* float: right; */
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 20px;
+  /* padding-right: 3rem; */
+}
+.close_button_pro_buy > button {
+  font-size: 2rem;
+  /* padding: 10px; */
+  /* background-color: rgb(213, 212, 210); */
+  padding: 1px 6px;
+  border-radius: 50%;
+}
+.close_button_pro_buy > button:hover {
+  /* font-size: 2rem; */
+  background-color: rgb(201, 201, 202);
+  /* padding: 1px 4px; */
+  color: red;
+}
+.detail_product {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  max-width: 1000px;
+  width: 100%;
+  gap: 2rem;
+}
+
+.det_img_pro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.det_img_pro > img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+.det_list_img_pro {
+  display: flex;
+  margin-top: 10px;
+}
+
+.det_list_img_pro > img {
+  width: 60px;
+  height: 60px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.det_list_img_pro > img:hover {
+  box-shadow: 0 0 5px rgba(246, 30, 30, 0.5); /* Bóng đỏ cho màu được chọn */
+}
+
+.info_pro_buy {
+  text-align: left;
+  font-size: 1rem;
+  /* max-width: 80%; */
+  width: 60%;
+}
+
+.info_pro_buy > h3 {
+  margin-bottom: 10px;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.discount_pro_buy {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+.discount_pro_buy > p:nth-child(2) {
+  font-weight: 400;
+  color: red;
+  font-size: 1.2rem;
+}
+.discount_pro_buy > p:nth-child(3) {
+  text-decoration: line-through;
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+.discount_pro_buy > p:nth-child(4) {
+  padding: 5px 8px;
+  background-color: rgb(252, 43, 43);
+  font-size: 0.8rem;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
+  position: relative;
+  top: -5px;
+  animation: shake 1.5s ease-in-out infinite;
+}
+.color_pro {
+  display: flex;
+  /* justify-content: center; */
+  margin: 10px 0;
+  flex-direction: row;
+  align-items: center;
+}
+.quantity_pro {
+  display: flex;
+  /* justify-content: center; */
+  margin: 10px 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+.quantity_pro span {
+  padding: 0px 10px;
+  font-size: 1.2rem;
+  background-color: rgb(225, 222, 219);
+  /* height: 2rem; */
+}
+.quantity_pro > input {
+  width: 45px;
+  font-size: 1rem;
+}
+.quantity_pro > span:hover {
+  background-color: rgb(102, 101, 101);
+  cursor: pointer;
+}
+/*  */
+.color_pro > span {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 2px solid transparent; /* Viền mặc định không có màu */
+  box-shadow: none; /* Bóng mặc định không có */
+}
+
+.color_pro .selected-color {
+  border: 2px solid rgb(6, 6, 241); /* Viền đỏ cho màu được chọn */
+  box-shadow: 0 0 5px rgba(245, 49, 49, 0.5); /* Bóng đỏ cho màu được chọn */
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Áp dụng hiệu ứng lắc lư */
+.rating_pro {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px 0;
+  /* align-items: center; */
+  /* gap: 2rem; */
+}
+.rating_pro > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+}
+.description_pro > div {
+  max-height: 200px;
+  height: 100px;
+  overflow-y: auto;
+  /* overflow-x: auto; */
+}
+.description_pro > div > p {
+  height: auto;
+  background: linear-gradient(white, lightgray);
+}
+/* //// */
+.sold_pro_new {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20px 0;
+  gap: 2rem;
+}
+/* / */
+.button_pro_buy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button_pro_buy > button {
+  padding: 5px 20px;
+  background-color: rgb(102, 102, 255);
+  color: #ffffff;
+  border-radius: 1rem;
+}
+.button_pro_buy > button:hover {
+  background-color: rgb(48, 48, 255);
+}
+/* ///////////// */
