@@ -71,11 +71,11 @@ const EditBrand = () => {
       await updateBrand({ id: bid, updatedBrand: values });
 
       if (isUpdateSuccess) {
-        toast.success("Brand updated successfully!");
+        toast.success("Cập nhật thông tin nhà cung cấp thành công!");
         navigate("/dashboard/brands");
       }
     } catch (error) {
-      toast.error("Failed to update brand!");
+      toast.error("Lỗi khi cập nhật thông tin!");
     }
   };
 
@@ -104,14 +104,14 @@ const EditBrand = () => {
                       htmlFor="name"
                       className="text-sm text-black font-medium mb-1"
                     >
-                      Brand Name
+                      Tên nhà cung cấp
                     </label>
                     <Field
                       type="text"
                       name="name"
                       id="name"
                       className="border rounded-md p-2 text-gray-900 border-black"
-                      placeholder="Brand Name"
+                      placeholder="Tên nhà cung cấp"
                     />
                     <ErrorMessage
                       name="name"
@@ -126,7 +126,7 @@ const EditBrand = () => {
                       htmlFor="address"
                       className="text-sm text-black font-medium mb-1"
                     >
-                      Address
+                      Địa chỉ
                     </label>
                     <Field
                       as="select"
@@ -135,7 +135,7 @@ const EditBrand = () => {
                       className="w-full p-2 mb-4 border border-gray-300 rounded"
                       multiple={true} // Cho phép chọn nhiều địa chỉ
                     >
-                      <option value="">Choose one value</option>
+                      <option value="">Chọn địa chỉ</option>
                       {addressData?.data?.map((address) => (
                         <option key={address._id} value={address._id}>
                           {`${address.street}, ${address.district}, ${address.city}, ${address.country}`}
@@ -146,7 +146,7 @@ const EditBrand = () => {
                       onClick={() => setIsCreateAddress(true)}
                       className="hover:text-red-500 hover:underline hover:cursor-pointer text-indigo-500"
                     >
-                      Add new address
+                      Thêm địa chỉ mới
                     </label>
                     <ErrorMessage
                       name="address"
@@ -161,7 +161,7 @@ const EditBrand = () => {
                       htmlFor="phone"
                       className="text-sm text-black font-medium mb-1"
                     >
-                      Phone
+                      Số điện thoại
                     </label>
                     <Field
                       type="text"
@@ -183,14 +183,14 @@ const EditBrand = () => {
                       htmlFor="email"
                       className="text-sm text-black font-medium mb-1"
                     >
-                      Email
+                      Địa chỉ email
                     </label>
                     <Field
                       type="email"
                       name="email"
                       id="email"
                       className="border rounded-md p-2 text-gray-900 border-black"
-                      placeholder="Brand Email"
+                      placeholder="Vui lòng nhập email"
                     />
                     <ErrorMessage
                       name="email"
@@ -204,7 +204,7 @@ const EditBrand = () => {
                       type="submit"
                       className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
                     >
-                      {!isLoading ? "Save" : <Spinner />}
+                      {!isLoading ? "Lưu lại" : <Spinner />}
                     </button>
                   </div>
                 </Form>

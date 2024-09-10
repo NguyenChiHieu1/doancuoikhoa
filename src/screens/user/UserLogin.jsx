@@ -1,12 +1,10 @@
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import "./style_user_css/UserLogin.css";
 import { useAuthLoginMutation } from "../../store/service/authService";
-import { useGetCartByUserIdQuery } from "../../store/service/cartUserService";
 import Spinner from "../../components/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "../../store/reducer/globalReducer";
 import { setUserToken } from "../../store/reducer/authReducer";
-import { addCart } from "../../store/reducer/cartReducer";
 import React, { useState, useEffect } from "react";
 import {
   validateEmail,
@@ -18,69 +16,37 @@ const UserLogin = () => {
   const navigate = useNavigate();
   const mess_success = useSelector((state) => state.globalReducer.success);
 
-  let checkLoginSuccess = localStorage.getItem("user-token") || null;
+  const [valueInput, setValueInput] = useState({});
+  const [errorInput, setErrorInput] = useState({});
 
-  const [valueInput, setValueInput] = useState();
-  const [errorInput, setErrorInput] = useState();
-  const [checkLogin, setCheckLogin] = useState(false);
+  // mutation để login
+  const [
+    login,
+    { data: dataLogin, error, isLoading, isSuccess: isLoginSuccess },
+  ] = useAuthLoginMutation();
 
-  //chú ý lỗi cấu trúc thi gọi mutation
-  const [login, { data: response, error, isLoading, isSuccess }] =
-    useAuthLoginMutation();
-  const { data: dataCart, isSuccess: isCartSuccess } = useGetCartByUserIdQuery(
-    undefined,
-    { skip: !checkLogin }
-  );
-
+  // Xử lý logic khi login thành công
   useEffect(() => {
-    if (checkLoginSuccess) {
-      navigate("/personal-info");
-    } else {
-      setCheckLogin(false);
-    }
-  }, [checkLoginSuccess]);
-
-  useEffect(() => {
-    if (isSuccess) {
+    if (isLoginSuccess) {
       dispatch(clearMessage(""));
-      const token = response?.token;
+      const token = dataLogin?.token;
       if (typeof token === "string") {
+        // Lưu token vào localStorage
         localStorage.setItem("user-token", token);
         dispatch(setUserToken(token));
-        setCheckLogin(true);
-      } else {
-        console.error("Err:", response);
       }
     }
-  }, [isSuccess]);
+  }, [isLoginSuccess, dataLogin]);
 
-  useEffect(() => {
-    if (isCartSuccess && dataCart) {
-      let arrCart = [];
-      dataCart.data.items.forEach((item) => {
-        const itemCart = {
-          _id: item._id,
-          name: item.product.name,
-          color: item.color,
-          quantity: item.quantity,
-          price: item.product.price,
-          discount: item.product.coupons.discount,
-        };
-        arrCart.push(itemCart);
-        dispatch(addCart(itemCart));
-      });
-      localStorage.setItem("cart", JSON.stringify(arrCart));
-      // setCheckLogin(!checkLogin);
-    }
-  }, [isCartSuccess, dataCart]);
-
-  //xử lý login
+  // Xử lý sự kiện thay đổi input
   const handleChange = (e) => {
-    setValueInput((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
+    setValueInput((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
+  // Hàm kiểm tra validate dữ liệu đầu vào
   const validateLogin = (value) => {
     const err = {};
     if (!validateEmail(value.email)) {
@@ -88,21 +54,29 @@ const UserLogin = () => {
     }
     if (!validatePassword(value.password)) {
       err.password =
-        "Password must be at least 8 characters long and include a number and a special character.!!!";
+        "Password must be at least 8 characters long and include a number and a special character.";
     }
     return err;
   };
 
-  const submitHandler = (e) => {
+  // Xử lý khi submit form
+  const submitHandler = async (e) => {
     e.preventDefault();
     const list_err = validateLogin(valueInput);
     if (Object.keys(list_err).length === 0) {
-      login(valueInput);
-      console.log("data", valueInput);
+      const logi = await login(valueInput).unwrap();
+      if (logi?.success === true) {
+        let token = logi?.token;
+        if (typeof token === "string") {
+          localStorage.setItem("user-token", token);
+          dispatch(setUserToken(token));
+        }
+      }
     } else {
       setErrorInput(list_err);
     }
   };
+
   return (
     <div className="container_login">
       <div className="card_login">
@@ -112,11 +86,11 @@ const UserLogin = () => {
         <div className="success_message">
           {mess_success && mess_success !== "" ? mess_success : ""}
         </div>
-        <h2 className="title_login">Login</h2>
+        <h2 className="title_login">Đăng nhập tài khoản</h2>
         <form onSubmit={submitHandler}>
           <div className="form-group_login">
             <label htmlFor="email" className="label_login">
-              Email
+              Tài khoản email:
             </label>
             <input
               type="email"
@@ -125,6 +99,7 @@ const UserLogin = () => {
               name="email"
               placeholder="you@example.com"
               onChange={handleChange}
+              autocomplete="current-password"
             />
             {errorInput?.email && (
               <div className="error_message">{errorInput?.email}</div>
@@ -132,7 +107,7 @@ const UserLogin = () => {
           </div>
           <div className="form_group_login">
             <label htmlFor="password" className="label_login">
-              Password
+              Mật khẩu:
             </label>
             <input
               type="password"
@@ -152,23 +127,23 @@ const UserLogin = () => {
                 to="/user/forgot-password"
                 className="forgot_password_link_login"
               >
-                Forgot your <b>password</b>?
+                Quên <b>mật khẩu</b> của bạn ?
               </NavLink>
             </div>
           </div>
           <div className="submit_login">
             <button type="submit" className="submit_button_login">
-              {isLoading ? <Spinner /> : "Sign in"}
+              {isLoading ? <Spinner /> : "Đăng nhập"}
             </button>
           </div>
         </form>
         <div className="register_user_login">
-          <span>You do not have an account, please </span>
+          <span>Bạn chưa có tài khoản, vui lòng đăng ký </span>
           <b>
             <NavLink
               to="/user/register" // Đảm bảo rằng '/login' là đường dẫn đến trang đăng nhập
             >
-              Register!!!
+              tại đây !!!
             </NavLink>
           </b>
           {/* <button id="register_user" >Register</button> */}

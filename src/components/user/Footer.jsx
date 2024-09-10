@@ -1,5 +1,6 @@
 import React from "react";
 // import './style/footer.css'
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <div className="footer">
@@ -12,32 +13,32 @@ const Footer = () => {
           <div className="list1">
             <ul>
               <li>
-                <a href="#">Chính sách bảo hành</a>
+                <Link to="">Chính sách bảo hành</Link>
               </li>
               <li>
-                <a href="#">Chính sách đổi trả</a>
+                <Link to="">Chính sách đổi trả</Link>
               </li>
               <li>
-                <a href="#">Giao hàng & Thanh toán</a>
+                <Link to="">Giao hàng & Thanh toán</Link>
               </li>
               <li>
-                <a href="#">Hướng dẫn mua online</a>
+                <Link to="">Hướng dẫn mua online</Link>
               </li>
               <li>
-                <a href="#">Nội quy cửa hàng</a>
+                <Link to="">Nội quy cửa hàng</Link>
               </li>
               <li>
-                <a href="#">Chất lượng phục vụ</a>
+                <Link to="">Chất lượng phục vụ</Link>
               </li>
             </ul>
           </div>
           <div className="list_2">
             <ul>
               <li>
-                <a href="#">Giới thiệu cửa hàng</a>
+                <Link to="">Giới thiệu cửa hàng</Link>
               </li>
               <li>
-                <a href="#">Gửi góp ý, khiếu nại</a>
+                <Link to="/contact#vitri">Gửi góp ý, khiếu nại</Link>
               </li>
               <span>
                 <img src="./image/logo/bct.png" alt="" />
@@ -54,7 +55,7 @@ const Footer = () => {
             </div>
             <div>
               <span>Gọi tư vấn:</span>
-              <a href="0967.750.342">
+              <a href="tel:0967.750.342">
                 <i className="bi bi-telephone-fill"></i>
                 <b> 0967.750.342 (9:00 - 17:00)</b>
               </a>

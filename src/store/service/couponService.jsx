@@ -18,10 +18,10 @@ const couponService = createApi({
   endpoints: (builder) => ({
     // Endpoint để tạo coupon mới
     createCoupon: builder.mutation({
-      query: (newCoupon) => ({
+      query: (formData) => ({
         url: "/create",
         method: "POST",
-        body: newCoupon,
+        body: formData,
       }),
     }),
     // Endpoint để lấy tất cả các coupon
@@ -39,10 +39,13 @@ const couponService = createApi({
       }),
     }),
     getCoupons: builder.query({
-      query: () => ({
-        url: "/get-coupons",
-        method: "GET",
-      }),
+      query: (queryString) => {
+        const queryPro = new URLSearchParams(queryString).toString();
+        return {
+          url: `/get-coupons?${queryPro}`,
+          method: "GET",
+        };
+      },
     }),
     // Endpoint để lấy một coupon theo ID
     getCouponById: builder.query({

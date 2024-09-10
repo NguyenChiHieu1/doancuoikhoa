@@ -8,6 +8,7 @@ import {
   toggleSelectItem,
   applyCouponToItem,
   checkoutSelectedItems,
+  checkAll,
 } from "../../store/reducer/cartReducer";
 import { useSendPaymentMutation } from "../../store/service/paymentService";
 import formatMoney from "../../utils/formatMoney";
@@ -16,6 +17,7 @@ import Payment from "./Payment";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
+import Spinner from "../../components/Spinner";
 
 const PageCart = () => {
   const dispatch = useDispatch();
@@ -31,12 +33,13 @@ const PageCart = () => {
     (state) => state.cartReducer.selectedTotal
   );
 
-  const [data, response] = useSendPaymentMutation();
+  const [data, { isLoading, error }] = useSendPaymentMutation();
   const { cart, items, total, selectedTotal, selectedItem } = useSelector(
     (state) => state.cartReducer
   );
   const [couponCodes, setCouponCodes] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [checkALlItem, setCheckALlItem] = useState(false);
 
   // const handleCouponChange = (id, code) => {
   //   setCouponCodes({
@@ -53,9 +56,14 @@ const PageCart = () => {
   //     );
   //   }
   // };
+  const handleAllCheck = () => {
+    dispatch(checkAll(!checkALlItem));
+    setCheckALlItem(!checkALlItem);
+  };
 
   const handleCheckboxChange = (item) => {
     dispatch(toggleSelectItem(item));
+    setCheckALlItem(false);
     console.log("selectedTotal: ", selectedTotal);
   };
 
@@ -116,6 +124,11 @@ const PageCart = () => {
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      alert(error?.data?.errors?.[0]?.msg);
+    }
+  }, [error]);
   return (
     <Wrapper onFooter={true}>
       <div className="cart-container">
@@ -132,10 +145,18 @@ const PageCart = () => {
               <table className="cart-table">
                 <thead>
                   <tr className="cart-table-header">
-                    <th className="cart-table-header-cell"></th>
+                    <th className="cart-table-header-cell">
+                      <input
+                        type="checkbox"
+                        checked={checkALlItem}
+                        onChange={() => handleAllCheck()}
+                        // className="p-2 bg-white"
+                      />
+                    </th>
                     <th className="cart-table-header-cell">STT</th>
                     <th className="cart-table-header-cell">Tên</th>
                     <th className="cart-table-header-cell">Giá</th>
+                    <th className="cart-table-header-cell">Màu</th>
                     <th className="cart-table-header-cell">Giảm giá</th>
                     <th className="cart-table-header-cell">Số lượng</th>
                     <th className="cart-table-header-cell">Hỗ trợ</th>
@@ -161,25 +182,15 @@ const PageCart = () => {
                       <td className="cart-table-cell">
                         {formatMoney(product?.price)}
                       </td>
+                      <td className="cart-table-cell">
+                        <span
+                          className="inline-block w-6 h-6 rounded-full"
+                          style={{ backgroundColor: product?.color }} // Thay đổi màu nền bằng inline style
+                        ></span>
+                      </td>
                       <td className="cart-table-cell">{product?.discount}%</td>
                       <td className="cart-table-cell quantity">
                         <div className="quantity-container">
-                          <button
-                            className="cart-item-button"
-                            onClick={() =>
-                              dispatch(
-                                incQuantity({
-                                  _id: product?._id,
-                                  color: product?.color,
-                                })
-                              )
-                            }
-                          >
-                            +
-                          </button>
-                          <span className="quantity-value">
-                            {product?.quantity}
-                          </span>
                           <button
                             className="cart-item-button"
                             onClick={() => {
@@ -192,6 +203,23 @@ const PageCart = () => {
                             }}
                           >
                             -
+                          </button>
+                          <span className="quantity-value">
+                            {product?.quantity}
+                          </span>
+
+                          <button
+                            className="cart-item-button"
+                            onClick={() =>
+                              dispatch(
+                                incQuantity({
+                                  _id: product?._id,
+                                  color: product?.color,
+                                })
+                              )
+                            }
+                          >
+                            +
                           </button>
                         </div>
                       </td>
@@ -249,14 +277,12 @@ const PageCart = () => {
               <div className="check-out-div">
                 <div className="cart-total-items">
                   <span>Tổng số lượng: </span>
-                  <span className="number-total">
-                    {selectedItem === 0 ? items : selectedItem}
-                  </span>{" "}
+                  <span className="number-total">{selectedItem}</span>{" "}
                 </div>
                 <div className="cart-total-price">
                   <span>Tổng tiền: </span>
                   <span className="number-price">
-                    {selectedTotal === 0
+                    {checkALlItem
                       ? formatMoney(total)
                       : formatMoney(selectedTotal)}
                   </span>
@@ -265,7 +291,7 @@ const PageCart = () => {
                   className="cart-checkout-button"
                   onClick={handleCheckOut}
                 >
-                  Thanh toán
+                  {isLoading ? <Spinner /> : "Thanh toán"}
                 </button>
               </div>
             </div>

@@ -25,7 +25,7 @@ const Nav = () => {
           onClick={() => adminLogout}
           disabled={isLoading}
         >
-          {isLoading ? "Logging out..." : " Logout "}
+          {isLoading ? "Đang đăng xuất..." : " Đăng xuất "}
         </button>
       </div>
     </nav>

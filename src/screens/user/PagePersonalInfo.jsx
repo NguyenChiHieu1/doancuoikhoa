@@ -7,16 +7,51 @@ import { useUpdateMutation } from "../../store/service/authService";
 import Spinner from "../../components/Spinner";
 import { addInfo } from "../../store/reducer/authReducer";
 import toast, { Toaster } from "react-hot-toast";
+import NewAddress from "../../components/user/NewAddress";
+import { removeItem } from "../../store/reducer/cartReducer";
+import { useVerifyPaymentQuery } from "../../store/service/paymentService";
 
 const PagePersonalInfo = () => {
   const dispatch = useDispatch();
   //----lấy thông tin user---------------//
   const [errors, setErrors] = useState();
   const [icon, setIcon] = useState({ id: "", hidden: true });
+  const [isNewAddressFormVisible, setNewAddressFormVisible] = useState(false);
   const info = useSelector((state) => state.authReducer.info);
-  const [imageInput, setImageInput] = useState(info?.avatar);
+  const [imageInput, setImageInput] = useState("");
+  const [imageURL, setImageURL] = useState(info?.avatar);
   // const [, setImageInput] = useState(info?.avatar);
 
+  // ----------Xóa sp vừa thanh toán trên giỏ hàng-------------
+
+  const queryParams = new URLSearchParams(location.search);
+  const session_id = queryParams.get("session_id");
+  // xóa giỏ hàng đã mua
+  let cart_buy_1 = localStorage.getItem("cart_buy");
+  cart_buy_1 = cart_buy_1 ? JSON.parse(cart_buy_1) : [];
+  console.log("cart_buy_1", cart_buy_1);
+
+  const { data: dataPayment, isSuccess: isVerifyPaymentSuccess } =
+    useVerifyPaymentQuery(session_id, {
+      skip: !session_id,
+    });
+
+  useEffect(() => {
+    if (isVerifyPaymentSuccess && cart_buy_1.length > 0) {
+      cart_buy_1.forEach((it) => {
+        console.log("Removing item:", it);
+        dispatch(
+          removeItem({
+            _id: it?._id,
+            color: it?.color,
+          })
+        );
+      });
+      localStorage.removeItem("cart_buy");
+    }
+  }, [isVerifyPaymentSuccess]);
+  // ---------The end----Xóa sp trong giỏ hàng -----------------
+  // ---------------
   const [value, setValue] = useState({
     name: info?.name || "",
     fullName: info?.fullName || "",
@@ -44,9 +79,10 @@ const PagePersonalInfo = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setImageInput(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImageInput(reader.result);
+        setImageURL(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -92,21 +128,38 @@ const PagePersonalInfo = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  // Validate password
+  const minLength = 8;
+  const hasNumber = /\d/;
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
 
   const validateInputPasswords = () => {
     const newErrors = {};
+
     if (!value.passwordOld) {
       newErrors.passwordOld = "Vui lòng nhập mật khẩu cũ.";
     }
     if (!value.passwordNew) {
       newErrors.passwordNew = "Vui lòng nhập mật khẩu mới.";
+    } else {
+      if (value.passwordNew.length < minLength) {
+        newErrors.passwordNew = `Mật khẩu mới phải có ít nhất ${minLength} ký tự.`;
+      }
+      if (!hasNumber.test(value.passwordNew)) {
+        newErrors.passwordNew = "Mật khẩu mới phải chứa ít nhất một chữ số.";
+      }
+      if (!hasSpecialChar.test(value.passwordNew)) {
+        newErrors.passwordNew =
+          "Mật khẩu mới phải chứa ít nhất một ký tự đặc biệt.";
+      }
     }
+
     if (!value.passwordConfirm) {
-      newErrors.passwordConfirm = "Vui lòng  nhập lại mật khẩu mới.";
-    }
-    if (value.passwordNew !== value.passwordConfirm) {
+      newErrors.passwordConfirm = "Vui lòng nhập lại mật khẩu mới.";
+    } else if (value.passwordNew !== value.passwordConfirm) {
       newErrors.passwordConfirm = "Mật khẩu xác nhận không khớp.";
     }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -116,14 +169,13 @@ const PagePersonalInfo = () => {
     try {
       console.log("value", value);
       const formData = new FormData();
-
       formData.append("name", value.name);
       formData.append("fullName", value.fullName);
       formData.append("phoneNumber", value.phoneNumber);
       formData.append("dateOfBirth", value.dateOfBirth);
       formData.append("gender", value.gender);
       formData.append("address", value.address);
-      if (imageInput !== info.avatar) {
+      if (imageInput && imageInput !== info.avatar) {
         formData.append("image", imageInput);
       }
       console.log("formData", formData);
@@ -182,11 +234,7 @@ const PagePersonalInfo = () => {
       <div className="personal-info-container">
         <div className="profileContainer">
           <div className="profileSection">
-            <img
-              src={imageInput || ""}
-              alt="Profile"
-              className="profileImage"
-            />
+            <img src={imageURL || ""} alt="Profile" className="profileImage" />
             <input
               id="avatar"
               type="file"
@@ -259,7 +307,16 @@ const PagePersonalInfo = () => {
               />
             </label>
             <label className="profileDetails_column2">
-              Địa chỉ:
+              <div className="w-full flex justify-between items-center">
+                <label htmlFor=""> Địa chỉ:</label>
+                <label
+                  htmlFor=""
+                  className="text-red-800 text-sm right-0 cursor-pointer hover:text-red-500"
+                  onClick={() => setNewAddressFormVisible(true)}
+                >
+                  <i className="bi bi-plus-square"></i>
+                </label>
+              </div>
               <select
                 className="profile-select"
                 id="address"
@@ -449,6 +506,14 @@ const PagePersonalInfo = () => {
             </button>
           </div>
         </div>
+        {isNewAddressFormVisible && (
+          <NewAddress
+            onClose={() => {
+              setNewAddressFormVisible(false);
+              // refetch();
+            }}
+          />
+        )}
       </div>
     </WrapperPersonal>
   );

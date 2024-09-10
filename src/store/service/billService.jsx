@@ -42,8 +42,8 @@ const billService = createApi({
       }),
     }),
     updateBill: builder.mutation({
-      query: ({ billId, billData }) => ({
-        url: `${billId}`,
+      query: ({ orderId, billData }) => ({
+        url: `${orderId}`,
         method: "PUT",
         body: billData,
       }),

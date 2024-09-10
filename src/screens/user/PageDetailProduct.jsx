@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import { useNavigate } from "react-router-dom";
 import StarRatings from "../../components/user/StarRatings";
 import formatMoney from "../../utils/formatMoney";
 import toast, { Toaster } from "react-hot-toast";
@@ -22,6 +22,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 const PageDetailProduct = () => {
   const { pid } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { data, isSuccess } = useGetProductIdQuery({ pid });
 
   useEffect(() => {
@@ -78,6 +79,9 @@ const PageDetailProduct = () => {
     toast.success("Thêm vào giỏ hàng thành công");
   };
 
+  const handleCart = () => {
+    navigate("/cart");
+  };
   //Ngắt link đến thẻ a
   useEffect(() => {
     // Lấy tất cả các thẻ <a> trong div
@@ -138,7 +142,7 @@ const PageDetailProduct = () => {
                 <i className="bi bi-heart"></i>
                 <i
                   className="bi bi-heart-fill"
-                  onClick={() => handleWishList(data?.data?._id)}
+                  onClick={() => handleWishList(data?.data)}
                 ></i>
               </div>
             </div>
@@ -189,7 +193,13 @@ const PageDetailProduct = () => {
               </p>
             </div>
             <div className="add_to_cart_section">
-              <button onClick={handleAddCart}>Thêm vào giỏ hàng</button>
+              <button onClick={handleAddCart} className="add-cart-new">
+                {" "}
+                <i className="bi bi-cart3"></i> Thêm vào giỏ hàng
+              </button>
+              <button onClick={handleCart} className="buy-now">
+                Mua ngay
+              </button>
             </div>
           </div>
         </div>

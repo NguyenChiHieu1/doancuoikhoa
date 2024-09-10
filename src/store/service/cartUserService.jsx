@@ -17,10 +17,10 @@ const cartService = createApi({
   endpoints: (builder) => ({
     // Endpoint để thêm sản phẩm vào giỏ hàng
     addItemToCart: builder.mutation({
-      query: (item) => ({
+      query: (items) => ({
         url: "/create",
         method: "POST",
-        body: item,
+        body: items,
       }),
     }),
     // Endpoint để lấy giỏ hàng của người dùng theo userId

@@ -22,11 +22,6 @@ const FeaturedCategories = ({
   const [arrayChild, setArrayChild] = useState([]);
   const [selectid, setSelectId] = useState("");
 
-  useEffect(() => {
-    if (dataCompoParent) {
-      handleOnClickCateChild(dataCompoParent?.children?.[0]?._id);
-    }
-  }, [dataCompoParent]);
   function handleOnClickCateChild(id) {
     try {
       let dataGet = [...dataProduct] || [];
@@ -60,6 +55,12 @@ const FeaturedCategories = ({
     toast.success("Đã thêm sản phẩm vào danh mục yêu thích của bạn");
   }
 
+  useEffect(() => {
+    if (dataCompoParent) {
+      handleOnClickCateChild(dataCompoParent?.children?.[0]?._id);
+    }
+  }, [dataCompoParent, dataProduct]);
+
   return (
     <>
       <div className="category_view">
@@ -73,7 +74,9 @@ const FeaturedCategories = ({
                     </div> */}
           <Toaster className="top-right" />
           <div className="name_parent">
-            <span>{dataCompoParent?.parent?.name}</span>
+            <span className="capitalize">
+              Danh mục {dataCompoParent?.parent?.name}
+            </span>
           </div>
           <div className="child_cate_content">
             <div className="child_cate_header">

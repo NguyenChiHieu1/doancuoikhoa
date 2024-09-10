@@ -9,11 +9,13 @@ import {
 import ScreenHeader from "../../components/ScreenHeader";
 import Spinner from "../../components/Spinner";
 import Pagination from "../../components/Pagination";
-import formatMoney from "../../utils/formatMoney";
+import CreateUpdateCoupons from "./CreateUpdateCoupons";
 
 const Coupons = () => {
   const [searchValue, setSearchValue] = useState("");
   const [sortValue, setSortValue] = useState("");
+  const [close, setClose] = useState(false);
+  const [valueUpdate, setValueUpdate] = useState({});
 
   const onChangeInput = (e) => {
     setSearchValue(e.target.value);
@@ -36,7 +38,7 @@ const Coupons = () => {
   } = useGetCouponsQuery({
     page: page,
     limit: 5,
-    ...(searchValue && { name: searchValue }),
+    ...(searchValue && { code: searchValue }),
     ...(sortValue && { sort: sortValue }),
   });
   const navigate = useNavigate();
@@ -44,7 +46,7 @@ const Coupons = () => {
   useEffect(() => {
     refetch();
   }, [searchValue, refetch]);
-
+  //
   const [delCoupon, { isSuccess }] = useDeleteCouponMutation();
 
   const deleteCoupon = async (id) => {
@@ -55,27 +57,20 @@ const Coupons = () => {
     }
   };
 
-  const onEditCoupon = (cid) => {
-    navigate(`/dashboard/coupons/edit/${cid}`);
-  };
-
-  const filteredCoupons = data?.data?.filter(
-    (coupon) => !/^Default(-\d+)?$/.test(coupon.name)
-  );
-
   return (
     <AdminHome loadGetCoupons={isSuccess}>
       <ScreenHeader>
         <div className="flex items-center space-x-10 justify-end">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-            <Link to="/dashboard/coupons/create">
-              <i className="bi bi-plus-lg text-lg"></i>
-            </Link>
+          <button
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            onClick={() => setClose(true)}
+          >
+            <i className="bi bi-plus-lg text-lg"></i>
           </button>
           <div className="flex items-center border border-gray-300 rounded-md overflow-hidden w-full">
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Tìm kiếm theo mã code..."
               className="py-2 px-4 w-full outline-none"
               onChange={(e) => onChangeInput(e)}
             />
@@ -87,7 +82,7 @@ const Coupons = () => {
         <Toaster position="top-right" />
       </ScreenHeader>
       {!isFetching ? (
-        filteredCoupons.length > 0 ? (
+        data?.data?.length > 0 ? (
           <div>
             <table className="w-full bg-slate-300 rounded-md">
               <thead>
@@ -96,27 +91,31 @@ const Coupons = () => {
                     STT
                   </th>
                   <th className="p-3 uppercase text-sm text-black-500 font-medium">
-                    Name
+                    Tên
                   </th>
                   <th className="p-3 uppercase text-sm text-black-500 font-medium">
                     Code
                   </th>
                   <th className="p-3 uppercase text-sm text-black-500 font-medium">
-                    Discount (%)
+                    Giảm giá (%)
                   </th>
                   <th className="p-3 uppercase text-sm text-black-500 font-medium">
-                    Expiry Date
+                    Ngày hết hạn
+                    <i
+                      className={`bi bi-arrow-${
+                        sortValue === `-expiryDate` ? "up" : "down"
+                      } text-black2 hover:text-white cursor-pointer`}
+                      onClick={() => onChangeSort(`expiryDate`)}
+                    ></i>
                   </th>
                   <th className="p-3 uppercase text-sm text-black-500 font-medium">
-                    Status
+                    Trạng thái
                   </th>
-                  <th className="p-3 uppercase text-sm text-black-500 font-medium">
-                    Action
-                  </th>
+                  <th className="p-3 uppercase text-sm text-black-500 font-medium"></th>
                 </tr>
               </thead>
               <tbody>
-                {filteredCoupons.map((coupon, index) => (
+                {data?.data?.map((coupon, index) => (
                   <tr className="odd:bg-slate-100" key={coupon?._id}>
                     <td className="p-3 capitalize text-sm text-left font-normal text-black">
                       {index + 1}
@@ -134,12 +133,20 @@ const Coupons = () => {
                       {new Date(coupon?.expiryDate).toLocaleDateString()}
                     </td>
                     <td className="p-3 capitalize text-sm text-left font-normal text-black">
-                      {coupon?.status ? "Active" : "Inactive"}
+                      {/* {coupon?.status ? "Active" : "Inactive"} */}
+                      <span
+                        className={`inline-block w-4 h-4 rounded-full mr-2 ${
+                          coupon?.status ? "bg-green-500" : "bg-gray-500"
+                        }`}
+                      ></span>
                     </td>
                     <td className="p-3 capitalize text-sm text-left font-normal text-black flex flex-row">
                       <button
                         className="btn btn-warning mr-1.5"
-                        onClick={() => onEditCoupon(coupon?._id)}
+                        onClick={() => {
+                          setValueUpdate(coupon);
+                          setClose(true);
+                        }}
                       >
                         <i className="bi bi-pencil"></i>
                       </button>
@@ -163,10 +170,24 @@ const Coupons = () => {
             />
           </div>
         ) : (
-          "No coupons!"
+          "Không có giảm giá!"
         )
       ) : (
         <Spinner />
+      )}
+      {close && Object.keys(valueUpdate).length === 0 && (
+        <CreateUpdateCoupons close={close} onClose={() => setClose(false)} />
+      )}
+      {close && Object.keys(valueUpdate).length !== 0 && (
+        <CreateUpdateCoupons
+          close={close}
+          onClose={() => {
+            setClose(false);
+            setValueUpdate({});
+            // refetch();
+          }}
+          dataUpdate={valueUpdate}
+        />
       )}
     </AdminHome>
   );

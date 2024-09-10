@@ -1,0 +1,43 @@
+.statiscal-revenue {
+  min-height: 20rem;
+  /* max-height: 100%; */
+}
+.container-statis {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative; /* Quan trọng để z-index có hiệu lực */
+}
+
+.gear-icon-statis {
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.value-setting-statis {
+  position: absolute; /* Để phần tử có thể được đặt lên trên cùng */
+  left: -8rem;
+  top: 1.4rem; /* Tùy chỉnh để đảm bảo phần tử không bị che khuất */
+  display: none; /* Ẩn mặc định */
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem; /* Rounded-lg */
+  padding: 0.75rem;
+  z-index: 100; /* Đặt lên trên cùng */
+}
+
+.container-statis:hover .value-setting-statis {
+  display: block; /* Hiển thị khi hover */
+}
+
+.menu-item-statis {
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  width: 8rem; /* w-32 */
+  max-width: 16rem; /* max-w-2xl */
+  cursor: pointer;
+}
+
+.menu-item-statis:hover {
+  background-color: #f3f4f6; /* hover:bg-gray-100 */
+}

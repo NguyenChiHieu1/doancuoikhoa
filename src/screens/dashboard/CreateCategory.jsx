@@ -70,7 +70,7 @@ const CreateCategory = () => {
               : category.name,
         };
       });
-      console.log("transformedData", transformedData);
+      // console.log("transformedData", transformedData);
       setCategories(transformedData);
     }
   }, [isSuccessCate12]);
@@ -98,14 +98,14 @@ const CreateCategory = () => {
                     htmlFor="name"
                     className="text-sm text-black font-medium mb-1"
                   >
-                    Category Name
+                    Tên danh mục:
                   </label>
                   <Field
                     type="text"
                     name="name"
                     id="name"
                     className="border rounded-md p-2 text-gray-900 border-black"
-                    placeholder="Category Name"
+                    placeholder="Vui lòng nhập thông tin..."
                   />
                   <ErrorMessage
                     name="name"
@@ -119,14 +119,14 @@ const CreateCategory = () => {
                     htmlFor="description"
                     className="text-sm text-black font-medium mb-1"
                   >
-                    Description
+                    Mô tả:
                   </label>
                   <Field
                     as="textarea"
                     name="description"
                     id="description"
                     className="border rounded-md p-2 text-gray-900 border-black"
-                    placeholder="Category Description"
+                    placeholder="Vui lòng nhập thông tin..."
                     rows="4"
                   />
                   <ErrorMessage
@@ -141,7 +141,7 @@ const CreateCategory = () => {
                     htmlFor="parentCategory"
                     className="text-sm text-black font-medium mb-1"
                   >
-                    Parent Category
+                    Danh mục cha
                   </label>
                   <Field
                     as="select"
@@ -168,7 +168,7 @@ const CreateCategory = () => {
                     type="submit"
                     className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
                   >
-                    {!isLoading ? "Save" : <Spinner />}
+                    {!isLoading ? "Lưu lại" : <Spinner />}
                   </button>
                 </div>
               </Form>

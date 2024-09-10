@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import {
   useUserLogoutMutation,
   useUseGetInfoUserQuery,
+  useUpdateMutation,
 } from "../../store/service/authService";
 import { useGetCateLevel123Query } from "../../store/service/cateService";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,15 +11,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, addInfo } from "../../store/reducer/authReducer";
 import { emptyCart } from "../../store/reducer/cartReducer";
 import { useGetAllProductsQuery } from "../../store/service/productService";
+import { useAddItemToCartMutation } from "../../store/service/cartUserService";
 import diacritics from "diacritics";
+import { clearWishList } from "../../store/reducer/wishListReducer";
+import toast, { Toaster } from "react-hot-toast";
+import { useGetCartByUserIdQuery } from "../../store/service/cartUserService";
+import { addCart } from "../../store/reducer/cartReducer";
 
 const Header = () => {
   const dispatch = useDispatch();
   const cartArray = useSelector((state) => state?.cartReducer?.cart) || null;
+  const wishLisst = useSelector((state) => state?.wishListReducer?.wishList);
+  // const ca = useSelector((state) => state?.wishListReducer?.wishList);
   const userExist =
     useSelector((state) => state?.authReducer?.userToken) || null;
   // const navigate = useNavigate();
-  //
+
   const [accUser, setAccUser] = useState(null);
   const [totalItemCart, setTotalItemCart] = useState(0);
   const [parentCa23, setParentCa23] = useState([]);
@@ -29,6 +37,7 @@ const Header = () => {
 
   //
   const [userLogout] = useUserLogoutMutation();
+  const [addCartUser] = useAddItemToCartMutation();
   const {
     data: infoUser,
     isSuccess: succesInfoUser,
@@ -46,6 +55,13 @@ const Header = () => {
     isFetching,
     error,
   } = useGetAllProductsQuery(undefined, { skip: !searchText });
+
+  // const { data: dataCart, isSuccess: successGetCart } = useGetCartByUserIdQuery(
+  //   undefined,
+  //   { skip: !userExist }
+  // );
+
+  const [updateData, response] = useUpdateMutation();
   // ------------------
 
   function handleSearch() {
@@ -62,18 +78,6 @@ const Header = () => {
     console.log(`${searchText}`, arr);
   }
 
-  // let parent1 = dataCate123?.data?.map((it) => {
-  //   return {
-  //     _idPa1: it?.parent?._id,
-  //     namePa1: it?.parent?.name,
-  //   };
-  // });
-  // useEffect(() => {
-  //   if (isSucGetCate) {
-  //     console.log("dataCate123", dataCate123);
-  //   }
-  // }, [isSucGetCate]);
-
   function arrCateParent23(idp) {
     dataCate123?.data?.forEach((element) => {
       if (element?.parent?._id === idp) {
@@ -89,21 +93,9 @@ const Header = () => {
       setBackColor(dataCate123?.data?.[0]?.parent?._id);
     }
   }, [isSucGetCate]);
-  // console.log(parent23);
-  //
-  //Lỗi khi đăng xuất ra khỏi trang cart nhưng bên trang login vẫn chưa out --> reload toàn bộ
-  //
+
   const banner_header_top =
     "https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2024/TrangsinhnhatT8_0824_LDP_Header_1263x60.jpg";
-
-  // useEffect(() => {
-  //   if (checkLogin) {
-  //     setGetInfo(true);
-  //     refetch();
-  //   } else {
-  //     setGetInfo(false);
-  //   }
-  // }, [checkLogin]);
 
   useEffect(() => {
     if (succesInfoUser) {
@@ -113,16 +105,38 @@ const Header = () => {
 
   useEffect(() => {
     setTotalItemCart(cartArray?.length || 0);
-  }, [setTotalItemCart, cartArray]);
+  }, [cartArray]);
 
   const handlerLogout = async () => {
-    await userLogout().unwrap();
-    dispatch(logout("user-token"));
-    dispatch(emptyCart());
-    localStorage.removeItem("user-token");
-    localStorage.removeItem("cart");
-    setAccUser(null);
-    window.location.reload();
+    const formData = new FormData();
+    if (wishLisst?.length > 0) {
+      wishLisst.forEach((element, index) => {
+        formData.append(`wishlist[${index}]`, element?._id);
+      });
+    }
+    const response = await updateData({ dataProduct: formData }).unwrap();
+    //--------------------
+    let items = [];
+
+    cartArray.forEach((element, index) => {
+      items.push({
+        product: element?._id,
+        quantity: element?.quantity,
+        color: element?.color,
+      });
+    });
+
+    const res = await addCartUser({ items }).unwrap();
+    if (response?.success && res?.success) {
+      await userLogout().unwrap();
+      dispatch(clearWishList());
+      dispatch(logout("user-token"));
+      dispatch(emptyCart());
+      setAccUser(null);
+      window.location.reload();
+    } else {
+      toast.error("Cập nhật wistlist/Cart thất bại");
+    }
   };
 
   useEffect(() => {
@@ -137,6 +151,44 @@ const Header = () => {
     }
   }, [userExist, succesInfoUser, infoUser]);
 
+  // useEffect(() => {
+  //   if (successGetCart && dataCart) {
+  //     let arrLocal = localStorage.getItem("cart");
+  //     arrLocal = arrLocal ? JSON.parse(arrLocal) : [];
+
+  //     // Tạo một map để dễ dàng kiểm tra và cập nhật số lượng
+  //     const itemMap = arrLocal.reduce((acc, item) => {
+  //       const key = `${item._id}-${item.color}`; // Tạo key để phân biệt phần tử theo _id và color
+  //       acc[key] = item;
+  //       return acc;
+  //     }, {});
+
+  //     // Cập nhật hoặc thêm mới các phần tử từ dataCart
+  //     dataCart?.data?.items.forEach((item) => {
+  //       if (item) {
+  //         const key = `${item._id}-${item.color}`; // Tạo key tương ứng
+  //         if (itemMap[key]) {
+  //           // Cập nhật số lượng nếu phần tử đã tồn tại
+  //           itemMap[key].quantity += item?.quantity;
+  //         } else {
+  //           // Thêm mới nếu phần tử chưa tồn tại
+  //           itemMap[key] = {
+  //             _id: item?._id || "",
+  //             name: item?.product?.name || "",
+  //             color: item?.color || "",
+  //             quantity: item?.quantity || 0,
+  //             price: item?.product?.price || 0,
+  //             discount: item?.product?.coupons?.discount || 0,
+  //           };
+  //         }
+  //       }
+  //     });
+
+  //     // Chuyển đổi itemMap trở lại thành mảng và lưu vào localStorage
+  //     const updatedCart = Object.values(itemMap);
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   }
+  // }, [successGetCart]);
   return (
     <>
       <div className="home">
@@ -272,12 +324,53 @@ const Header = () => {
                   {/* )} */}
                 </li>
                 <li className="">
+                  <div className="dropdown-notification">
+                    <div className="dropdown-button-notification">
+                      <div className="notification-item">
+                        <i class="bi bi-bell"></i>
+                        <span className="">Thông báo</span>
+                        <div className="notification">{totalItemCart}</div>
+                      </div>
+                      {accUser !== null && (
+                        <div
+                          className="dropdown-menu-notification"
+                          role="menu"
+                          aria-orientation="vertical"
+                          aria-labelledby="menu-button"
+                          tabIndex="-1"
+                        >
+                          <div className="header-notification">
+                            <i className="bi bi-bell-fill text-xl text-red-500"></i>
+                            <span className="tb ">Thông báo</span>
+                          </div>
+                          <div
+                            className="dropdown-content-notification"
+                            role="none"
+                          >
+                            {/* <span className="dropdown-item-notification">
+                              Chào mừng bạn đến với Hiệu Sách Mai Hương
+                            </span>
+                            <span className="dropdown-item-notification">
+                              Đơn hàng #.... của bạn đang vận chuyển đến bạn
+                            </span>
+                            <span className="dropdown-item-notification">
+                              
+                            </span> */}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+                <li className="">
                   <div className="cart-item">
                     <i className="bi bi-cart3"></i>
                     <span className="">
                       <Link to="/cart">Giỏ hàng</Link>
                     </span>
-                    <div className="cart-badge">{totalItemCart}</div>
+                    {totalItemCart > 0 && (
+                      <div className="cart-badge">{totalItemCart}</div>
+                    )}
                   </div>
                 </li>
                 <li className="">
@@ -326,6 +419,7 @@ const Header = () => {
               </ul>
             </div>
           </div>
+          <Toaster />
         </div>
       </div>
     </>

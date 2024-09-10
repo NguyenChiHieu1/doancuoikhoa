@@ -186,3 +186,8 @@
 .print-bill-order-user > button:hover {
   background-color: #165aec;
 }
+@media print {
+  .no-print {
+    display: none;
+  }
+}

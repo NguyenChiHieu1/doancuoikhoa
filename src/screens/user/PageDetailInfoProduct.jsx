@@ -5,6 +5,7 @@ import formatMoney from "../../utils/formatMoney";
 import toast, { Toaster } from "react-hot-toast";
 import { addCart } from "../../store/reducer/cartReducer";
 import { useDispatch } from "react-redux";
+
 const PageDetailInfoProduct = ({ product, onClose }) => {
   const dispatch = useDispatch();
   const containerRef = useRef(null);
@@ -92,6 +93,7 @@ const PageDetailInfoProduct = ({ product, onClose }) => {
     });
     return result / ratings.length;
   }
+
   return (
     <div className="containe_detail_product" ref={containerRef}>
       <Toaster className="top-right" />

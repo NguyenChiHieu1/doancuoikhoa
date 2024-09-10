@@ -1,0 +1,85 @@
+/* VoucherList.css */
+.voucher-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+.vouchers-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cột trên mỗi hàng */
+  gap: 20px; /* Khoảng cách giữa các phần tử */
+  justify-items: center;
+}
+
+.voucher-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  align-items: center;
+  width: 100%; /* Chiều rộng của mỗi card sẽ chiếm toàn bộ cột */
+  max-width: 350px; /* Giới hạn chiều rộng của mỗi card */
+}
+
+.voucher-card h4 {
+  font-size: 1rem;
+  color: #000;
+}
+
+.img-voucher-card {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.voucher-image {
+  max-width: 100%;
+  border-radius: 8px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.voucher-name {
+  font-size: 1.8rem;
+  color: #ff6600;
+  margin-bottom: 10px;
+}
+
+.voucher-code,
+.voucher-discount,
+.voucher-status,
+.voucher-expiry {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.voucher-products {
+  list-style-type: none;
+  padding: 0;
+  overflow-y: auto;
+  max-height: 100px;
+  padding-right: 10px; /* Thêm khoảng đệm khi xuất hiện thanh cuộn */
+  scroll-behavior: smooth;
+}
+
+.voucher-products li {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 10px;
+  white-space: nowrap; /* Giữ tên sản phẩm trên một dòng */
+  overflow: hidden; /* Ẩn phần văn bản vượt quá chiều dài */
+  text-overflow: ellipsis; /* Thêm dấu ba chấm (...) khi văn bản quá dài */
+  color: #ff6600;
+}

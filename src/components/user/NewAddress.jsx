@@ -20,14 +20,15 @@ const NewAddress = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await data(value);
   };
 
   useEffect(() => {
     if (response.isSuccess) {
-      dispatch(setSuccess("Thêm địa chỉ mới thành công !!!"));
+      toast.success("Thêm địa chỉ mới thành công !!!");
       onClose();
+    } else {
+      toast.error("Thêm địa chỉ mới thất bại !!!");
     }
   }, [response.isSuccess]);
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Pagination, Autoplay } from "swiper/modules";
-
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -76,19 +76,19 @@ const Slider = () => {
         <div className="promot_content">
           <ul className="option_promot">
             <li className="car_free_ship">
-              <a href="#">
+              <Link to="#">
                 <img src="/image/slider/shipped.png" alt="" />
                 <span>Miễn phí giao hàng</span>
-              </a>
+              </Link>
             </li>
             <li className="xa_kho">
-              <a href="#">
+              <Link to="#">
                 <img src="/image/slider/sale.png" />
                 <span>Xả kho ưu đãi khủng</span>
-              </a>
+              </Link>
             </li>
             <li className="kho_voucher">
-              <a href="#">
+              <Link to="/list-coupon">
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/3595/3595867.png"
                   alt=""
@@ -97,16 +97,16 @@ const Slider = () => {
                   Kho voucher <br />
                   đang chờ bạn
                 </span>
-              </a>
+              </Link>
             </li>
             <li className="tuu_truong">
-              <a href="#">
+              <Link to="#">
                 <img src="/image/slider/back-to-school.png" alt="" />
                 <span>
                   Hướng đến ngày
                   <br /> tựu trường
                 </span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

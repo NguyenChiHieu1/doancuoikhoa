@@ -7,7 +7,7 @@ const authService = createApi({
   reducerPath: "auth",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000/api/user/",
-    prepareHeaders: (headers, { endpointName }) => {
+    prepareHeaders: (headers, {}) => {
       const token = getToken("admin-token") || getToken("user-token");
 
       if (token) {
@@ -68,10 +68,16 @@ const authService = createApi({
         }),
       }),
       getUser: builder.query({
-        query: () => ({
-          url: "/",
+        query: ({ role }) => ({
+          url: `/${role}`,
           method: "GET",
         }),
+      }),
+      getAccount: builder.query({
+        query: (queryString) => {
+          const queryPro = new URLSearchParams(queryString).toString();
+          return { url: `/account?${queryPro}`, method: "GET" };
+        },
       }),
       update: builder.mutation({
         query: ({ dataProduct }) => {
@@ -79,6 +85,34 @@ const authService = createApi({
             url: "/update",
             method: "PUT",
             body: dataProduct,
+          };
+        },
+      }),
+      updateAccount: builder.mutation({
+        query: ({ id, dataAccount }) => {
+          return {
+            url: `/account/${id}`,
+            method: "PUT",
+            body: dataAccount,
+          };
+        },
+      }),
+      createAccount: builder.mutation({
+        query: ({ dataProduct }) => {
+          return {
+            url: "/account",
+            method: "POST",
+            body: dataProduct,
+          };
+        },
+      }),
+      deleteAccount: builder.mutation({
+        query: ({ _id }) => {
+          return {
+            url: "/delete",
+            method: "DELETE",
+            // chú ý
+            body: { _id },
           };
         },
       }),
@@ -92,7 +126,11 @@ export const {
   useUserForgotPasswordMutation,
   useUserResetPasswordMutation,
   useUseGetInfoUserQuery,
+  useGetAccountQuery,
   useGetUserQuery,
   useUpdateMutation,
+  useCreateAccountMutation,
+  useUpdateAccountMutation,
+  useDeleteAccountMutation,
 } = authService;
 export default authService;

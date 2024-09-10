@@ -18,14 +18,15 @@ const AdminLogin = () => {
     await login(state);
   };
 
+  const allowedRoles = ["admin", "employee", "shipper"];
   useEffect(() => {
-    if (isSuccess && data?.role === "admin") {
+    if (isSuccess && allowedRoles.includes(data?.role)) {
       localStorage.setItem("admin-token", data?.token);
       dispatch(setAdminToken(data?.token));
       toast.success("Đăng nhập thành công!!!");
       navigate("/dashboard/products");
     } else if (isSuccess) {
-      toast.error("Bạn không có quyền đăng nhập admin!!!");
+      toast.error("Bạn không đủ quyền đăng nhập!!!");
       setState({ email: "", password: "" });
     }
   }, [isSuccess, data, dispatch, navigate]);
@@ -53,7 +54,7 @@ const AdminLogin = () => {
         >
           <Toaster position="top-right" />
           <h3 className="mb-4 text-white capitalize font-semibold text-lg">
-            dashboard login
+            Đăng nhập trang quản lý
           </h3>
           <div className="mb-4 mt-4">
             <input
@@ -62,7 +63,7 @@ const AdminLogin = () => {
               className="w-full bg-black1 p-4 rounded outline-none text-white"
               value={state.email}
               onChange={handleInputs}
-              placeholder="Enter email..."
+              placeholder="Nhập email..."
             />
           </div>
           <div className="mb-4">
@@ -72,13 +73,13 @@ const AdminLogin = () => {
               className="w-full bg-black1 p-4 rounded outline-none text-white"
               value={state.password}
               onChange={handleInputs}
-              placeholder="Enter password..."
+              placeholder="Nhập mật khẩu..."
             />
           </div>
           <div className="mb-4">
             <input
               type="submit"
-              value={isLoading ? "Loading..." : "Sign in"}
+              value={isLoading ? "Đang tải..." : "Đăng nhập"}
               className="bg-indigo-600 w-full p-4 rounded text-white uppercase font-semibold cursor-pointer"
               disabled={isLoading}
             />

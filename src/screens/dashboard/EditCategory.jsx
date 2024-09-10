@@ -16,7 +16,7 @@ import Spinner from "../../components/Spinner";
 const categorySchema = Yup.object().shape({
   name: Yup.string().required("Category name is required"),
   description: Yup.string().trim(),
-  parentCategory: Yup.string().nullable().default(""),
+  // parentCategory: Yup.string().nullable().default(""),
 });
 
 const EditCategory = () => {
@@ -33,19 +33,19 @@ const EditCategory = () => {
     useGetCateLevel12Query();
   const [
     updateCategory,
-    { isSuccess: isSuccessUpdate, isFetching: isFetchingUpdate },
+    { isSuccess: isSuccessUpdate, isLoading: isLoadingUpdate },
   ] = useUpdateCategoryMutation();
 
   const [state, setState] = useState({});
 
-  useEffect(() => {
-    refetchCategory();
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   refetchCategory();
+  // }, [location.pathname]);
 
   useEffect(() => {
     if (categoryData) {
       setState(categoryData?.data?.[0]);
-      console.log(categoryData);
+      // console.log(categoryData);
     }
   }, [categoryData]);
 
@@ -55,14 +55,18 @@ const EditCategory = () => {
         cid,
         updatedCategory: values,
       });
-      if (isSuccessUpdate) {
-        toast.success("Category updated successfully!");
-        navigate("/dashboard/category");
-      }
     } catch (error) {
-      toast.error("Failed to update category!");
+      toast.error("Lỗi cập nhật danh mục!");
     }
   };
+  useEffect(() => {
+    if (isSuccessUpdate) {
+      toast.success("Cập nhật danh mục thành công!");
+      navigate(-1);
+    } else {
+      toast.error("Lỗi cập nhật danh mục!");
+    }
+  }, [isSuccessUpdate]);
 
   // useEffect(() => {
   //   if (isSuccessCate12) {
@@ -96,19 +100,19 @@ const EditCategory = () => {
               onSubmit={handleFormSubmit}
               enableReinitialize
             >
-              {() => (
+              {({ values, setValues }) => (
                 <Form className="w-full lg:w-8/12 text-black p-2 space-y-6 border border-white rounded-xl">
                   {/* Category Name */}
                   <div className="flex flex-col">
                     <label htmlFor="name" className="text-sm font-medium mb-1">
-                      Category Name
+                      Tên danh mục
                     </label>
                     <Field
                       type="text"
                       name="name"
                       id="name"
                       className="border rounded-md p-2 text-gray-900"
-                      placeholder="Category Name"
+                      placeholder="Vui lòng nhập tên danh mục"
                     />
                     <ErrorMessage
                       name="name"
@@ -123,7 +127,7 @@ const EditCategory = () => {
                       htmlFor="description"
                       className="text-sm font-medium mb-1"
                     >
-                      Description
+                      Mô tả
                     </label>
                     <Field
                       as="textarea"
@@ -146,7 +150,7 @@ const EditCategory = () => {
                       htmlFor="parentCategory"
                       className="text-sm font-medium mb-1"
                     >
-                      Parent Category
+                      Danh mục cha
                     </label>
                     {!isFetchingCategories ? (
                       <Field
@@ -154,6 +158,13 @@ const EditCategory = () => {
                         name="parentCategory"
                         id="parentCategory"
                         className="border rounded-md p-2 text-gray-900"
+                        value={values?.parentCategory?._id}
+                        onChange={(e) =>
+                          setValues({
+                            ...values,
+                            parentCategory: e.target.value,
+                          })
+                        }
                       >
                         <option value="" label="None" />
                         {level1Categories?.data?.map((category) => (
@@ -177,7 +188,7 @@ const EditCategory = () => {
                       type="submit"
                       className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
                     >
-                      {!isFetchingUpdate ? "Save" : <Spinner />}
+                      {!isLoadingUpdate ? "Lưu lại" : <Spinner />}
                     </button>
                   </div>
                 </Form>

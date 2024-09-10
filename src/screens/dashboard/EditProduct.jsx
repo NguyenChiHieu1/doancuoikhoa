@@ -176,12 +176,12 @@ const EditProduct = () => {
       //   console.log(pair[0]+ ', '+ pair[1]);
       // }
       if (upda) {
-        toast.success("Edit product successfully!!!");
+        toast.success("Chỉnh sửa thông tin sản phẩm thành công!!!");
         // /dashboard/products
         navigate("/dashboard/products");
       }
     } catch (error) {
-      toast.error("Failed to edit product!!!");
+      toast.error("Chỉnh sửa thông tin sản phẩm thất bại!!!");
     }
   };
 
@@ -222,14 +222,14 @@ const EditProduct = () => {
                           htmlFor="name"
                           className="text-sm font-medium mb-1"
                         >
-                          Name
+                          Tên sản phẩm
                         </label>
                         <Field
                           type="text"
                           name="name"
                           id="name"
                           className="border rounded-md p-2 text-gray-900"
-                          placeholder="Product Name"
+                          placeholder="Vui lòng nhập tên sản phẩm"
                         />
                         <ErrorMessage
                           name="name"
@@ -244,14 +244,14 @@ const EditProduct = () => {
                           htmlFor="price"
                           className="text-sm font-medium mb-1"
                         >
-                          Price
+                          Giá tiền
                         </label>
                         <Field
                           type="number"
                           name="price"
                           id="price"
                           className="border border-gray-300 rounded-md p-2 text-gray-900"
-                          placeholder="Price"
+                          placeholder="Vui lòng nhập giá tiền"
                         />
                         <ErrorMessage
                           name="price"
@@ -266,14 +266,14 @@ const EditProduct = () => {
                           htmlFor="stock"
                           className="text-sm font-medium mb-1"
                         >
-                          Stock
+                          Lượng hàng tồn kho
                         </label>
                         <Field
                           type="number"
                           name="stock"
                           id="stock"
                           className="border border-gray-300 rounded-md p-2 text-gray-900"
-                          placeholder="Stock"
+                          placeholder="Vui lòng nhập lượng hàng tồn kho"
                         />
                         <ErrorMessage
                           name="stock"
@@ -288,7 +288,7 @@ const EditProduct = () => {
                           htmlFor="coupons"
                           className="text-sm font-medium mb-1"
                         >
-                          Discount
+                          Giảm giá
                         </label>
                         {!isFetchingCoupon ? (
                           <Field
@@ -297,7 +297,7 @@ const EditProduct = () => {
                             id="coupons"
                             className="border border-gray-300 rounded-md p-2 text-gray-900"
                           >
-                            <option value=" ">Choose Discount</option>
+                            <option value=" ">Vui lòng chọn % giảm giá</option>
                             {couponData?.data?.map((ci) => (
                               <option value={ci._id} key={ci._id}>
                                 {ci.discount}%
@@ -320,7 +320,7 @@ const EditProduct = () => {
                           htmlFor="category"
                           className="text-sm font-medium mb-1"
                         >
-                          Category
+                          Danh mục
                         </label>
                         {!isFetchingCategories ? (
                           <Field
@@ -329,7 +329,9 @@ const EditProduct = () => {
                             id="category"
                             className="border border-gray-300 rounded-md p-2 text-gray-900"
                           >
-                            <option value=" ">Choose category</option>
+                            <option value=" ">
+                              Chọn danh mục của sản phẩm
+                            </option>
                             {categoryData?.data?.map((cate) => (
                               <option value={cate._id} key={cate._id}>
                                 {cate.name}
@@ -360,7 +362,7 @@ const EditProduct = () => {
                           htmlFor="brand"
                           className="text-sm font-medium mb-1"
                         >
-                          Brand
+                          Nhà cung cấp
                         </label>
                         {!isFetchingBrand ? (
                           <Field
@@ -369,7 +371,9 @@ const EditProduct = () => {
                             id="brand"
                             className="border border-gray-300 rounded-md p-2 text-gray-900"
                           >
-                            <option value=" ">Choose brand</option>
+                            <option value=" ">
+                              Vui lòng chọn nhà cung cấp
+                            </option>
                             {brandData?.data?.map((br) => (
                               <option value={br._id} key={br._id}>
                                 {br.name}
@@ -389,9 +393,7 @@ const EditProduct = () => {
 
                     {/* Description */}
                     <div className="flex flex-col">
-                      <label className="text-sm font-medium mb-1">
-                        Description
-                      </label>
+                      <label className="text-sm font-medium mb-1">Mô tả</label>
                       <TextCKE
                         initText={textDescript}
                         onChangeValue={onChangeDescript}
@@ -405,7 +407,9 @@ const EditProduct = () => {
 
                     {/* Images */}
                     <div className="flex flex-col">
-                      <label className="text-sm font-medium mb-1">Images</label>
+                      <label className="text-sm font-medium mb-1">
+                        Ảnh sản phẩm
+                      </label>
                       <input
                         type="file"
                         className="border border-gray-300 rounded-md p-2 text-white"
@@ -436,7 +440,9 @@ const EditProduct = () => {
 
                     {/* Colors */}
                     <div className="flex flex-col col-span-2 ">
-                      <label className="text-sm font-medium mb-1">Colors</label>
+                      <label className="text-sm font-medium mb-1">
+                        Màu sắc
+                      </label>
                       <div className="flex items-center space-x-2">
                         <InputColor
                           initialValue="#D2691E"
@@ -475,14 +481,14 @@ const EditProduct = () => {
                         type="submit"
                         className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
                       >
-                        {!response.isLoading ? "Save" : <Spinner />}
+                        {!response.isLoading ? "Lưu lại" : <Spinner />}
                       </button>
                     </div>
                   </Form>
                 )}
               </Formik>
             ) : (
-              "Not found product!"
+              "Không tìm thấy sản phẩm!"
             )
           ) : (
             <Spinner />

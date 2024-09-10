@@ -7,18 +7,18 @@ import { useUpdateOrderByAdminMutation } from "../../store/service/orderService"
 
 // Validation schema cho EditAddress
 const addressSchema = Yup.object().shape({
-  recipientName: Yup.string().required("Recipient Name is required"),
+  recipientName: Yup.string().required("Vui lòng nhập tên người nhận"),
   recipientNumber: Yup.string()
-    .required("Recipient Number is required")
-    .matches(/^[0-9]{10,11}$/, "Must be a valid phone number"),
-  city: Yup.string().required("City is required"),
-  country: Yup.string().required("Country is required"),
-  line1: Yup.string().required("Address Line 1 is required"),
+    .required("Vui lòng nhập số điện thoại người nhận")
+    .matches(/^[0-9]{10,11}$/, "Vui lòng nhập đúng định dạng số điện thoại"),
+  city: Yup.string().required("Vui lòng nhập tên thành phố"),
+  country: Yup.string().required("Vui lòng nhập tên nước"),
+  line1: Yup.string().required("Vui lòng nhập địa chỉ nhận hàng"),
   line2: Yup.string(),
   postal_code: Yup.string()
-    .required("Postal Code is required")
-    .matches(/^[0-9]{5,6}$/, "Must be a valid postal code"),
-  state: Yup.string().required("State is required"),
+    .required("Vui lòng nhập mã bưu điện")
+    .matches(/^[0-9]{5,6}$/, "Vui lòng nhập đúng định dạng"),
+  state: Yup.string().required("Vui lòng nhập tên tỉnh"),
 });
 
 const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
@@ -34,11 +34,11 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
         orderData: { shippingAddress },
       });
       if (isUpdateSuccess) {
-        toast.success("Address updated successfully");
+        toast.success("Cập nhật địa chỉ thành công");
         onClose();
       }
     } catch (error) {
-      toast.error("Failed to update address");
+      toast.error("Lỗi khi cập nhật địa chỉ");
     }
   };
 
@@ -59,7 +59,7 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
           {() => (
             <Form className="grid grid-cols-2 gap-x-4">
               <h2 className="text-center text-blue-600 text-xl font-semibold mb-5 col-span-2">
-                Edit Address
+                Cập nhật địa chỉ
               </h2>
 
               <div>
@@ -67,14 +67,14 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="recipientName"
                 >
-                  Recipient Name:
+                  Tên người nhận:
                 </label>
                 <Field
                   type="text"
                   name="recipientName"
                   id="recipientName"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="Recipient Name"
+                  placeholder="Vui lòng nhập tên người nhận"
                 />
                 <ErrorMessage
                   name="recipientName"
@@ -88,14 +88,14 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="recipientNumber"
                 >
-                  Recipient Number:
+                  Số điện thoại người nhận:
                 </label>
                 <Field
                   type="text"
                   name="recipientNumber"
                   id="recipientNumber"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="Recipient Number"
+                  placeholder="Vui lòng nhập số điện thoại người nhận"
                 />
                 <ErrorMessage
                   name="recipientNumber"
@@ -109,7 +109,7 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="line1"
                 >
-                  Address line 1:
+                  Địa chỉ nhận hàng:
                 </label>
                 <Field
                   type="text"
@@ -130,14 +130,14 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="line2"
                 >
-                  Địa chỉ dòng 2:
+                  Địa chỉ dự phòng:
                 </label>
                 <Field
                   type="text"
                   name="line2"
                   id="line2"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="Address Line 2"
+                  placeholder="Vui lòng nhập địa chỉ dự phòng"
                 />
                 <ErrorMessage
                   name="line2"
@@ -151,14 +151,14 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="city"
                 >
-                  City:
+                  Thành phố:
                 </label>
                 <Field
                   type="text"
                   name="city"
                   id="city"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="City"
+                  placeholder="Vui lòng nhập tên thành phố"
                 />
                 <ErrorMessage
                   name="city"
@@ -172,14 +172,14 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="state"
                 >
-                  State:
+                  Tỉnh:
                 </label>
                 <Field
                   type="text"
                   name="state"
                   id="state"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="State"
+                  placeholder="Vui lòng nhập tên tỉnh"
                 />
                 <ErrorMessage
                   name="state"
@@ -193,14 +193,14 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="country"
                 >
-                  Country:
+                  Quốc gia:
                 </label>
                 <Field
                   type="text"
                   name="country"
                   id="country"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="Country"
+                  placeholder="Vui lòng nhập tên quốc gia"
                 />
                 <ErrorMessage
                   name="country"
@@ -214,14 +214,14 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="postal_code"
                 >
-                  Postal Code:
+                  Mã bưu điện:
                 </label>
                 <Field
                   type="text"
                   name="postal_code"
                   id="postal_code"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="Postal Code"
+                  placeholder="Vui lòng nhập mã bưu điển"
                 />
                 <ErrorMessage
                   name="postal_code"
@@ -235,7 +235,7 @@ const EditAddressOrder = ({ onClose, oid, shippingAddress }) => {
                   type="submit"
                   className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
                 >
-                  {!isLoading ? "Save" : <Spinner />}
+                  {!isLoading ? "Lưu lại" : <Spinner />}
                 </button>
               </div>
             </Form>

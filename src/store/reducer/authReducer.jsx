@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
-const customerToken = localStorage.getItem("userToken");
-const adminToken = localStorage.getItem("adminToken");
+const customerToken = localStorage.getItem("user-token");
+const adminToken = localStorage.getItem("admin-token");
 const infoData = localStorage.getItem("info");
 const infoArray = infoData ? JSON.parse(infoData) : {};
 
@@ -27,6 +27,7 @@ const authReducer = createSlice({
     },
     logout: (state, action) => {
       localStorage.removeItem(action.payload);
+      localStorage.removeItem("info");
       if (action.payload === "admin-token") {
         state.adminToken = null;
         state.adminInfo = null;

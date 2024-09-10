@@ -19,6 +19,8 @@ import * as XLSX from "xlsx";
 const Products = () => {
   const [searchValue, setSearchValue] = useState("");
   const [sortValue, setSortValue] = useState("");
+  // const [status, setStatus] = useState();
+  // const [stock, setStock] = useState();
   const onChangeInput = (e) => {
     setSearchValue(e.target.value);
   };
@@ -41,7 +43,7 @@ const Products = () => {
     isLoading: loadGetPro,
   } = useGetProductsQuery({
     page: page,
-    limit: 5,
+    limit: 6,
     ...(searchValue && { name: searchValue }),
     ...(sortValue && { sort: sortValue }),
   });
@@ -49,7 +51,14 @@ const Products = () => {
 
   //excel
   const [dataExcel, setDataExcel] = useState([]);
+  //
+  // function filterProduct(){
+  //   if(status) {
+  //     if(status===0){
 
+  //     }
+  //   }
+  // }
   // Xử lý tệp tin tải lên
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -141,7 +150,7 @@ const Products = () => {
           <div className="flex items-center border border-gray-300 rounded-md overflow-hidden w-full">
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Tìm sản phẩm theo tên..."
               className="py-2 px-4 w-full outline-none "
               onChange={(e) => onChangeInput(e)}
             />
@@ -163,6 +172,7 @@ const Products = () => {
               <i className="bi bi-upload text-lg"></i>
             </label>
           </div>
+
           <Excel dataRow={dataForCSV} dataHeader={headers} />
         </div>
         <Toaster position="top-right" />
@@ -173,11 +183,11 @@ const Products = () => {
             <table className="w-full bg-slate-300 rounded-md">
               <thead>
                 <tr className="border-b border-gray-800 text-left">
-                  <th className="p-3 uppercase text-sm text-black-500 font-medium">
+                  <th className="p-3 capitalize text-sm text-black-500 font-medium">
                     STT
                   </th>
-                  <th className="p-3 uppercase h- text-sm font-medium text-black-500 flex gap-1 max-w-xs">
-                    <span className="mr-2">Name</span>
+                  <th className="p-3 capitalize h- text-sm font-medium text-black-500 flex gap-1 max-w-xs">
+                    <span className="mr-2">Tên sản phẩm</span>
                     <i
                       className={`bi bi-arrow-${
                         sortValue === `name` ? "up" : "down"
@@ -185,12 +195,12 @@ const Products = () => {
                       onClick={() => onChangeSort(`name`)}
                     ></i>
                   </th>
-                  <th className="p-3 uppercase text-sm  font-medium text-black-500">
-                    Color
+                  <th className="p-3 capitalize text-sm  font-medium text-black-500">
+                    Màu sắc
                   </th>
-                  {/* <th className="p-3 uppercase text-sm  font-medium text-black-500">Sizes</th> */}
-                  <th className="p-3 uppercase text-sm   font-medium text-black-500 flex gap-1">
-                    <span className="mr-2">Price</span>
+                  {/* <th className="p-3 capitalize text-sm  font-medium text-black-500">Sizes</th> */}
+                  <th className="p-3 capitalize text-sm   font-medium text-black-500 flex gap-1">
+                    <span className="mr-2">Giá</span>
                     <i
                       className={`bi bi-arrow-${
                         sortValue === `-price` ? "up" : "down"
@@ -198,8 +208,8 @@ const Products = () => {
                       onClick={() => onChangeSort(`price`)}
                     ></i>
                   </th>
-                  <th className="p-3 uppercase text-sm   font-medium text-black-500">
-                    <span className="mr-2">Stock</span>
+                  <th className="p-3 capitalize text-sm   font-medium text-black-500">
+                    <span className="mr-2">Tồn kho</span>
                     <i
                       className={`bi bi-arrow-${
                         sortValue === `-stock` ? "up" : "down"
@@ -207,8 +217,8 @@ const Products = () => {
                       onClick={() => onChangeSort(`stock`)}
                     ></i>
                   </th>
-                  <th className="p-3 uppercase text-sm   font-medium text-black-500">
-                    <span className="mr-2">Sold</span>
+                  <th className="p-3 capitalize text-sm   font-medium text-black-500">
+                    <span className="mr-2">Đã bán</span>
                     <i
                       className={`bi bi-arrow-${
                         sortValue === `-sold` ? "up" : "down"
@@ -216,24 +226,27 @@ const Products = () => {
                       onClick={() => onChangeSort(`sold`)}
                     ></i>
                   </th>
-                  <th className="p-3 uppercase text-sm   font-medium text-black-500">
-                    <span className="mr-2">Discount</span>
+                  <th className="p-3 capitalize text-sm   font-medium text-black-500">
+                    <span className="mr-2">Giảm giá</span>
                   </th>
-                  <th className="p-3 uppercase text-sm  font-medium text-black-500">
-                    Category
+                  <th className="p-3 capitalize text-sm  font-medium text-black-500">
+                    Danh mục
                   </th>
-                  <th className="p-3 uppercase text-sm  font-medium text-black-500">
-                    Status
+                  <th className="p-3 capitalize text-sm  font-medium text-black-500">
+                    Trạng thái
                   </th>
-                  <th className="p-3 uppercase text-sm  font-medium text-black-500 ">
-                    Action
-                  </th>
+                  <th className="p-3 capitalize text-sm  font-medium text-black-500 "></th>
                   {/* <th className="p-3 uppercase text-sm  font-medium text-black-500">Delete</th> */}
                 </tr>
               </thead>
               <tbody>
                 {data?.data?.map((product, index) => (
-                  <tr className="odd:bg-slate-100" key={product?._id}>
+                  <tr
+                    className={`${
+                      product?.stock < 20 ? "bg-red-300 text-white" : ""
+                    } odd:bg-slate-100`}
+                    key={product?._id}
+                  >
                     <td className="p-3 capitalize text-sm text-left font-normal text-black">
                       {index + 1}
                     </td>
@@ -296,16 +309,27 @@ const Products = () => {
                 ))}
               </tbody>
             </table>
+            <div className="w-20 flex flex-row p-2  0 mb-2 ">
+              <label className="" htmlFor="total_counts">
+                Tổng tiền:
+              </label>
+              <input
+                id="total_counts"
+                className="w-8 border-none"
+                value={data?.counts}
+                readOnly
+              />
+            </div>
             <Pagination
               page={parseInt(page)}
-              perPage={5}
+              perPage={6}
               count={data.counts}
               path="dashboard/products"
               theme="light"
             />
           </div>
         ) : (
-          "No products!"
+          "Không có sản phẩm nào!"
         )
       ) : (
         <Spinner />

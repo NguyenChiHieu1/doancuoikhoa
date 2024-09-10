@@ -51,10 +51,10 @@ const Category = () => {
 
   const headers = [
     { label: "STT", key: "index" },
-    { label: "Name", key: "name" },
-    { label: "Description", key: "description" },
-    { label: "Parent Category", key: "parentCategory" },
-    { label: "Status", key: "status" },
+    { label: "Tên", key: "name" },
+    { label: "Mô tả", key: "description" },
+    { label: "Danh mục cha", key: "parentCategory" },
+    { label: "Trạng thái", key: "status" },
   ];
 
   const dataForCSV =
@@ -81,7 +81,7 @@ const Category = () => {
             <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Tìm kiếm theo tên..."
                 value={searchValue}
                 onChange={(e) => onChangeInput(e)}
                 className="py-2 px-4 w-full outline-none"
@@ -91,7 +91,7 @@ const Category = () => {
               </div>
             </div>
             {/* Nút "Import" */}
-            <div className="bg-green-500 !border !border-green-500 text-white hover:bg-white hover:text-green-400 hover:border-green-500 px-4 py-2 rounded cursor-pointer">
+            {/* <div className="bg-green-500 !border !border-green-500 text-white hover:bg-white hover:text-green-400 hover:border-green-500 px-4 py-2 rounded cursor-pointer">
               <input
                 id="import"
                 type="file"
@@ -101,7 +101,7 @@ const Category = () => {
               <label htmlFor="import">
                 <i className="bi bi-upload text-lg"></i>
               </label>
-            </div>
+            </div> */}
             {/* Nút "Export" */}
             <Excel dataRow={dataForCSV} dataHeader={headers} />
           </div>
@@ -118,20 +118,18 @@ const Category = () => {
                     STT
                   </th>
                   <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Name
+                    Tên danh mục
                   </th>
                   <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Description
+                    Mô tả
                   </th>
                   <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Parent Category
+                    Danh mục cha
                   </th>
                   <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Status
+                    Trạng thái
                   </th>
-                  <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Action
-                  </th>
+                  <th className="p-3 uppercase text-sm font-medium text-gray-600"></th>
                 </tr>
               </thead>
               <tbody>
@@ -177,7 +175,7 @@ const Category = () => {
             />
           </div>
         ) : (
-          "No categories!"
+          "Không có danh mục!"
         )
       ) : (
         <Spinner />

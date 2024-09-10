@@ -29,6 +29,7 @@ const OrderDetail = () => {
   const dispatch = useDispatch();
   let cart_buy_1 = localStorage.getItem("cart_buy");
   cart_buy_1 = cart_buy_1 ? JSON.parse(cart_buy_1) : [];
+  console.log("cart_buy_1", cart_buy_1);
 
   const { data: dataPayment, isSuccess: isVerifyPaymentSuccess } =
     useVerifyPaymentQuery(session_id, {
@@ -38,6 +39,7 @@ const OrderDetail = () => {
   useEffect(() => {
     if (isVerifyPaymentSuccess && cart_buy_1.length > 0) {
       cart_buy_1.forEach((it) => {
+        console.log("Removing item:", it);
         dispatch(
           removeItem({
             _id: it?._id,

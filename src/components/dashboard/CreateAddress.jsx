@@ -21,14 +21,18 @@ const CreateAddress = ({ onClose }) => {
     console.log(values);
     try {
       await createAddress({ ...values });
-      if (isSuccess) {
-        toast.success("Create address successfully");
-      }
     } catch (error) {
-      toast.error("Failed to create address");
+      toast.error("Lỗi khi tạo địa chỉ");
     }
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Tạo địa chỉ mới thành công");
+    } else {
+      toast.error("Tạo địa chỉ mới thất bại");
+    }
+  }, [isSuccess]);
   let init = {
     street: "",
     district: "",
@@ -53,7 +57,7 @@ const CreateAddress = ({ onClose }) => {
           {() => (
             <Form className="grid grid-cols-2 gap-x-4">
               <h2 className="text-center text-blue-600 text-xl font-semibold mb-5 col-span-2">
-                Create Address
+                Tạo địa chỉ
               </h2>
 
               <div className="col-span-2">
@@ -61,14 +65,14 @@ const CreateAddress = ({ onClose }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="street"
                 >
-                  Street:
+                  Tên đường:
                 </label>
                 <Field
                   type="text"
                   name="street"
                   id="street"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="Street"
+                  placeholder="Vui lòng nhập tên đường"
                 />
                 <ErrorMessage
                   name="street"
@@ -82,14 +86,14 @@ const CreateAddress = ({ onClose }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="district"
                 >
-                  District:
+                  Tên huyện:
                 </label>
                 <Field
                   type="text"
                   name="district"
                   id="district"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="District"
+                  placeholder="Vui lòng nhập tên huyện"
                 />
                 <ErrorMessage
                   name="district"
@@ -103,14 +107,14 @@ const CreateAddress = ({ onClose }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="city"
                 >
-                  City:
+                  Tên thành phố:
                 </label>
                 <Field
                   type="text"
                   name="city"
                   id="city"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="City"
+                  placeholder="Vui lòng nhập tên thành phố"
                 />
                 <ErrorMessage
                   name="city"
@@ -124,14 +128,14 @@ const CreateAddress = ({ onClose }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="country"
                 >
-                  Country:
+                  Tên quốc gia:
                 </label>
                 <Field
                   type="text"
                   name="country"
                   id="country"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="Country"
+                  placeholder="Vui lòng nhập tên quốc gia"
                 />
                 <ErrorMessage
                   name="country"
@@ -145,14 +149,14 @@ const CreateAddress = ({ onClose }) => {
                   className="mb-2 text-blue-600 font-semibold"
                   htmlFor="type"
                 >
-                  Type:
+                  Loại địa chỉ:
                 </label>
                 <Field
                   type="text"
                   name="type"
                   id="type"
                   className="w-full p-2 mb-4 border border-gray-300 rounded"
-                  placeholder="Type: Home, Company, ..."
+                  placeholder="Kiểu: Home, Company, ..."
                 />
                 <ErrorMessage
                   name="type"
@@ -166,7 +170,7 @@ const CreateAddress = ({ onClose }) => {
                   type="submit"
                   className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
                 >
-                  {!isLoading ? "Save" : <Spinner />}
+                  {!isLoading ? "Lưu lại" : <Spinner />}
                 </button>
               </div>
             </Form>

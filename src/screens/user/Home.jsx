@@ -15,8 +15,11 @@ import "./style_user_css/style/featuredCategories.css";
 // import './style_user_css/style/footer.css'
 import { useGetAllProductsQuery } from "../../store/service/productService";
 import { useGetCateLevel123Query } from "../../store/service/cateService";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const user = useSelector((state) => state.authReducer.info);
+  // JSON.stringify
   const { data: dataAllProduct, isSuccess: isSucAllPro } =
     useGetAllProductsQuery();
 
@@ -33,6 +36,15 @@ const Home = () => {
     const shuffled = arr.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, num);
   }
+  async function wistlistInput() {
+    if (user?.wishlist?.length > 0 && dataAllProduct?.data?.length > 0) {
+      let arr = [];
+      user.wishlist.forEach((item) => {
+        arr.push(dataAllProduct?.data.find((product) => product._id === item));
+      });
+      await localStorage.setItem("wishList", JSON.stringify(arr));
+    }
+  }
 
   useEffect(() => {
     try {
@@ -42,11 +54,13 @@ const Home = () => {
 
         setItemRandom(arr);
         // console.log("itemRandom:", arr);
+        wistlistInput();
       }
     } catch (error) {
       console.log(error);
     }
   }, [dataCate123]);
+  //
 
   return (
     <>

@@ -81,19 +81,19 @@ const ResetPassword = () => {
             </NavLink>
           </div>
           <div>
-            <h2 className="title_reset_password">Reset Password</h2>
+            <h2 className="title_reset_password">Đặt lại mật khẩu</h2>
           </div>
         </div>
         <form onSubmit={(e) => submitHandler(e)}>
           <div className="form_group_reset_password">
             <label htmlFor="password" className="label_reset_password">
-              New Password
+              Mật khẩu mới
             </label>
             <input
               type="password"
               id="password"
               className="input_reset_password"
-              placeholder="Enter your new password"
+              // placeholder="Enter your new password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -104,13 +104,13 @@ const ResetPassword = () => {
           </div>
           <div className="form_group_reset_password">
             <label htmlFor="confirm_password" className="label_reset_password">
-              Confirm Password
+              Nhập lại mật khẩu:
             </label>
             <input
               type="password"
               id="confirm_password"
               className="input_reset_password"
-              placeholder="Confirm your new password"
+              // placeholder="Confirm your new password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -124,7 +124,7 @@ const ResetPassword = () => {
           {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
           <div className="footer_reset_password">
             <button type="submit" className="submit_button_reset_password">
-              {isLoading ? <Spinner /> : "Reset Password"}
+              {isLoading ? <Spinner /> : "Lưu lại"}
             </button>
           </div>
         </form>

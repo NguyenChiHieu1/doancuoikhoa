@@ -34,7 +34,14 @@ const ViewOrderDetail = () => {
 
   if (errorOrder)
     return (
-      <p className="error-message">Lỗi dữ liệu cho chi tiết đơn hàng của bạn</p>
+      <div className="w-full flex flex-col items-center">
+        <p className="error-message">
+          Lỗi dữ liệu cho chi tiết đơn hàng của bạn
+        </p>
+        <Link to="/order-detail" className="underline text-red-400 text-xl">
+          Return
+        </Link>
+      </div>
     );
 
   return (
@@ -42,14 +49,14 @@ const ViewOrderDetail = () => {
       {loadingOrder ? (
         <Spinner />
       ) : (
-        <div className="view-order-detail-container">
-          <div className="view-order-detail-header-icon">
+        <div className="view-order-detail-container" ref={componentRef}>
+          <div className="view-order-detail-header-icon no-print">
             <button className="back-button" onClick={() => navigate(-1)}>
               <i className="bi bi-arrow-left"></i>
             </button>
             <ReactToPrint
               trigger={() => (
-                <div className="print-bill-order-user">
+                <div className="print-bill-order-user ">
                   <button>
                     <i className="bi bi-printer"></i>
                   </button>
@@ -116,16 +123,16 @@ const ViewOrderDetail = () => {
                       <p>Đang chờ</p>
                     )}
                     {orderData?.data?.orderStatus === "processing" && (
-                      <p>Đang xử lý</p>
+                      <p>Đã xác nhận</p>
                     )}
                     {orderData?.data?.orderStatus === "shipped" && (
-                      <p>Đã vận chuyển</p>
+                      <p>Đang giao hàng</p>
                     )}
                     {orderData?.data?.orderStatus === "delivered" && (
-                      <p>Đã giao hàng</p>
+                      <p>Giao hàng thành công</p>
                     )}
                     {orderData?.data?.orderStatus === "cancelled" && (
-                      <p>Đã hủy</p>
+                      <p>Hủy đơn</p>
                     )}
                   </b>
                 </span>

@@ -13,7 +13,7 @@ import { productSchema } from "../../validations/manaProductValidation";
 import { useCreateProductMutation } from "../../store/service/productService";
 import { useGetAllDiscountsQuery } from "../../store/service/couponService";
 import { useGetAllBrandsQuery } from "../../store/service/brandService";
-import { useGetCateLevel12Query } from "../../store/service/cateService";
+import { useGetCateLevel3Query } from "../../store/service/cateService";
 //, useGetAllDiscountsQuery, useGetAllBrandsQuery, useGetCateLevel12Query
 const CreateProduct = () => {
   const { data: couponData = [], isFetching: isFetchingCoupon } =
@@ -21,7 +21,7 @@ const CreateProduct = () => {
   const { data: brandData = [], isFetching: isFetchingBrand } =
     useGetAllBrandsQuery();
   const { data: categoryData = [], isFetching: isFetchingCategories } =
-    useGetCateLevel12Query();
+    useGetCateLevel3Query();
   const [createData, response] = useCreateProductMutation();
 
   const [colorP, setColorP] = useState([]);
@@ -46,7 +46,7 @@ const CreateProduct = () => {
     const files = Array.from(e.target.files);
 
     if (selectedFiles.length + files.length > maxImages) {
-      alert(`You can only upload a maximum of ${maxImages} images.`);
+      alert(`Bạn chỉ có thể thêm tối đa ${maxImages} ảnh mỗi lần.`);
       return;
     }
 
@@ -86,7 +86,7 @@ const CreateProduct = () => {
       console.log(response);
       await createData(formData);
     } catch (error) {
-      toast.error("Failed to create product");
+      toast.error("Tạo sản phẩm mới không thành công");
     }
   };
 
@@ -95,6 +95,9 @@ const CreateProduct = () => {
       console.log(response);
       toast.success("Product created successfully");
     }
+    // else if ( !response.isSuccess) {
+    //   toast.error("Failed to create product");
+    // }
   }, [response.isSuccess]);
   return (
     <AdminHome>
@@ -115,9 +118,13 @@ const CreateProduct = () => {
               <Form className="w-full  lg:w-8/12  p-2 space-y-6 border border-separate rounded-xl hover:shadow-lg">
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 m-2">
                   {[
-                    { name: "name", label: "Name", type: "text" },
-                    { name: "price", label: "Price", type: "number" },
-                    { name: "stock", label: "Stock", type: "number" },
+                    { name: "name", label: "Tên", type: "text" },
+                    { name: "price", label: "Giá", type: "number" },
+                    {
+                      name: "stock",
+                      label: "Số lượng tồn kho",
+                      type: "number",
+                    },
                   ].map(({ name, label, type }) => (
                     <div key={name} className="flex flex-col">
                       <label
@@ -144,19 +151,19 @@ const CreateProduct = () => {
                   {[
                     {
                       name: "coupons",
-                      label: "Discount",
+                      label: "Giảm giá",
                       data: couponData,
                       fetching: isFetchingCoupon,
                     },
                     {
                       name: "category",
-                      label: "Category",
+                      label: "Danh mục",
                       data: categoryData,
                       fetching: isFetchingCategories,
                     },
                     {
                       name: "brand",
-                      label: "Brand",
+                      label: "Nhà cung cấp",
                       data: brandData,
                       fetching: isFetchingBrand,
                     },
@@ -175,7 +182,7 @@ const CreateProduct = () => {
                           id={name}
                           className="border border-gray-300 rounded-md p-2 text-gray-900 hover:shadow-lg"
                         >
-                          <option value="">Choose {label}</option>
+                          <option value="">Vui lòng chọn {label}</option>
                           {data.data?.map((item) => (
                             <option value={item._id} key={item._id}>
                               {item.name || `${item.discount}%`}
@@ -195,9 +202,7 @@ const CreateProduct = () => {
                 </div>
 
                 <div className="flex flex-col">
-                  <label className=" text-sm font-medium mb-1 ">
-                    Description
-                  </label>
+                  <label className=" text-sm font-medium mb-1 ">Mô tả</label>
                   <TextCKE
                     initText={textDescript}
                     onChangeValue={onChangeDescript}
@@ -210,7 +215,7 @@ const CreateProduct = () => {
                 </div>
 
                 <div className="flex flex-col">
-                  <label className=" text-sm font-medium mb-1 ">Images</label>
+                  <label className=" text-sm font-medium mb-1 ">Ảnh</label>
                   <input
                     type="file"
                     className="border border-gray-300 rounded-md p-2 "
@@ -280,7 +285,7 @@ const CreateProduct = () => {
                     type="submit"
                     className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
                   >
-                    {!response.isLoading ? "Save" : <Spinner />}
+                    {!response.isLoading ? "Lưu lại" : <Spinner />}
                   </button>
                 </div>
               </Form>

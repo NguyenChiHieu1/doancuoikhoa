@@ -118,20 +118,18 @@ const Brands = () => {
                     STT
                   </th>
                   <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Name
+                    Tên
                   </th>
                   <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Address
+                    Địa chỉ
                   </th>
                   <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Phone
+                    Số điện thoại
                   </th>
                   <th className="p-3 uppercase text-sm font-medium text-gray-600">
                     Email
                   </th>
-                  <th className="p-3 uppercase text-sm font-medium text-gray-600">
-                    Action
-                  </th>
+                  <th className="p-3 uppercase text-sm font-medium text-gray-600"></th>
                 </tr>
               </thead>
               <tbody>

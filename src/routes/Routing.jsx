@@ -17,13 +17,15 @@ import Category from "../screens/dashboard/Category.jsx";
 import CreateCategory from "../screens/dashboard/CreateCategory.jsx";
 import EditCategory from "../screens/dashboard/EditCategory.jsx";
 import Coupons from "../screens/dashboard/Coupons.jsx";
-import CreateCoupons from "../screens/dashboard/CreateCoupons.jsx";
-import EditCoupons from "../screens/dashboard/EditCoupons.jsx";
 import Order from "../screens/dashboard/Order.jsx";
 import DetailOrder from "../screens/dashboard/DetailOrder.jsx";
 import Brands from "../screens/dashboard/Brands.jsx";
 import CreateBrands from "../screens/dashboard/CreateBrands.jsx";
 import EditBrand from "../screens/dashboard/EditBrand.jsx";
+import StatisRevenue from "../screens/dashboard/statistical/StatisRevenue.jsx";
+import RevenueLineChart from "../screens/dashboard/statistical/RevenueLineChart.jsx";
+import Bill from "../screens/dashboard/Bill.jsx";
+import Account from "../screens/dashboard/Account.jsx";
 // import CreateCoupons from "../screens/dashboard/CreateCoupons.jsx"
 // import EditCoupons from "../screens/dashboard/EditCoupons.jsx"
 // import Test from "../screens/user/Test.jsx";
@@ -35,6 +37,8 @@ import PagePersonalInfo from "../screens/user/PagePersonalInfo.jsx";
 // import Breadcrumb from "../components/Breadcrumb.jsx";
 import PageNotFound from "../screens/user/PageNotFound.jsx";
 import PageDetailProduct from "../screens/user/PageDetailProduct.jsx";
+import PageListCoupons from "../screens/user/PageListCoupons.jsx";
+import Contact from "../screens/user/Contact.jsx";
 
 const Routing = () => {
   console.log("Routing component rendered");
@@ -44,7 +48,11 @@ const Routing = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<PageCart />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/product/:pid" element={<PageDetailProduct />} />
+        <Route path="/list-coupon">
+          <Route index element={<PageListCoupons />} />
+        </Route>
         <Route path="/category">
           <Route index element={<PageCategoryProduct />} />
           <Route path="page/:page" element={<PageCategoryProduct />} />
@@ -176,22 +184,6 @@ const Routing = () => {
               }
             />
             <Route
-              path="create"
-              element={
-                <Private>
-                  <CreateCoupons />
-                </Private>
-              }
-            />
-            <Route
-              path="edit/:cid"
-              element={
-                <Private>
-                  <EditCoupons />
-                </Private>
-              }
-            />
-            <Route
               path=":page"
               element={
                 <Private>
@@ -210,6 +202,14 @@ const Routing = () => {
               }
             />
             <Route
+              path=":page"
+              element={
+                <Private>
+                  <Order />
+                </Private>
+              }
+            />
+            <Route
               path="detail/:oid"
               element={
                 <Private>
@@ -217,22 +217,15 @@ const Routing = () => {
                 </Private>
               }
             />
-            <Route
-              path="edit/:cid"
-              element={
-                <Private>
-                  <EditCoupons />
-                </Private>
-              }
-            />
-            <Route
+
+            {/* <Route
               path=":page"
               element={
                 <Private>
                   <Coupons />
                 </Private>
               }
-            />
+            /> */}
           </Route>
           <Route path="brands">
             <Route
@@ -264,6 +257,68 @@ const Routing = () => {
               element={
                 <Private>
                   <Brands />
+                </Private>
+              }
+            />
+          </Route>
+          <Route path="statistical">
+            {/* <Route
+              index
+              element={
+                <Private>
+                  <StatisRevenue />
+                </Private>
+              }
+            /> */}
+            <Route
+              path="line-chart"
+              element={
+                <Private>
+                  <RevenueLineChart />
+                </Private>
+              }
+            />
+          </Route>
+          <Route path="account">
+            <Route
+              index
+              element={
+                <Private>
+                  <Account />
+                </Private>
+              }
+            />
+            <Route
+              path=":page"
+              element={
+                <Private>
+                  <Account />
+                </Private>
+              }
+            />
+            {/* <Route
+              path="line-chart"
+              element={
+                <Private>
+                  <RevenueLineChart />
+                </Private>
+              }
+            /> */}
+          </Route>
+          <Route path="bills">
+            <Route
+              index
+              element={
+                <Private>
+                  <Bill />
+                </Private>
+              }
+            />
+            <Route
+              path=":page"
+              element={
+                <Private>
+                  <Bill />
                 </Private>
               }
             />

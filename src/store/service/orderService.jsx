@@ -42,6 +42,12 @@ const orderService = createApi({
         method: "GET",
       }),
     }),
+    getFindOrders: builder.query({
+      query: () => ({
+        url: "/find-order-bill",
+        method: "GET",
+      }),
+    }),
     getOrdersByUserId: builder.query({
       query: () => ({
         url: "userOrder",
@@ -74,8 +80,8 @@ const orderService = createApi({
       }),
     }),
     deleteOrder: builder.mutation({
-      query: (orderId) => ({
-        url: `${orderId}`,
+      query: (oid) => ({
+        url: `/${oid}`,
         method: "DELETE",
       }),
     }),
@@ -87,6 +93,7 @@ export const {
   useGetOrdersQuery,
   useGetOrdersByUserIdQuery,
   useGetOrdersByAdminIdQuery,
+  useGetFindOrdersQuery,
   useUpdateOrderByUserMutation,
   useCancelOrderUserMutation,
   useUpdateRatingsUserMutation,

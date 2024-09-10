@@ -85,20 +85,20 @@ const UserRegister = () => {
             </NavLink>
           </div>
           <div>
-            <h2 className="title_register"> Register</h2>
+            <h2 className="title_register">Đăng ký tài khoản</h2>
           </div>
         </div>
         <form onSubmit={submitHandler}>
           <div className="form_group_register">
             <label htmlFor="nickname" className="label_register">
-              Nick Name
+              Tên đăng nhập:
             </label>
             <input
               type="text"
               id="nickname"
               name="name"
               className="input_register"
-              placeholder="Your Nick Name"
+              // placeholder="Your Nick Name"
               onChange={handleChange}
             />
             {errors?.name && (
@@ -107,14 +107,14 @@ const UserRegister = () => {
           </div>
           <div className="form_group_register">
             <label htmlFor="fullname" className="label_register">
-              Full Name
+              Họ và tên:
             </label>
             <input
               type="text"
               id="fullname"
               name="fullName"
               className="input_register"
-              placeholder="Your Full Name"
+              // placeholder="Your Full Name"
               onChange={handleChange}
             />
             {errors?.fullName && (
@@ -123,14 +123,14 @@ const UserRegister = () => {
           </div>
           <div className="form_group_register">
             <label htmlFor="email" className="label_register">
-              Email
+              Tài khoản email:
             </label>
             <input
               type="email"
               id="email"
               name="email"
               className="input_register"
-              placeholder="you@example.com"
+              // placeholder="you@example.com"
               onChange={handleChange}
             />
             {errors?.email && (
@@ -139,7 +139,7 @@ const UserRegister = () => {
           </div>
           <div className="form_group_register">
             <label htmlFor="password" className="label_register">
-              Password
+              Mật khẩu:
             </label>
             <input
               type="password"
@@ -155,7 +155,7 @@ const UserRegister = () => {
           </div>
           <div className="submit_register">
             <button type="submit" className="submit_button_register">
-              {isLoading ? <Spinner /> : "Register"}
+              {isLoading ? <Spinner /> : "Đăng ký"}
             </button>
           </div>
         </form>

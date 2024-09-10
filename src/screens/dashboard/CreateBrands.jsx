@@ -8,24 +8,23 @@ import ScreenHeader from "../../components/ScreenHeader";
 import { useCreateBrandMutation } from "../../store/service/brandService";
 import { useGetAllAddressesQuery } from "../../store/service/addressService";
 import Spinner from "../../components/Spinner";
-import CreateAddress from "../../components/dashboard/CreateAddress";
+import NewAddress from "../../components/user/NewAddress";
 // Validation schema cho Brand
 const brandSchema = Yup.object().shape({
-  name: Yup.string().required("Brand name is required"),
+  name: Yup.string().required("Vui lòng nhập tên nhà cung cấp"),
   address: Yup.string().trim(),
   phone: Yup.string()
     .trim()
     .matches(
       /^[0-9]{10,11}$/,
-      "Must be a valid phone number with 10-11 digits"
+      "Vui lòng nhập đúng định dạng số điện thoại và chứa 10-11 số"
     ),
-  email: Yup.string().email("Invalid email format").trim(),
+  email: Yup.string().email("Lỗi định dạng email").trim(),
 });
 
 const CreateBrands = () => {
-  const [isCreateAddress, setIsCreateAddress] = useState();
-  const [createBrand, { isSuccess: isCreateSuccess, isLoading }] =
-    useCreateBrandMutation();
+  const [isCreateAddress, setIsCreateAddress] = useState(false);
+  const [createBrand, response] = useCreateBrandMutation();
   const { data, refetch } = useGetAllAddressesQuery();
   // const [brands, setBrands] = useState([]);
 
@@ -42,26 +41,19 @@ const CreateBrands = () => {
     try {
       const formattedValues = { ...values };
       await createBrand(formattedValues);
-
-      if (isCreateSuccess) {
-        toast.success("Brand created successfully");
-        navigate("/dashboard/brands");
-      }
     } catch (error) {
-      toast.error("Failed to create brand");
+      toast.error("Lỗi tạo nhà cung cấp");
     }
   };
 
-  // useEffect(() => {
-  //   if (isSuccessBrands) {
-  //     const transformedData = brandsData?.data.map((brand) => {
-  //       return {
-  //         name: brand.name,
-  //       };
-  //     });
-  //     setBrands(transformedData);
-  //   }
-  // }, [isSuccessBrands]);
+  useEffect(() => {
+    if (response.isSuccess) {
+      toast.success("Thêm nhà cung cấp mới thành công !!!");
+      navigate(-1);
+    } else {
+      toast.error("Thêm nhà cung cấp mới thất bại !!!");
+    }
+  }, [response.isSuccess]);
 
   return (
     <AdminHome>
@@ -86,14 +78,14 @@ const CreateBrands = () => {
                     htmlFor="name"
                     className="text-sm text-black font-medium mb-1"
                   >
-                    Brand Name
+                    Tên nhà cung cấp:
                   </label>
                   <Field
                     type="text"
                     name="name"
                     id="name"
                     className="border rounded-md p-2 text-gray-900 border-black"
-                    placeholder="Brand Name"
+                    placeholder="Nhập tên nhà cung cấp"
                   />
                   <ErrorMessage
                     name="name"
@@ -107,7 +99,7 @@ const CreateBrands = () => {
                     htmlFor="address"
                     className="text-sm text-black font-medium mb-1"
                   >
-                    Address
+                    Địa chỉ:
                   </label>
                   <Field
                     as="select"
@@ -115,7 +107,7 @@ const CreateBrands = () => {
                     id="type"
                     className="w-full p-2 mb-4 border border-gray-300 rounded"
                   >
-                    <option value="">Choose one value</option>
+                    <option value="">Chọn địa chỉ</option>
                     {data?.data?.map((item, index) => {
                       return (
                         <option key={index} value={item?._id}>
@@ -130,7 +122,7 @@ const CreateBrands = () => {
                     }}
                     className="hover:text-red-500 hover:underline hover:cursor-pointer text-indigo-500"
                   >
-                    Add new address
+                    Thêm mới địa chỉ
                   </label>
                   <ErrorMessage
                     name="address"
@@ -144,14 +136,14 @@ const CreateBrands = () => {
                     htmlFor="phone"
                     className="text-sm text-black font-medium mb-1"
                   >
-                    Phone
+                    Số điện thoại:
                   </label>
                   <Field
                     type="text"
                     name="phone"
                     id="phone"
                     className="border rounded-md p-2 text-gray-900 border-black"
-                    placeholder="Brand Phone"
+                    placeholder="Số điện thoại liên hệ"
                   />
                   <ErrorMessage
                     name="phone"
@@ -172,7 +164,7 @@ const CreateBrands = () => {
                     name="email"
                     id="email"
                     className="border rounded-md p-2 text-gray-900 border-black"
-                    placeholder="Brand Email"
+                    placeholder="Email liên hệ"
                   />
                   <ErrorMessage
                     name="email"
@@ -186,14 +178,14 @@ const CreateBrands = () => {
                     type="submit"
                     className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
                   >
-                    {!isLoading ? "Save" : <Spinner />}
+                    {!response.isLoading ? "Lưu lại" : <Spinner />}
                   </button>
                 </div>
               </Form>
             )}
           </Formik>
-          {isCreateAddress && (
-            <CreateAddress
+          {isCreateAddress === true && (
+            <NewAddress
               onClose={() => {
                 setIsCreateAddress(false);
                 refetch();

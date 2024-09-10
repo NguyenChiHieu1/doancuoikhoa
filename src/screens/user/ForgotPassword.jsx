@@ -56,13 +56,13 @@ const ForgotPassword = () => {
         <form onSubmit={handleSubmit}>
           <div className="form_group_forget_password">
             <label htmlFor="email" className="label_forget_password">
-              Email
+              Tài khoản email:
             </label>
             <input
               type="email"
               id="email"
               className="input_forget_password"
-              placeholder="you@example.com"
+              placeholder="you@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -73,7 +73,7 @@ const ForgotPassword = () => {
           </div>
           <div className="footer_forget_password">
             <button type="submit" className="submit_button_forget_password">
-              {isLoading ? <Spinner /> : "Send Reset Link"}
+              {isLoading ? <Spinner /> : "Gửi link cấp lại mật khẩu"}
             </button>
           </div>
         </form>

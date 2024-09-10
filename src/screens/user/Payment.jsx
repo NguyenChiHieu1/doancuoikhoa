@@ -8,6 +8,7 @@ import { clearMessage } from "../../store/reducer/globalReducer";
 import { useCreateOrderMutation } from "../../store/service/orderService";
 import formatMoney from "../../utils/formatMoney";
 import { useNavigate } from "react-router-dom";
+import { removeItem } from "../../store/reducer/cartReducer";
 
 const Payment = ({ itemCart, totalPayment, paymentMethod, onClose }) => {
   const dispatch = useDispatch();
@@ -29,16 +30,13 @@ const Payment = ({ itemCart, totalPayment, paymentMethod, onClose }) => {
     refetch,
   } = useGetAllAddressesQuery();
 
-  const [
-    createOrder,
-    { data: dataOrder, isSuccess: successCreateOrder, isLoading },
-  ] = useCreateOrderMutation();
+  const [createOrder, response] = useCreateOrderMutation();
 
   // Tạo state cho các input và lỗi
   const [fullName, setFullName] = useState(userInfo?.fullName || "");
   const [phoneNumber, setPhoneNumber] = useState(userInfo?.phoneNumber || 0);
   const [email, setEmail] = useState(userInfo?.email || "");
-  const [address, setAddress] = useState(userInfo?.address?.[0] || "");
+  const [address, setAddress] = useState(userInfo?.address?.[0]?._id || "");
   const [orderNotes, setOrderNotes] = useState("");
   const [errors, setErrors] = useState({});
   const [allAddress, setAllAddress] = useState();
@@ -85,6 +83,41 @@ const Payment = ({ itemCart, totalPayment, paymentMethod, onClose }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  function removeItemBuyCart() {
+    if (itemCart.length > 0) {
+      itemCart.forEach((it) => {
+        dispatch(
+          removeItem({
+            _id: it._id,
+            color: it.color,
+          })
+        );
+      });
+    }
+    localStorage.removeItem("cart_buy");
+  }
+
+  function shippingAddres(id) {
+    // console.log("id", id);
+    // console.log("allAddress", allAddress);
+    let addre = {};
+    allAddress.filter((it) => {
+      if (it?._id === id) return (addre = it);
+    });
+    console.log("addre", addre);
+
+    return {
+      recipientName: fullName || "",
+      recipientNumber: phoneNumber || "",
+      city: addre?.city || "",
+      country: addre?.country || "",
+      line1: `${addre?.street}, ${addre?.district}` || "",
+      line2: ``,
+      postal_code: addre?.postalCode || "",
+      state: addre?.state || "",
+    };
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateInputs()) {
@@ -113,35 +146,21 @@ const Payment = ({ itemCart, totalPayment, paymentMethod, onClose }) => {
       console.log("order", order);
       try {
         const result = await createOrder(order).unwrap();
-        toast.success("Đơn hàng được thêm thành công!!!");
-
-        navigate("/order-detail");
       } catch (err) {
         toast.error("Đơn hàng được thêm thất bại!!!");
       }
     }
   };
 
-  function shippingAddres(id) {
-    console.log(id);
-    console.log(allAddress);
-    let addre = {};
-    allAddress.filter((it) => {
-      if (it?._id === id) return (addre = it);
-    });
-    console.log(addre);
-
-    return {
-      recipientName: fullName || "",
-      recipientNumber: phoneNumber || "",
-      city: addre?.city || "",
-      country: addre?.country || "",
-      line1: `${addre?.street}, ${addre?.district}` || "",
-      line2: ``,
-      postal_code: addre?.postalCode || "",
-      state: addre?.state || "",
-    };
-  }
+  useEffect(() => {
+    if (response.isSuccess) {
+      removeItemBuyCart();
+      toast.success("Đơn hàng được thêm thành công!!!");
+      setTimeout(() => {
+        navigate("/order-detail");
+      }, 2000);
+    }
+  }, [response.isSuccess]);
 
   return (
     <div className="order-form-overlay">

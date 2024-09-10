@@ -174,6 +174,26 @@ const cartReducer = createSlice({
       }
     },
 
+    checkAll: (state, { payload }) => {
+      // console.log("payload-checkall", payload);
+      if (payload === true) {
+        state.cart.forEach((item) => {
+          item.isSelected = true;
+        });
+        state.selectedItem = selectedItem(state.cart);
+        state.selectedTotal = calculateSelectedTotal(state.cart);
+      } else {
+        state.cart.forEach((item) => {
+          item.isSelected = false;
+        });
+        state.selectedItem = 0;
+        state.selectedCart = [];
+        state.selectedTotal = 0;
+      }
+
+      localStorage.setItem("cart", JSON.stringify(state.cart));
+    },
+
     // Áp dụng mã giảm giá cho sản phẩm
     applyCouponToItem: (state, { payload }) => {
       const { id, coupon } = payload;
@@ -187,10 +207,11 @@ const cartReducer = createSlice({
 
     // Xóa toàn bộ giỏ hàng
     emptyCart: (state) => {
+      localStorage.removeItem("cart");
       state.cart = [];
       state.items = 0;
       state.total = 0;
-      localStorage.setItem("cart", JSON.stringify(state.cart));
+      // localStorage.setItem("cart", JSON.stringify(state.cart));
     },
 
     // Thanh toán các sản phẩm được chọn
@@ -222,5 +243,6 @@ export const {
   applyCouponToItem,
   emptyCart,
   checkoutSelectedItems,
+  checkAll,
 } = cartReducer.actions;
 export default cartReducer.reducer;
