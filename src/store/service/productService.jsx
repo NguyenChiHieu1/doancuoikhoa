@@ -6,7 +6,7 @@ const getToken = (type) => localStorage.getItem(type);
 const productService = createApi({
   reducerPath: "product",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.url}/api/product/`,
+    baseUrl: `https://doancuoikhoa.onrender.com/api/product/`,
     prepareHeaders: (headers) => {
       const token = getToken("admin-token") || getToken("user-token");
       if (token) {
