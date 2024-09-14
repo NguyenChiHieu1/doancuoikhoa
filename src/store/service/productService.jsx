@@ -6,7 +6,7 @@ const getToken = (type) => localStorage.getItem(type);
 const productService = createApi({
   reducerPath: "product",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8000/api/product/", // Thay đổi baseUrl theo API của bạn
+    baseUrl: `${import.meta.env.url}/api/product/`,
     prepareHeaders: (headers) => {
       const token = getToken("admin-token") || getToken("user-token");
       if (token) {
