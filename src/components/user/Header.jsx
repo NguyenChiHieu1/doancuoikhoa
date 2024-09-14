@@ -241,7 +241,9 @@ const Header = () => {
                                       : {}
                                   }
                                 >
-                                  <Link to={`/category/${it?.parent?._id}`}>
+                                  <Link
+                                    to={`/category/${it?.parent?._id}/#page-vitri`}
+                                  >
                                     {it?.parent?.name}
                                   </Link>
                                 </span>
@@ -258,7 +260,9 @@ const Header = () => {
                               <li className="child-item">
                                 <div>
                                   <span>
-                                    <Link to={`/category/${i23?._id}`}>
+                                    <Link
+                                      to={`/category/${i23?._id}/#page-vitri`}
+                                    >
                                       {i23?.name}
                                     </Link>
                                   </span>
@@ -272,7 +276,9 @@ const Header = () => {
                                         key={i._id}
                                       >
                                         <div>
-                                          <Link to={`/category/${i?._id}`}>
+                                          <Link
+                                            to={`/category/${i?._id}/#page-vitri`}
+                                          >
                                             {i?.name}
                                           </Link>
                                         </div>
@@ -311,7 +317,9 @@ const Header = () => {
                       {searchResults.length > 0 ? (
                         searchResults.map((result) => (
                           <li key={result?._id} className="li-search">
-                            <Link to={`/product/${result?._id}`}>
+                            <Link
+                              to={`/product/${result?._id}/#page-detail-product`}
+                            >
                               {result?.name}
                             </Link>
                           </li>
@@ -329,7 +337,7 @@ const Header = () => {
                       <div className="notification-item">
                         <i class="bi bi-bell"></i>
                         <span className="">Thông báo</span>
-                        <div className="notification">{totalItemCart}</div>
+                        <div className="notification">0</div>
                       </div>
                       {accUser !== null && (
                         <div

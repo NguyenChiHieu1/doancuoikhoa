@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import "./style_user_css/style/pageCategory.css";
 import CategoryCondition from "../../components/user/CategoryCondition";
 import CategoryListProduct from "../../components/user/CategoryListProduct";

@@ -61,24 +61,25 @@ const Products = () => {
   // }
   // Xử lý tệp tin tải lên
   const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+    toast.error("Chức năng đang trong giai đoạn bảo hành!!");
+    // const file = event.target.files[0];
+    // const reader = new FileReader();
 
-    reader.onload = (e) => {
-      const dataInput = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(dataInput, { type: "array" });
+    // reader.onload = (e) => {
+    //   const dataInput = new Uint8Array(e.target.result);
+    //   const workbook = XLSX.read(dataInput, { type: "array" });
 
-      // Lấy dữ liệu từ sheet đầu tiên
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const json = XLSX.utils.sheet_to_json(sheet);
-      console.log("json", json);
+    //   // Lấy dữ liệu từ sheet đầu tiên
+    //   const sheetName = workbook.SheetNames[0];
+    //   const sheet = workbook.Sheets[sheetName];
+    //   const json = XLSX.utils.sheet_to_json(sheet);
+    //   console.log("json", json);
 
-      setDataExcel(json);
-    };
+    //   setDataExcel(json);
+    // };
 
-    reader.readAsArrayBuffer(file);
-    console.log("dataExcel", dataExcel);
+    // reader.readAsArrayBuffer(file);
+    // console.log("dataExcel", dataExcel);
   };
 
   // Sử dụng useEffect để gọi lại khi giá trị tìm kiếm thay đổi
@@ -285,11 +286,13 @@ const Products = () => {
                     <td className="p-3 capitalize text-sm  text-left font-normal text-black">
                       {product?.coupons?.discount}%
                     </td>
-                    <td className="p-3 capitalize text-sm  text-left font-normal text-black">
+                    <td className="p-3 capitalize text-sm w-40 text-left font-normal text-black">
                       {product?.category?.name}
                     </td>
                     <td className="p-3 capitalize text-sm  text-left font-normal text-black">
-                      {product?.status}
+                      {product?.status === "available"
+                        ? "còn hàng"
+                        : "hết hàng"}
                     </td>
                     <td className="p-3 capitalize text-sm text-left font-normal text-black flex flex-row">
                       <button
@@ -309,7 +312,7 @@ const Products = () => {
                 ))}
               </tbody>
             </table>
-            <div className="w-20 flex flex-row p-2  0 mb-2 ">
+            <div className="w-28 flex flex-row p-2  0 mb-2 ">
               <label className="" htmlFor="total_counts">
                 Tổng tiền:
               </label>

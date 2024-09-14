@@ -339,7 +339,7 @@ const CreateUpdateCoupons = ({ close, onClose, dataUpdate }) => {
           )}
         </Formik>
 
-        <Toaster />
+        {/* <Toaster /> */}
       </div>
     </div>
   );

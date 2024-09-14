@@ -62,9 +62,9 @@ const PageListCoupons = () => {
       ],
     },
     {
-      name: "Giảm giá 20% cho đơn hàng đầu tiên",
+      name: "Giảm giá 40% cho đơn hàng đầu tiên",
       description:
-        'Sử dụng mã "FIRST20" để nhận ngay 20% giảm giá cho lần mua hàng đầu tiên của bạn.',
+        'Sử dụng mã "FAKFJ2120" để nhận ngay 20% giảm giá cho lần mua hàng đầu tiên của bạn.',
       image:
         "https://res.cloudinary.com/dr3f3acgx/image/upload/v1725333575/hieusach_maihuong/nxu9oopudn1p5xdjjhzs.png",
       expiryDate: "30/09/2024",
@@ -83,9 +83,9 @@ const PageListCoupons = () => {
       ],
     },
     {
-      name: "Giảm giá 20% cho đơn hàng đầu tiên",
+      name: "Giảm giá 30% cho đơn hàng đầu tiên",
       description:
-        'Sử dụng mã "FIRST20" để nhận ngay 20% giảm giá cho lần mua hàng đầu tiên của bạn.',
+        'Sử dụng mã "FACBS20" để nhận ngay 20% giảm giá cho lần mua hàng đầu tiên của bạn.',
       image:
         "https://res.cloudinary.com/dr3f3acgx/image/upload/v1725333575/hieusach_maihuong/nxu9oopudn1p5xdjjhzs.png",
       expiryDate: "30/09/2024",

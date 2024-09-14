@@ -21,6 +21,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 
 const PageDetailProduct = () => {
   const { pid } = useParams();
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data, isSuccess } = useGetProductIdQuery({ pid });
@@ -108,6 +109,16 @@ const PageDetailProduct = () => {
     toast.success("Đã thêm sản phẩm vào danh mục yêu thích của bạn");
   }
 
+  useEffect(() => {
+    // Kiểm tra nếu URL chứa "#vitri"
+    if (location.hash === "#page-detail-product") {
+      const vitriElement = document.getElementById("page-detail-product");
+      if (vitriElement) {
+        vitriElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   return (
     <Wrapper onFooter="true">
       <div className="product_detail_wrapper">
@@ -118,10 +129,12 @@ const PageDetailProduct = () => {
             level1={data?.categories?.level1}
             level2={data?.categories?.level2}
             level3={data?.categories?.level3}
+            colorBread={true}
           />
+          <div id="page-detail-product"></div>
         </div>
         <div className="product_detail_box">
-          <div id="page-detail-product" className="image_gallery">
+          <div className="image_gallery">
             <img src={mainImage} alt={data?.data?.name} />
             <div className="thumbnail_list">
               {data?.data?.images?.map((img, idx) => (
@@ -189,7 +202,8 @@ const PageDetailProduct = () => {
 
             <div className="sold_quantity">
               <p>
-                Số lượng đã bán: {data?.data?.sold > 0 ? data?.data?.sold : 0}
+                <b>Số lượng đã bán:</b>{" "}
+                {data?.data?.sold > 0 ? data?.data?.sold : 0}
               </p>
             </div>
             <div className="add_to_cart_section">

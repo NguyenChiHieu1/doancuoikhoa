@@ -77,7 +77,7 @@ const DetailOrder = () => {
                 Thông tin đơn hàng
               </h4>
               <span className="text-sm pl-4 pb-2 ">
-                Mã đơn hàng: <b>{order?._id || "null"} </b>
+                Mã đơn hàng: <b>{order?.idOrder || "null"} </b>
               </span>
               <span className="text-sm pl-4 pb-2">
                 Số tiền thanh toán:{" "}
@@ -93,14 +93,26 @@ const DetailOrder = () => {
                     : "N/A"}
                 </b>
               </span>
-              <span className="text-sm pl-4 pb-2">
+              {/* <span className="text-sm pl-4 pb-2">
                 Ngày thanh toán:{" "}
                 <b className=" uppercase">{order?.paymentMethod || "null"}</b>
-              </span>
+              </span> */}
               <span className="text-sm pl-4 pb-2">
                 Tình trạng đơn hàng:{" "}
                 <b className="text-red-600 uppercase">
-                  {order?.orderStatus || "null"}
+                  {order?.orderStatus === "pending" && <span>Đang chờ</span>}
+                  {order?.orderStatus === "processing" && (
+                    <span>Đã xác nhận</span>
+                  )}
+                  {order?.orderStatus === "shipped" && (
+                    <span>Đang giao hàng</span>
+                  )}
+                  {order?.orderStatus === "delivered" && (
+                    <span>Giao hàng thành công</span>
+                  )}
+                  {order?.orderStatus === "cancelled" && (
+                    <span className="text-red-500">Hủy đơn</span>
+                  )}
                 </b>
               </span>
               <span className="text-sm pl-4 pb-2">

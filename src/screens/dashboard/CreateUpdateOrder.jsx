@@ -30,7 +30,7 @@ const CreateUpdateOrder = ({ close, onClose, dataUpdate }) => {
     totalAmount: 0,
     paymentMethod: "",
     orderStatus: "",
-    createdAt: "",
+    // createdAt: "",
     deliveryDate: "",
     shippingAddress: {
       recipientName: "",
@@ -85,10 +85,16 @@ const CreateUpdateOrder = ({ close, onClose, dataUpdate }) => {
     }
   };
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = (values) => {
+    console.log("update-now");
+
     if (dataUpdate) {
+      console.log("update-now");
+
       handleUpdateOrder(values);
     } else {
+      console.log("create-now");
+
       handleCreateOrder(values);
     }
   };
@@ -122,9 +128,9 @@ const CreateUpdateOrder = ({ close, onClose, dataUpdate }) => {
     ),
     shippingAddress: Yup.object().shape({
       recipientName: Yup.string().required("Vui lòng nhập tên người nhận"),
-      recipientNumber: Yup.string().required(
-        "Vui lòng nhập số điện thoại người nhận"
-      ),
+      recipientNumber: Yup.string()
+        .matches(/^\d{9,10}$/, "Số điện thoại phải có 10 hoặc 11 số")
+        .required("Vui lòng nhập số điện thoại người nhận"),
       city: Yup.string().required("Vui lòng nhập tên thành phố"),
       country: Yup.string().required("Vui lòng nhập tên quốc gia"),
       line1: Yup.string().required("Vui lòng nhập địa chỉ giao hàng"),
@@ -147,443 +153,460 @@ const CreateUpdateOrder = ({ close, onClose, dataUpdate }) => {
           validationSchema={validationSchema}
           onSubmit={handleFormSubmit}
         >
-          {({ values, setValues, errors }) => (
-            <Form className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {console.log("Giá trị:", values)}
-              {/* Cột 1: Thông tin sản phẩm */}
-              <div className="col-span-1">
-                <h2 className="text-xl font-bold mb-4">
-                  Thông tin sản phẩm mua
-                </h2>
-                <div className="mb-4">
-                  <label
-                    htmlFor="numProducts"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Số sản phẩm đã mua:
-                  </label>
-                  <input
-                    type="number"
-                    id="numProducts"
-                    name="numProducts"
-                    min="1"
-                    className="mt-1 block w-full p-2 border rounded"
-                    value={values?.items?.length || 1}
-                    readOnly={dataUpdate ? true : false}
-                    onChange={(e) => {
-                      const num = parseInt(e.target.value) || 1;
-                      const updatedItems = Array.from(
-                        { length: num },
-                        (_, index) => {
-                          const existingItem = values.items[index];
-                          if (existingItem) {
-                            return existingItem;
-                          }
-
-                          const defaultItem = {
-                            productId: "",
-                            name: "",
-                            quantity: 1,
-                            price: 0,
-                            discount: 0,
-                            color: "",
-                            availableColors: [],
-                          };
-
-                          const product = products?.data?.find(
-                            (p) => p._id === defaultItem.productId
-                          );
-
-                          if (product) {
-                            return {
-                              ...defaultItem,
-                              availableColors: product.color,
-                            };
-                          }
-
-                          return defaultItem;
-                        }
-                      );
-
-                      setValues({
-                        ...values,
-                        items: updatedItems,
-                      });
-                    }}
-                  />
-                  {errors.items && (
-                    <div className="text-red-500 text-sm">{errors.items}</div>
-                  )}
-                </div>
-
-                <div className="max-h-[400px] overflow-y-auto">
-                  {values.items.map((item, index) => (
-                    <div
-                      key={index}
-                      className="space-y-2 border p-4 rounded-lg"
+          {({ values, setValues, errors }) => {
+            console.log("Errors:", errors); // In lỗi ra console để kiểm tra
+            return (
+              <Form className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* {console.log("Giá trị:", values)} */}
+                {/* Cột 1: Thông tin sản phẩm */}
+                <div className="col-span-1">
+                  <h2 className="text-xl font-bold mb-4">
+                    Thông tin sản phẩm mua
+                  </h2>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="numProducts"
+                      className="block text-sm font-medium text-gray-700"
                     >
-                      <label htmlFor="">{`Sản phẩm ${index + 1}:`}</label>
-                      <Field
-                        as="select"
-                        name={`items[${index}].productId`}
-                        value={
-                          dataUpdate
-                            ? values?.items[index]?.productId?._id || ""
-                            : values?.items[index]?.productId || ""
-                        }
-                        onChange={(e) => {
-                          // console.log("--idvalues", values);
-                          const selectedProductId = e.target.value;
-                          const product = products?.data?.find(
-                            (p) => p._id === selectedProductId
-                          );
-                          // console.log("232", product);
-                          if (product) {
+                      Số sản phẩm đã mua:
+                    </label>
+                    <input
+                      type="number"
+                      id="numProducts"
+                      name="numProducts"
+                      min="1"
+                      className="mt-1 block w-full p-2 border rounded"
+                      value={values?.items?.length || 0}
+                      readOnly={dataUpdate ? true : false}
+                      onChange={(e) => {
+                        const num = parseInt(e.target.value) || 1;
+                        const updatedItems = Array.from(
+                          { length: num },
+                          (_, index) => {
+                            const existingItem = values.items[index];
+                            if (existingItem) {
+                              return existingItem;
+                            }
+
+                            const defaultItem = {
+                              productId: "",
+                              name: "",
+                              quantity: 1,
+                              price: 0,
+                              discount: 0,
+                              color: "",
+                              availableColors: [],
+                            };
+
+                            const product = products?.data?.find(
+                              (p) => p._id === defaultItem.productId
+                            );
+
+                            if (product) {
+                              return {
+                                ...defaultItem,
+                                availableColors: product.color,
+                              };
+                            }
+
+                            return defaultItem;
+                          }
+                        );
+
+                        setValues({
+                          ...values,
+                          items: updatedItems,
+                        });
+                      }}
+                    />
+                    {errors.items && (
+                      <div className="text-red-500 text-sm">{errors.items}</div>
+                    )}
+                  </div>
+
+                  <div className="max-h-[400px] overflow-y-auto">
+                    {values.items.map((item, index) => (
+                      <div
+                        key={index}
+                        className="space-y-2 border p-4 rounded-lg"
+                      >
+                        <label htmlFor="">{`Sản phẩm ${index + 1}:`}</label>
+                        <Field
+                          as="select"
+                          name={`items[${index}].productId`}
+                          value={
+                            dataUpdate
+                              ? values?.items[index]?.productId?._id || ""
+                              : values?.items[index]?.productId || ""
+                          }
+                          onChange={(e) => {
+                            // console.log("--idvalues", values);
+                            const selectedProductId = e.target.value;
+                            const product = products?.data?.find(
+                              (p) => p._id === selectedProductId
+                            );
+                            // console.log("232", product);
+                            if (product) {
+                              const updatedItems = values.items.map((itm, i) =>
+                                i === index
+                                  ? {
+                                      ...itm,
+                                      productId: product._id,
+                                      name: product.name,
+                                      price: product.price,
+                                      availableColors: product.color,
+                                      color: "",
+                                    }
+                                  : itm
+                              );
+
+                              setValues({
+                                ...values,
+                                items: updatedItems,
+                                totalAmount: calculateTotalAmount(updatedItems),
+                              });
+                            }
+                          }}
+                          className="w-full p-2 border rounded"
+                        >
+                          <option value="">Chọn sản phẩm</option>
+                          {productsLoading ? (
+                            <option value="">Đang tải...</option>
+                          ) : (
+                            products?.data?.map((product) => (
+                              <option
+                                key={product._id}
+                                value={product._id || ""}
+                              >
+                                {productsLoading ? <Spinner /> : product.name}
+                              </option>
+                            ))
+                          )}
+                        </Field>
+                        <ErrorMessage
+                          name={`items[${index}].productId`}
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
+
+                        <Field
+                          name={`items[${index}].quantity`}
+                          placeholder="Quantity"
+                          type="number"
+                          className="w-full p-2 border rounded"
+                          onChange={(e) => {
                             const updatedItems = values.items.map((itm, i) =>
                               i === index
                                 ? {
                                     ...itm,
-                                    productId: product._id,
-                                    name: product.name,
-                                    price: product.price,
-                                    availableColors: product.color,
-                                    color: "",
+                                    quantity: parseInt(e.target.value) || 1,
                                   }
                                 : itm
                             );
-
                             setValues({
                               ...values,
                               items: updatedItems,
                               totalAmount: calculateTotalAmount(updatedItems),
                             });
-                          }
-                        }}
-                        className="w-full p-2 border rounded"
-                      >
-                        <option value="">Chọn sản phẩm</option>
-                        {productsLoading ? (
-                          <option value="">Đang tải...</option>
-                        ) : (
-                          products?.data?.map((product) => (
-                            <option key={product._id} value={product._id || ""}>
-                              {productsLoading ? <Spinner /> : product.name}
-                            </option>
-                          ))
-                        )}
-                      </Field>
-                      <ErrorMessage
-                        name={`items[${index}].productId`}
-                        component="div"
-                        className="text-red-500 text-sm"
-                      />
+                          }}
+                        />
+                        <ErrorMessage
+                          name={`items[${index}].quantity`}
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
 
-                      <Field
-                        name={`items[${index}].quantity`}
-                        placeholder="Quantity"
-                        type="number"
-                        className="w-full p-2 border rounded"
-                        onChange={(e) => {
-                          const updatedItems = values.items.map((itm, i) =>
-                            i === index
-                              ? {
-                                  ...itm,
-                                  quantity: parseInt(e.target.value) || 1,
-                                }
-                              : itm
-                          );
-                          setValues({
-                            ...values,
-                            items: updatedItems,
-                            totalAmount: calculateTotalAmount(updatedItems),
-                          });
-                        }}
-                      />
-                      <ErrorMessage
-                        name={`items[${index}].quantity`}
-                        component="div"
-                        className="text-red-500 text-sm"
-                      />
+                        <Field
+                          as="select"
+                          name={`items[${index}].color`}
+                          className="w-full p-2 border rounded overflow-y-auto "
+                          style={{
+                            backgroundColor: values?.items[index]?.color || "",
+                          }}
+                          value={values?.items[index].color || ""}
+                          onChange={(e) => {
+                            const selectedColor = e.target.value;
+                            setValues({
+                              ...values,
+                              items: values.items.map((itm, i) =>
+                                i === index
+                                  ? { ...itm, color: selectedColor.toString() }
+                                  : itm
+                              ),
+                            });
+                          }}
+                        >
+                          <option value="">Chọn màu sắc</option>
+                          {values.items[index]?.availableColors?.map(
+                            (color, colorIndex) => (
+                              <option
+                                key={colorIndex}
+                                value={color}
+                                style={{
+                                  backgroundColor: color,
+                                  color: "#000",
+                                }}
+                              >
+                                {color}
+                              </option>
+                            )
+                          )}
+                        </Field>
+                        <ErrorMessage
+                          name={`items[${index}].color`}
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
 
-                      <Field
-                        as="select"
-                        name={`items[${index}].color`}
-                        className="w-full p-2 border rounded overflow-y-auto "
-                        style={{
-                          backgroundColor: values?.items[index]?.color || "",
-                        }}
-                        value={values?.items[index].color || ""}
-                        onChange={(e) => {
-                          const selectedColor = e.target.value;
-                          setValues({
-                            ...values,
-                            items: values.items.map((itm, i) =>
+                        <Field
+                          as="select"
+                          name={`items[${index}].discount`}
+                          className="w-full p-2 border rounded"
+                          onChange={(e) => {
+                            const updatedItems = values.items.map((itm, i) =>
                               i === index
-                                ? { ...itm, color: selectedColor.toString() }
+                                ? {
+                                    ...itm,
+                                    discount: parseFloat(e.target.value) || 0,
+                                  }
                                 : itm
-                            ),
-                          });
-                        }}
-                      >
-                        <option value="">Chọn màu sắc</option>
-                        {values.items[index]?.availableColors?.map(
-                          (color, colorIndex) => (
-                            <option
-                              key={colorIndex}
-                              value={color}
-                              style={{ backgroundColor: color, color: "#000" }}
-                            >
-                              {color}
-                            </option>
-                          )
-                        )}
-                      </Field>
-                      <ErrorMessage
-                        name={`items[${index}].color`}
-                        component="div"
-                        className="text-red-500 text-sm"
-                      />
+                            );
+                            setValues({
+                              ...values,
+                              items: updatedItems,
+                              totalAmount: calculateTotalAmount(updatedItems),
+                            });
+                          }}
+                        >
+                          <option value="">Chọn mức giảm giá</option>
+                          {couponsLoading ? (
+                            <option value="">Đang tải...</option>
+                          ) : (
+                            coupons?.data?.map((coupon) => (
+                              <option key={coupon._id} value={coupon.discount}>
+                                {coupon.code} - {coupon.discount}%
+                              </option>
+                            ))
+                          )}
+                        </Field>
+                        <ErrorMessage
+                          name={`items[${index}].discount`}
+                          component="div"
+                          className="text-red-500 text-sm"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
+                {/* Cột 2: Thông tin khác */}
+                <div className="col-span-1">
+                  <h2 className="text-xl font-bold mb-4">
+                    Thông tin người đặt hàng
+                  </h2>
+                  <div className="space-y-2">
+                    <div className="mb-4">
                       <Field
-                        as="select"
-                        name={`items[${index}].discount`}
+                        name="customer"
                         className="w-full p-2 border rounded"
-                        onChange={(e) => {
-                          const updatedItems = values.items.map((itm, i) =>
-                            i === index
-                              ? {
-                                  ...itm,
-                                  discount: parseFloat(e.target.value) || 0,
-                                }
-                              : itm
-                          );
-                          setValues({
-                            ...values,
-                            items: updatedItems,
-                            totalAmount: calculateTotalAmount(updatedItems),
-                          });
-                        }}
+                        as="select"
+                        value={
+                          dataUpdate
+                            ? values?.customer?._id || ""
+                            : values?.customer || ""
+                        }
                       >
-                        <option value="">Chọn mức giảm giá</option>
-                        {couponsLoading ? (
-                          <option value="">Đang tải...</option>
-                        ) : (
-                          coupons?.data?.map((coupon) => (
-                            <option key={coupon._id} value={coupon.discount}>
-                              {coupon.code} - {coupon.discount}%
+                        <option value="">Chọn email người đặt hàng</option>
+                        {account?.data.length > 0 &&
+                          account?.data?.map((acc) => (
+                            <option key={acc?._id} value={acc?._id}>
+                              {acc?.email}
                             </option>
-                          ))
-                        )}
+                          ))}
                       </Field>
                       <ErrorMessage
-                        name={`items[${index}].discount`}
+                        name="customer"
                         component="div"
                         className="text-red-500 text-sm"
                       />
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Cột 2: Thông tin khác */}
-              <div className="col-span-1">
-                <h2 className="text-xl font-bold mb-4">
-                  Thông tin người đặt hàng
-                </h2>
-                <div className="space-y-2">
-                  <div className="mb-4">
+                    <div className="mb-4">
+                      <Field
+                        name="totalAmount"
+                        type="number"
+                        className="w-full p-2 border rounded hidden"
+                        value={values.totalAmount}
+                        readOnly
+                      />
+                      <span className="w-full p-2 border rounded">
+                        Tổng tiền: {formatMoney(values.totalAmount)}
+                      </span>
+                    </div>
+                    <div className="mb-4">
+                      <Field
+                        as="select"
+                        name="paymentMethod"
+                        className="w-full p-2 border rounded"
+                        // disabled={dataUpdate ? true : false}
+                      >
+                        <option value="">Chọn phương thức thanh toán</option>
+                        <option value="COD">Thanh toán khi nhận hàng</option>
+                        <option value="card">Thanh toán bằng thẻ</option>
+                        <option value="bank_transfer">Chuyển khoản</option>
+                      </Field>
+                      <ErrorMessage
+                        name="paymentMethod"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                    </div>
+                    <div className="mb-5">
+                      <Field
+                        as="select"
+                        name="orderStatus"
+                        className="w-full p-2 border rounded"
+                        // disabled={dataUpdate ? false : false}
+                      >
+                        <option value="">Chọn trạng thái đơn hàng</option>
+                        <option value="pending">Đang chờ</option>
+                        <option value="processing">Đã xác nhận</option>
+                        <option value="shipped">Đang vận chuyển</option>
+                        <option value="delivered">Giao hàng thành công</option>
+                        <option value="cancelled">Hủy đơn</option>
+                      </Field>
+                      <ErrorMessage
+                        name="paymentMethod"
+                        component="div"
+                        className="text-red-500 text-sm"
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-4 mt-4 text-black">
+                    <label htmlFor="" className="mt-2">
+                      Ngày giao hàng:
+                    </label>
                     <Field
-                      name="customer"
+                      name="deliveryDate"
+                      type="date"
                       className="w-full p-2 border rounded"
-                      as="select"
                       value={
-                        dataUpdate
-                          ? values?.customer?._id || ""
-                          : values?.customer || ""
+                        values.deliveryDate
+                          ? new Date(values.deliveryDate)
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
                       }
-                    >
-                      <option value="">Chọn email người đặt hàng</option>
-                      {account?.data.length > 0 &&
-                        account?.data?.map((acc) => (
-                          <option key={acc?._id} value={acc?._id}>
-                            {acc?.email}
-                          </option>
-                        ))}
-                    </Field>
-                    <ErrorMessage
-                      name="customer"
-                      component="div"
-                      className="text-red-500 text-sm"
+                      onChange={(e) =>
+                        setValues({
+                          ...values,
+                          deliveryDate: e.target.value,
+                        })
+                      }
                     />
                   </div>
-                  <div className="mb-4">
+                  {/* <div className="mb-4">
+                    <label htmlFor="">Ngày mua:</label>
                     <Field
-                      name="totalAmount"
-                      type="number"
-                      className="w-full p-2 border rounded hidden"
-                      value={values.totalAmount}
-                      readOnly
-                    />
-                    <span className="w-full p-2 border rounded">
-                      Tổng tiền: {formatMoney(values.totalAmount)}
-                    </span>
-                  </div>
-                  <div className="mb-4">
-                    <Field
-                      as="select"
-                      name="paymentMethod"
+                      name="createdAt"
+                      type="date"
                       className="w-full p-2 border rounded"
-                      // disabled={dataUpdate ? true : false}
-                    >
-                      <option value="">Chọn phương thức thanh toán</option>
-                      <option value="COD">COD</option>
-                      <option value="card">Card</option>
-                      <option value="bank_transfer">Bank Transfer</option>
-                    </Field>
-                    <ErrorMessage
-                      name="paymentMethod"
-                      component="div"
-                      className="text-red-500 text-sm"
+                      value={
+                        values.createdAt
+                          ? new Date(values.createdAt)
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
+                      }
+                      onChange={(e) =>
+                        setValues({
+                          ...values,
+                          createdAt: e.target.value,
+                        })
+                      }
                     />
-                  </div>
-                  <div className="mb-5">
+                  </div> */}
+
+                  <Field
+                    as="textarea"
+                    name="notes"
+                    placeholder="Notes"
+                    className="w-full p-2 border rounded mt-4"
+                  />
+                </div>
+
+                {/* Cột 3: Địa chỉ giao hàng */}
+                <div className="col-span-1">
+                  <h2 className="text-xl font-bold mb-4">Địa chỉ giao hàng</h2>
+                  <div className="space-y-2">
                     <Field
-                      as="select"
-                      name="orderStatus"
+                      name="shippingAddress.recipientName"
+                      placeholder="Tên người nhận:"
                       className="w-full p-2 border rounded"
-                      // disabled={dataUpdate ? false : false}
-                    >
-                      <option value="">Chọn trạng thái đơn hàng</option>
-                      <option value="pending">Đang chờ</option>
-                      <option value="processing">Đã xác nhận</option>
-                      <option value="shipped">Đang giao hàng</option>
-                      <option value="delivered">Giao hàng thành công</option>
-                      <option value="cancelled">Hủy đơn</option>
-                    </Field>
-                    <ErrorMessage
-                      name="paymentMethod"
-                      component="div"
-                      className="text-red-500 text-sm"
+                    />
+                    <Field
+                      name="shippingAddress.recipientNumber"
+                      placeholder="Số điện thoại người nhận:"
+                      className="w-full p-2 border rounded"
+                    />
+
+                    <Field
+                      name="shippingAddress.line1"
+                      placeholder="Địa chỉ nhận 1:"
+                      className="w-full p-2 border rounded"
+                    />
+                    <Field
+                      name="shippingAddress.line2"
+                      placeholder="Địa chỉ nhận 2:"
+                      className="w-full p-2 border rounded"
+                    />
+                    <Field
+                      name="shippingAddress.city"
+                      placeholder="Tên thành phố:"
+                      className="w-full p-2 border rounded"
+                    />
+                    <Field
+                      name="shippingAddress.state"
+                      placeholder="Tên tỉnh:"
+                      className="w-full p-2 border rounded"
+                    />
+                    <Field
+                      name="shippingAddress.country"
+                      placeholder="Quốc gia:"
+                      className="w-full p-2 border rounded"
+                    />
+                    <Field
+                      name="shippingAddress.postal_code"
+                      placeholder="Mã bưu điện:"
+                      className="w-full p-2 border rounded"
                     />
                   </div>
                 </div>
-                <div className="mb-4 mt-4 text-black">
-                  <label htmlFor="" className="mt-2">
-                    Ngày giao hàng:
-                  </label>
-                  <Field
-                    name="deliveryDate"
-                    type="date"
-                    className="w-full p-2 border rounded"
-                    value={
-                      values.deliveryDate
-                        ? new Date(values.deliveryDate)
-                            .toISOString()
-                            .split("T")[0]
-                        : ""
-                    }
-                    onChange={(e) =>
-                      setValues({
-                        ...values,
-                        deliveryDate: e.target.value,
-                      })
-                    }
-                  />
+
+                <div className="col-span-3 flex justify-end mt-4">
+                  <button
+                    type="submit"
+                    className="bg-blue-500 text-white p-2 rounded mr-2 hover:bg-blue-300 hover:text-black"
+                    disabled={creating || updating}
+                  >
+                    {creating || updating ? (
+                      <Spinner />
+                    ) : dataUpdate ? (
+                      "Cập nhật"
+                    ) : (
+                      "Tạo mới"
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    className="bg-gray-500 text-white p-2 rounded hover:bg-gray-300 hover:text-black"
+                    onClick={onClose}
+                  >
+                    Thoát
+                  </button>
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="">Ngày mua:</label>
-                  <Field
-                    name="createdAt"
-                    type="date"
-                    className="w-full p-2 border rounded"
-                    value={
-                      values.createdAt
-                        ? new Date(values.createdAt).toISOString().split("T")[0]
-                        : ""
-                    }
-                    onChange={(e) =>
-                      setValues({
-                        ...values,
-                        createdAt: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-
-                <Field
-                  as="textarea"
-                  name="notes"
-                  placeholder="Notes"
-                  className="w-full p-2 border rounded mt-4"
-                />
-              </div>
-
-              {/* Cột 3: Địa chỉ giao hàng */}
-              <div className="col-span-1">
-                <h2 className="text-xl font-bold mb-4">Địa chỉ giao hàng</h2>
-                <div className="space-y-2">
-                  <Field
-                    name="shippingAddress.recipientName"
-                    placeholder="Tên người nhận:"
-                    className="w-full p-2 border rounded"
-                  />
-                  <Field
-                    name="shippingAddress.recipientNumber"
-                    placeholder="Số điện thoại người nhận:"
-                    className="w-full p-2 border rounded"
-                  />
-
-                  <Field
-                    name="shippingAddress.line1"
-                    placeholder="Địa chỉ nhận 1:"
-                    className="w-full p-2 border rounded"
-                  />
-                  <Field
-                    name="shippingAddress.line2"
-                    placeholder="Địa chỉ nhận 2:"
-                    className="w-full p-2 border rounded"
-                  />
-                  <Field
-                    name="shippingAddress.city"
-                    placeholder="Tên thành phố:"
-                    className="w-full p-2 border rounded"
-                  />
-                  <Field
-                    name="shippingAddress.state"
-                    placeholder="Tên tỉnh:"
-                    className="w-full p-2 border rounded"
-                  />
-                  <Field
-                    name="shippingAddress.country"
-                    placeholder="Quốc gia:"
-                    className="w-full p-2 border rounded"
-                  />
-                  <Field
-                    name="shippingAddress.postal_code"
-                    placeholder="Mã bưu điện:"
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-              </div>
-
-              <div className="col-span-3 flex justify-end mt-4">
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white p-2 rounded mr-2"
-                  disabled={creating || updating}
-                >
-                  {creating || updating ? <Spinner /> : "Lưu lại"}
-                </button>
-                <button
-                  type="button"
-                  className="bg-gray-500 text-white p-2 rounded"
-                  onClick={onClose}
-                >
-                  Thoát
-                </button>
-              </div>
-            </Form>
-          )}
+              </Form>
+            );
+          }}
         </Formik>
 
         <Toaster />

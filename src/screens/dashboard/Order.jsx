@@ -14,7 +14,6 @@ import {
 import CreateUpdateOrder from "./CreateUpdateOrder";
 const Order = () => {
   const { page = 1 } = useParams();
-
   const [searchValue, setSearchValue] = useState("");
   const [sortValue, setSortValue] = useState("");
   const navigate = useNavigate();
@@ -91,8 +90,8 @@ const Order = () => {
   };
 
   useEffect(() => {
-    refetch();
-  }, [searchValue, refetch]);
+    setValuePage(page);
+  }, [page]);
 
   return (
     <AdminHome>
@@ -121,18 +120,18 @@ const Order = () => {
           <div className=" flex flex-end">
             <select
               value={orrderStatus}
-              className="p-2 border rounded-lg w-36"
+              className="p-2 border rounded-lg w-50"
               onChange={(e) => {
                 setSearchValue("");
                 setValuePage(0);
                 setOrderStatus(e.target.value);
               }}
             >
-              <option value="">Lọc theo tình trạng</option>
+              <option value="">Lọc theo tình trạng đơn hàng</option>
               <option value="pending">Đang chờ</option>
-              <option value="processing">Đang xử lý</option>
+              <option value="processing">Đã xác nhận</option>
               <option value="shipped">Đang vận chuyển</option>
-              <option value="delivered">Đã giao hàng</option>
+              <option value="delivered">Giao hàng thành công</option>
               <option value="cancelled">Đã hủy</option>
             </select>
           </div>
@@ -206,8 +205,8 @@ const Order = () => {
                     >
                       {order?.idOrder || "Null"}
                     </td>
-                    <td className="p-3 capitalize text-sm text-left font-normal text-black">
-                      {order?.customer?.fullName || "Null"}
+                    <td className="p-3 text-sm text-left font-normal text-black">
+                      {order?.customer?.email || "Null"}
                     </td>
                     <td className="p-3 capitalize text-sm text-left font-normal text-black">
                       {formatMoney(order?.totalAmount) || 0}
@@ -223,7 +222,7 @@ const Order = () => {
                         <span>Đã xác nhận</span>
                       )}
                       {order?.orderStatus === "shipped" && (
-                        <span>Đang giao hàng</span>
+                        <span>Đang vận chuyển</span>
                       )}
                       {order?.orderStatus === "delivered" && (
                         <span>Giao hàng thành công</span>
@@ -310,7 +309,7 @@ const Order = () => {
             />
           </div>
         ) : (
-          "No orders!"
+          "Không tìm thấy đơn hàng nào!"
         )
       ) : (
         <Spinner />

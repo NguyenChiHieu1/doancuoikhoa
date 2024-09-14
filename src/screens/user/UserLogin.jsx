@@ -50,11 +50,11 @@ const UserLogin = () => {
   const validateLogin = (value) => {
     const err = {};
     if (!validateEmail(value.email)) {
-      err.email = "Email is invalid.";
+      err.email = "Vui lòng nhập email";
     }
     if (!validatePassword(value.password)) {
       err.password =
-        "Password must be at least 8 characters long and include a number and a special character.";
+        "Mật khẩu phải dài ít nhất 8 ký tự và bao gồm một số và một ký tự đặc biệt.";
     }
     return err;
   };
@@ -97,7 +97,7 @@ const UserLogin = () => {
               id="email"
               className="input_login"
               name="email"
-              placeholder="you@example.com"
+              placeholder="you@gmail.com"
               onChange={handleChange}
               autocomplete="current-password"
             />

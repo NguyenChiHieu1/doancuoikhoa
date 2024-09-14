@@ -15,9 +15,7 @@ import CreateAddress from "../../components/dashboard/CreateAddress";
 
 const brandSchema = Yup.object().shape({
   name: Yup.string().required("Brand name is required"),
-  address: Yup.array()
-    .of(Yup.string().nullable())
-    .required("Address is required"),
+  address: Yup.string().nullable().required("Address is required"),
   phone: Yup.string()
     .trim()
     .matches(
@@ -30,11 +28,8 @@ const brandSchema = Yup.object().shape({
 const EditBrand = () => {
   const { bid } = useParams();
   const navigate = useNavigate();
-  const {
-    data: getBrandID,
-
-    isSuccess: isSuccessGetBrandID,
-  } = useGetBrandByIdQuery(bid);
+  const { data: getBrandID, isSuccess: isSuccessGetBrandID } =
+    useGetBrandByIdQuery(bid);
   const { data: addressData, refetch: refetchAddresses } =
     useGetAllAddressesQuery();
   const [
@@ -59,7 +54,7 @@ const EditBrand = () => {
     if (isSuccessGetBrandID) {
       setInitialValues({
         name: getBrandID?.data?.name,
-        address: getBrandID?.data?.address || [],
+        address: getBrandID?.data?.address[0]?._id || [],
         phone: getBrandID?.data?.phone || "",
         email: getBrandID?.data?.email || "",
       });
@@ -68,11 +63,13 @@ const EditBrand = () => {
 
   const handleFormSubmit = async (values) => {
     try {
-      await updateBrand({ id: bid, updatedBrand: values });
+      const res = await updateBrand({ id: bid, updatedBrand: values }).unwrap();
 
-      if (isUpdateSuccess) {
+      if (res.success) {
         toast.success("Cập nhật thông tin nhà cung cấp thành công!");
-        navigate("/dashboard/brands");
+        navigate(-1);
+      } else {
+        toast.success("Cập nhật thông tin nhà cung cấp thất bại!");
       }
     } catch (error) {
       toast.error("Lỗi khi cập nhật thông tin!");
@@ -133,7 +130,7 @@ const EditBrand = () => {
                       name="address"
                       id="address"
                       className="w-full p-2 mb-4 border border-gray-300 rounded"
-                      multiple={true} // Cho phép chọn nhiều địa chỉ
+                      // multiple={true}
                     >
                       <option value="">Chọn địa chỉ</option>
                       {addressData?.data?.map((address) => (

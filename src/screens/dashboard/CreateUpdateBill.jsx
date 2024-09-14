@@ -134,7 +134,7 @@ const CreateUpdateBill = ({ close, onClose, dataUpdate }) => {
                       ) : (
                         orders?.data?.map((order) => (
                           <option key={order._id} value={order._id}>
-                            {`Mã đơn hàng: ${order._id} - Người mua: ${order.customer.fullName}`}
+                            {`Mã đơn hàng: ${order.idOrder} - Người mua: ${order.customer.fullName}`}
                           </option>
                         ))
                       )}

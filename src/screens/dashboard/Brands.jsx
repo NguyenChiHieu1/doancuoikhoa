@@ -27,9 +27,9 @@ const Brands = () => {
     ...(searchValue && { name: searchValue }),
   });
 
-  useEffect(() => {
-    refetch();
-  }, [searchValue]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [searchValue]);
 
   const [delBrand] = useDeleteBrandMutation();
 
@@ -38,7 +38,9 @@ const Brands = () => {
       try {
         await delBrand(id);
         toast.success("Xóa thương hiệu thành công");
-        refetch();
+        setTimeout(() => {
+          refetch();
+        }, 1500);
       } catch (error) {
         toast.error("Có lỗi xảy ra khi xóa thương hiệu");
       }

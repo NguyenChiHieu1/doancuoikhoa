@@ -171,11 +171,12 @@ const EditProduct = () => {
       const upda = await updateData({
         pid: pid,
         updatedProduct: formData,
-      });
+      }).unwrap();
       // for(var pair of formData.entries()) {
       //   console.log(pair[0]+ ', '+ pair[1]);
       // }
-      if (upda) {
+
+      if (upda.success) {
         toast.success("Chỉnh sửa thông tin sản phẩm thành công!!!");
         // /dashboard/products
         navigate("/dashboard/products");

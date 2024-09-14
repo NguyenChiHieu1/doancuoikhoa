@@ -33,7 +33,7 @@ const NewProduct = ({ dataInput, productSelect }) => {
       let allProducts = Array.isArray(dataInput) ? [...dataInput] : [];
 
       const oneWeekAgo = new Date();
-      oneWeekAgo.setDate(oneWeekAgo.getDate() - 30);
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 60);
 
       let newProducts = allProducts?.filter((product) => {
         const createdAt = new Date(product?.createdAt);
@@ -73,7 +73,7 @@ const NewProduct = ({ dataInput, productSelect }) => {
               </div>
               <div className="title_newpro_main_i">
                 <span>
-                  <Link to={`/category/`}>Xem tất cả </Link>
+                  <Link to={`/category/#page-vitri`}>Xem tất cả </Link>
                 </span>
                 <i className="bi bi-chevron-right"></i>
               </div>
@@ -126,7 +126,9 @@ const NewProduct = ({ dataInput, productSelect }) => {
                                 </button>
                               </div>
                             </div>
-                            <Link to={`/product/${item?._id}`}>
+                            <Link
+                              to={`/product/${item?._id}#page-detail-product`}
+                            >
                               <div className="newproduct_info_stock">
                                 <p>{item?.name}</p>
                                 <div className="newproduct_iteam_price">

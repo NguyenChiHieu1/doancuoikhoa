@@ -13,29 +13,31 @@ const Footer = () => {
           <div className="list1">
             <ul>
               <li>
-                <Link to="">Chính sách bảo hành</Link>
+                <Link to="/new/chinh-sach-bao-hanh">Chính sách bảo hành</Link>
               </li>
               <li>
-                <Link to="">Chính sách đổi trả</Link>
+                <Link to="/new/chinh-sach-doi-tra">Chính sách đổi trả</Link>
               </li>
               <li>
-                <Link to="">Giao hàng & Thanh toán</Link>
+                <Link to="/new/giao-hang-thanh-toan">
+                  Giao hàng & Thanh toán
+                </Link>
               </li>
               <li>
-                <Link to="">Hướng dẫn mua online</Link>
+                <Link to="/new/huong-dan-mua-online">Hướng dẫn mua online</Link>
               </li>
               <li>
-                <Link to="">Nội quy cửa hàng</Link>
+                <Link to="/new/noi-quy-cua-hang">Nội quy cửa hàng</Link>
               </li>
               <li>
-                <Link to="">Chất lượng phục vụ</Link>
+                <Link to="/new/chat-luong-phuc-vu">Chất lượng phục vụ</Link>
               </li>
             </ul>
           </div>
           <div className="list_2">
             <ul>
               <li>
-                <Link to="">Giới thiệu cửa hàng</Link>
+                <Link to="/new/gioi-thieu-cua-hang">Giới thiệu cửa hàng</Link>
               </li>
               <li>
                 <Link to="/contact#vitri">Gửi góp ý, khiếu nại</Link>
@@ -50,14 +52,14 @@ const Footer = () => {
               <span>Gọi mua hàng:</span>
               <a href="tel:0369.784.847">
                 <i className="bi bi-telephone-fill"></i>
-                <b> 0369.784.847 (9:00 - 22:00)</b>
+                <b> 84369.784.847 (9:00 - 22:00)</b>
               </a>
             </div>
             <div>
               <span>Gọi tư vấn:</span>
               <a href="tel:0967.750.342">
                 <i className="bi bi-telephone-fill"></i>
-                <b> 0967.750.342 (9:00 - 17:00)</b>
+                <b> 84967.750.342 (9:00 - 17:00)</b>
               </a>
             </div>
           </div>

@@ -15,7 +15,9 @@ const PagePersonalInfo = () => {
   const dispatch = useDispatch();
   //----lấy thông tin user---------------//
   const [errors, setErrors] = useState();
-  const [icon, setIcon] = useState({ id: "", hidden: true });
+  const [iconold, setIconOld] = useState({ id: "", hidden: true });
+  const [iconnew, setIconNew] = useState({ id: "", hidden: true });
+  const [iconconfirm, setIconConfirm] = useState({ id: "", hidden: true });
   const [isNewAddressFormVisible, setNewAddressFormVisible] = useState(false);
   const info = useSelector((state) => state.authReducer.info);
   const [imageInput, setImageInput] = useState("");
@@ -229,6 +231,7 @@ const PagePersonalInfo = () => {
       console.error(error);
     }
   };
+
   return (
     <WrapperPersonal>
       <div className="personal-info-container">
@@ -377,7 +380,7 @@ const PagePersonalInfo = () => {
               <input
                 id="passwordOld"
                 type={
-                  icon?.id === "passwordOld" && icon?.hidden === true
+                  iconold?.id === "passwordOld" && iconold?.hidden === true
                     ? "password"
                     : "text"
                 }
@@ -385,11 +388,11 @@ const PagePersonalInfo = () => {
                 value={value?.passwordOld || ""}
                 onChange={handleInputChange}
               />
-              {icon?.id === "passwordOld" && icon?.hidden === true ? (
+              {iconold?.id === "passwordOld" && iconold?.hidden === true ? (
                 <i
                   className="bi bi-eye-slash eye"
                   onClick={() =>
-                    setIcon({
+                    setIconOld({
                       id: "passwordOld",
                       hidden: false,
                     })
@@ -400,7 +403,7 @@ const PagePersonalInfo = () => {
                 <i
                   className="bi bi-eye eye"
                   onClick={() =>
-                    setIcon({
+                    setIconOld({
                       id: "passwordOld",
                       hidden: true,
                     })
@@ -417,19 +420,18 @@ const PagePersonalInfo = () => {
               <input
                 id="passwordNew"
                 type={
-                  icon?.id === "passwordNew" && icon?.hidden === true
-                    ? "password"
-                    : "text"
+                  iconnew?.id === "passwordNew" &&
+                  (iconnew?.hidden === true ? "password" : "text")
                 }
                 name="passwordNew"
                 value={value?.passwordNew || ""}
                 onChange={handleInputChange}
               />
-              {icon?.id === "passwordNew" && icon?.hidden === true ? (
+              {iconnew?.id === "passwordNew" && iconnew?.hidden === true ? (
                 <i
                   className="bi bi-eye-slash eye"
                   onClick={() =>
-                    setIcon({
+                    setIconNew({
                       id: "passwordNew",
                       hidden: false,
                     })
@@ -440,7 +442,7 @@ const PagePersonalInfo = () => {
                 <i
                   className="bi bi-eye eye"
                   onClick={() =>
-                    setIcon({
+                    setIconNew({
                       id: "passwordNew",
                       hidden: true,
                     })
@@ -457,7 +459,8 @@ const PagePersonalInfo = () => {
               <input
                 id="passwordConfirm"
                 type={
-                  icon?.id === "passwordConfirm" && icon?.hidden === true
+                  iconconfirm?.id === "passwordConfirm" &&
+                  iconconfirm?.hidden === true
                     ? "password"
                     : "text"
                 }
@@ -465,11 +468,12 @@ const PagePersonalInfo = () => {
                 value={value?.passwordConfirm || ""}
                 onChange={handleInputChange}
               />
-              {icon?.id === "passwordConfirm" && icon?.hidden === true ? (
+              {iconconfirm?.id === "passwordConfirm" &&
+              iconconfirm?.hidden === true ? (
                 <i
                   className="bi bi-eye-slash eye"
                   onClick={() =>
-                    setIcon({
+                    setIconConfirm({
                       id: "passwordConfirm",
                       hidden: false,
                     })
@@ -480,7 +484,7 @@ const PagePersonalInfo = () => {
                 <i
                   className="bi bi-eye eye"
                   onClick={() =>
-                    setIcon({
+                    setIconConfirm({
                       id: "passwordConfirm",
                       hidden: true,
                     })

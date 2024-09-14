@@ -83,22 +83,23 @@ const CreateProduct = () => {
     selectedFiles.forEach((file) => formData.append("images", file));
 
     try {
-      console.log(response);
+      // console.log(response);
       await createData(formData);
     } catch (error) {
-      toast.error("Tạo sản phẩm mới không thành công");
+      toast.error("Tạo sản phẩm mới thất bại");
     }
   };
 
   useEffect(() => {
     if (response.isSuccess) {
-      console.log(response);
-      toast.success("Product created successfully");
+      // console.log(response);
+      toast.success("Tạo sản phẩm mới thành công");
     }
     // else if ( !response.isSuccess) {
     //   toast.error("Failed to create product");
     // }
   }, [response.isSuccess]);
+
   return (
     <AdminHome>
       <ScreenHeader>
@@ -155,6 +156,40 @@ const CreateProduct = () => {
                       data: couponData,
                       fetching: isFetchingCoupon,
                     },
+                  ].map(({ name, label, data, fetching }) => (
+                    <div key={name} className="flex flex-col">
+                      <label
+                        htmlFor={name}
+                        className="  text-sm font-medium mb-1"
+                      >
+                        {label}
+                      </label>
+                      {!fetching ? (
+                        <Field
+                          as="select"
+                          name={name}
+                          id={name}
+                          className="border border-gray-300 rounded-md p-2 text-gray-900 hover:shadow-lg"
+                        >
+                          <option value="">Vui lòng chọn {label}</option>
+                          {data.data?.map((item) => (
+                            <option value={item._id} key={item._id}>
+                              {` - ${item.discount}%`}
+                            </option>
+                          ))}
+                        </Field>
+                      ) : (
+                        <Spinner />
+                      )}
+                      <ErrorMessage
+                        name={name}
+                        component="div"
+                        className="text-red-500 text-xs"
+                      />
+                    </div>
+                  ))}
+
+                  {[
                     {
                       name: "category",
                       label: "Danh mục",
@@ -185,7 +220,7 @@ const CreateProduct = () => {
                           <option value="">Vui lòng chọn {label}</option>
                           {data.data?.map((item) => (
                             <option value={item._id} key={item._id}>
-                              {item.name || `${item.discount}%`}
+                              {`${item.name}`}
                             </option>
                           ))}
                         </Field>

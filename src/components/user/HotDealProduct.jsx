@@ -165,7 +165,7 @@ const HotDealProduct = ({ productSelect, dataInput = [] }) => {
                 </Swiper>
                 <div className="button_hotdeal">
                   <button>
-                    <Link to={"/category"}>Xem thêm</Link>
+                    <Link to={"/category/#page-vitri"}>Xem thêm</Link>
                   </button>
                 </div>
               </div>

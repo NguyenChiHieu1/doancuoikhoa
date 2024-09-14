@@ -92,7 +92,8 @@ const ViewOrderDetail = () => {
               <div className="order-info-section">
                 <h4>Thông tin đơn hàng</h4>
                 <span>
-                  Mã đơn: &nbsp;<b>{orderData?.data?._id || "Lỗi dữ liệu"}</b>
+                  Mã đơn: &nbsp;
+                  <b>{orderData?.data?.idOrder || "Lỗi dữ liệu"}</b>
                 </span>
                 <span>
                   Thanh toán:&nbsp;
@@ -126,7 +127,7 @@ const ViewOrderDetail = () => {
                       <p>Đã xác nhận</p>
                     )}
                     {orderData?.data?.orderStatus === "shipped" && (
-                      <p>Đang giao hàng</p>
+                      <p>Đang vận chuyển</p>
                     )}
                     {orderData?.data?.orderStatus === "delivered" && (
                       <p>Giao hàng thành công</p>

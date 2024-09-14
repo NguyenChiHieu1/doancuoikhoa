@@ -133,7 +133,7 @@ const FeaturedCategories = ({
                             <div>
                               <div className="listProductChild_stock">
                                 <img src={item?.images[0]} alt="" />
-                                <div className="newpro-showcase-actions">
+                                <div className="fea-newpro-showcase-actions">
                                   <button
                                     className="btn-action-newpro"
                                     onClick={() => handleWishList(item)}
@@ -188,7 +188,9 @@ const FeaturedCategories = ({
             <div className="button_viewall">
               <div>
                 <span>
-                  <Link to={`/category/${selectid}`}>Xem tất cả</Link>
+                  <Link to={`/category/${selectid}/#page-vitri`}>
+                    Xem tất cả
+                  </Link>
                 </span>
                 <i className="bi bi-chevron-right"></i>
               </div>

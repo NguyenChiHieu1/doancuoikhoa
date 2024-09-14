@@ -147,7 +147,7 @@ const OrderDetail = () => {
               <tbody>
                 {selectedOrders.map((order) => (
                   <tr className="table-row-order-details" key={order?._id}>
-                    <td className="table-cell">{order?._id || "Null"}</td>
+                    <td className="table-cell">{order?.idOrder || "N/A"}</td>
                     <td className="table-cell status">
                       {order?.orderStatus === "pending" && (
                         <span>Đang chờ</span>
@@ -156,10 +156,10 @@ const OrderDetail = () => {
                         <span>Đã xác nhận</span>
                       )}
                       {order?.orderStatus === "shipped" && (
-                        <span>Đang vận chuyển đến bạn</span>
+                        <span>Đang vận chuyển</span>
                       )}
                       {order?.orderStatus === "delivered" && (
-                        <span>Đã giao hàng tới bạn</span>
+                        <span>Giao hàng thành công</span>
                       )}
                       {order?.orderStatus === "cancelled" && (
                         <span>Đã hủy</span>
@@ -244,7 +244,7 @@ const OrderDetail = () => {
             />
           </div>
         ) : (
-          "No orders!"
+          "Không có đơn nào!"
         )
       ) : (
         <Spinner />

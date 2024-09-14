@@ -49,29 +49,29 @@ const Bill = () => {
     setSortValue(sortValue === `-${field}` ? field : `-${field}`);
   };
 
-  const confirmBillHandler = async (id) => {
-    if (window.confirm("Bạn có chắc chắn đơn hàng trên đã thanh toán?")) {
-      try {
-        await updateBill({
-          id,
-          billData: { paymentStatus: "paid", paymentDate: new Date() },
-        });
-        toast.success("Cập nhật đơn hàng thành công!!!");
-        refetch();
-      } catch (error) {
-        toast.error("Lỗi cập nhật đơn hàng!!!");
-      }
-    }
-  };
+  // const confirmBillHandler = async (id) => {
+  //   if (window.confirm("Bạn có chắc chắn hóa đơn trên đã thanh toán?")) {
+  //     try {
+  //       await updateBill({
+  //         id,
+  //         billData: { paymentStatus: "paid", paymentDate: new Date() },
+  //       });
+  //       toast.success("Cập nhật hóa đơn thành công!!!");
+  //       refetch();
+  //     } catch (error) {
+  //       toast.error("Lỗi cập nhật hóa đơn!!!");
+  //     }
+  //   }
+  // };
 
   const deleteBillHandler = async (id) => {
-    if (window.confirm("Bạn có chắc chắn xóa đơn hàng này không?")) {
+    if (window.confirm("Bạn có chắc chắn xóa hóa đơn này không?")) {
       try {
         await deleteBill(id);
-        toast.success("Xóa đơn hàng thành công !!!");
+        toast.success("Xóa hóa đơn thành công !!!");
         refetch();
       } catch (error) {
-        toast.error("Lỗi xóa đơn hàng!!!");
+        toast.error("Lỗi xóa hóa đơn!!!");
       }
     }
   };
@@ -79,8 +79,8 @@ const Bill = () => {
   // const detailBill = (id) => navigate(`/dashboard/bills/detail/${id}`);
 
   useEffect(() => {
-    refetch();
-  }, [searchValue, refetch]);
+    setValuePage(page);
+  }, [page]);
 
   // Check button refund
   function refundButtonCheck(orderStatus, paymentStatus, isRefund) {
@@ -99,7 +99,8 @@ const Bill = () => {
     if (
       orderStatus === "cancelled" ||
       paymentStatus === "paid" ||
-      paymentStatus === "refund"
+      paymentStatus === "refund" ||
+      paymentStatus === "failed"
     ) {
       return false;
     }
@@ -121,13 +122,13 @@ const Bill = () => {
           billData: { paymentStatus: billData },
         });
         refetch();
-        toast.success("Cập nhật hoàn tiền thành công");
+        toast.success("Cập nhật thành công hóa đơn!!");
       } else {
         // console.log("thieu value in");
-        toast.error("Lỗi cập nhật hoàn tiền");
+        toast.error("Lỗi cập nhật");
       }
     } catch (error) {
-      toast.error("Lỗi cập nhật hoàn tiền");
+      toast.error("Lỗi cập nhật");
     }
   };
 
@@ -266,7 +267,7 @@ const Bill = () => {
                         </span>
                       )}
                       {bill?.paymentStatus === "refund" && (
-                        <span className="text-orange-600 font-bold">
+                        <span className="text-yellow-600 font-bold">
                           Hoàn tiền
                         </span>
                       )}
@@ -386,7 +387,7 @@ const Bill = () => {
             />
           </div>
         ) : (
-          "No bills found!"
+          "Không tìm thấy hóa đơn nào!"
         )
       ) : (
         <Spinner />
@@ -401,7 +402,7 @@ const Bill = () => {
           onClose={() => {
             setClose(false);
             setValueUpdate({});
-            // refetch();
+            refetch();
           }}
           dataUpdate={valueUpdate}
         />

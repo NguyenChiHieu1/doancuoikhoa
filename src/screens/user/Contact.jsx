@@ -44,7 +44,7 @@ const Contact = () => {
               <div className="icon">
                 <i className="bi bi-phone"></i>
               </div>
-              <span>+0369784847</span>
+              <span>+84369784847</span>
             </div>
             <div className="left">
               <div className="icon">

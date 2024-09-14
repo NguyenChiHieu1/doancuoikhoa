@@ -176,7 +176,13 @@ const Coupons = () => {
         <Spinner />
       )}
       {close && Object.keys(valueUpdate).length === 0 && (
-        <CreateUpdateCoupons close={close} onClose={() => setClose(false)} />
+        <CreateUpdateCoupons
+          close={close}
+          onClose={() => {
+            setClose(false);
+            refetch();
+          }}
+        />
       )}
       {close && Object.keys(valueUpdate).length !== 0 && (
         <CreateUpdateCoupons
@@ -184,7 +190,7 @@ const Coupons = () => {
           onClose={() => {
             setClose(false);
             setValueUpdate({});
-            // refetch();
+            refetch();
           }}
           dataUpdate={valueUpdate}
         />

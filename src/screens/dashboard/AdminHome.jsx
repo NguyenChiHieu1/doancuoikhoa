@@ -4,20 +4,28 @@ import {
   useUserLogoutMutation,
   useUseGetInfoUserQuery,
 } from "../../store/service/authService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const AdminHome = ({ children, loadGetPro }) => {
+  const location = useLocation();
+  const isProducts = location.pathname.includes("/products");
+  const isCoupons = location.pathname.includes("/coupons");
+  const isBrands = location.pathname.includes("/brands");
+  const isCategory = location.pathname.includes("/category");
+  const isOrders = location.pathname.includes("/orders");
+  const isBills = location.pathname.includes("/bills");
+  const isStatistical = location.pathname.includes("/statistical");
+  const isAccount = location.pathname.includes("/account");
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isSelect, setIsSelect] = useState("");
   const [plusIcon, setPlusIcon] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logoutServer, { isLoading, isError }] = useUserLogoutMutation();
   const { data, isSuccess } = useUseGetInfoUserQuery();
   const role = useSelector((state) => state.authReducer.adminInfo);
-  // console.log("role", role);
   const allowedRoles = ["admin", "employee"];
 
   const adminLogout = async () => {
@@ -64,11 +72,8 @@ const AdminHome = ({ children, loadGetPro }) => {
             <Link to="/dashboard/products" className="text-base capitalize">
               <li
                 className={`px-4 cursor-pointer transition-all py-3 text-gray-800 flex items-center ${
-                  isSelect === "1" ? "bg-gray-400" : ""
+                  isProducts ? "bg-gray-400 text-white" : ""
                 } hover:bg-gray-400 hover:text-white`}
-                onClick={() => {
-                  setIsSelect("1");
-                }}
               >
                 <i className="bi bi-book mr-2 inline-block text-lg "></i> Quản
                 lý sản phẩm
@@ -80,11 +85,8 @@ const AdminHome = ({ children, loadGetPro }) => {
             <Link to="/dashboard/coupons" className="text-base ">
               <li
                 className={`px-4 cursor-pointer transition-all capitalize py-3 text-gray-800 flex items-center ${
-                  isSelect === "2" ? "bg-gray-400" : ""
+                  isCoupons ? "bg-gray-400 text-white" : ""
                 } hover:bg-gray-400 hover:text-white`}
-                onClick={() => {
-                  setIsSelect("2");
-                }}
               >
                 <i className="bi bi-bag-check mr-2 inline-block text-lg"></i>{" "}
                 Quản lý khuyến mãi
@@ -96,11 +98,8 @@ const AdminHome = ({ children, loadGetPro }) => {
             <Link to="/dashboard/brands" className="text-base ">
               <li
                 className={`px-4 cursor-pointer capitalize transition-all py-3 text-gray-800 flex items-center ${
-                  isSelect === 3 ? "bg-gray-400" : ""
+                  isBrands ? "bg-gray-400 text-white" : ""
                 } hover:bg-gray-400 hover:text-white`}
-                onClick={() => {
-                  setIsSelect("3");
-                }}
               >
                 <i className="bi bi-buildings mr-2 inline-block text-lg"></i>{" "}
                 Quản lý nhà cung cấp
@@ -112,11 +111,8 @@ const AdminHome = ({ children, loadGetPro }) => {
             <Link to="/dashboard/category" className="text-base ">
               <li
                 className={`px-4 cursor-pointer transition-all capitalize py-3 text-gray-800 flex items-center ${
-                  isSelect === 4 ? "bg-gray-400" : ""
+                  isCategory ? "bg-gray-400 text-white" : ""
                 } hover:bg-gray-400 hover:text-white`}
-                onClick={() => {
-                  setIsSelect("4");
-                }}
               >
                 <i className="bi bi-collection mr-2 inline-block text-lg "></i>{" "}
                 Quản lý danh mục
@@ -127,11 +123,8 @@ const AdminHome = ({ children, loadGetPro }) => {
           {/* {role.role === "admin" && (
             <li
               className={`px-4 cursor-pointer transition-all py-3 text-gray-800 flex items-center ${
-                isSelect === "5" ? "bg-gray-400" : ""
+                selectedLiRef.current === "5" ? "bg-gray-400" : ""
               } hover:bg-gray-400 hover:text-white`}
-              onClick={() => {
-                setIsSelect("5");
-              }}
             >
               <Link to="/dashboard/slider" className="text-base capitalize">
                 <i className="bi bi-collection-play-fill mr-2 inline-block text-lg text-gray-600"></i>{" "}
@@ -141,14 +134,11 @@ const AdminHome = ({ children, loadGetPro }) => {
           )} */}
           {/* Order----ổn---- */}
           {allowedRoles.includes(role.role) && (
-            <Link to="/dashboard/category" className="text-base ">
+            <Link to="/dashboard/orders" className="text-base ">
               <li
                 className={`px-4 cursor-pointer transition-all capitalize py-3 text-gray-800 flex items-center ${
-                  isSelect === "6" ? "bg-gray-400" : ""
+                  isOrders ? "bg-gray-400 text-white" : ""
                 } hover:bg-gray-400 hover:text-white`}
-                onClick={() => {
-                  setIsSelect("6");
-                }}
               >
                 <i className="bi bi-card-list mr-2 inline-block text-lg"></i>{" "}
                 Quản lý đơn hàng
@@ -160,11 +150,8 @@ const AdminHome = ({ children, loadGetPro }) => {
             <Link to="/dashboard/bills" className="text-base ">
               <li
                 className={`px-4 cursor-pointer transition-all capitalize py-3 text-gray-800 flex items-center ${
-                  isSelect === "7" ? "bg-gray-400" : ""
+                  isBills ? "bg-gray-400 text-white" : ""
                 } hover:bg-gray-400 hover:text-white`}
-                onClick={() => {
-                  setIsSelect("7");
-                }}
               >
                 <i className="bi bi-card-checklist mr-2 inline-block text-lg"></i>{" "}
                 Quản lý hóa đơn
@@ -176,10 +163,10 @@ const AdminHome = ({ children, loadGetPro }) => {
           {role.role === "admin" && (
             <li
               className={`px-4 cursor-pointer transition-all py-3 text-gray-800 flex items-center flex-col ${
-                isSelect === "8" ? "bg-gray-400" : ""
+                isStatistical ? "bg-gray-400 text-white" : ""
               } hover:bg-gray-400 hover:text-white`}
               onClick={() => {
-                setIsSelect("8");
+                setPlusIcon(!plusIcon);
               }}
             >
               {/* <Link to="#" className="text-base capitalize"> */}
@@ -189,30 +176,48 @@ const AdminHome = ({ children, loadGetPro }) => {
                   <p>Thống kê</p>
                 </div>
                 <div>
-                  <i
-                    className={!plusIcon ? "bi bi-dash" : "bi bi-plus"}
-                    onClick={() => {
-                      setPlusIcon(!plusIcon);
-                    }}
-                  ></i>
+                  <i className={!plusIcon ? "bi bi-dash" : "bi bi-plus"}></i>
                 </div>
               </div>
-              {plusIcon ? (
-                ""
-              ) : (
+              {!plusIcon || isStatistical ? (
                 <div className="w-full flex flex-col items-start p-2 ">
                   {/* <div className="w-full  rounded-md p-2 text-base  line-clamp-2 text-gray-800 hover:bg-slate-200 hover:text-gray-900">
                   <Link to="/dashboard/statistical">Thống kê sản phẩm</Link>
                 </div> */}
-                  <div className="w-full  rounded-md p-2 text-base  mb-1 line-clamp-2 text-gray-800 hover:bg-slate-100 hover:text-gray-900">
-                    <Link to="/dashboard/statistical/line-chart">
-                      Thống kê doanh thu
-                    </Link>
+                  <div
+                    className={`w-full rounded-md p-2 text-base mb-1 line-clamp-2
+                   bg-slate-100 text-gray-900`}
+                  >
+                    <div>
+                      <Link to="/dashboard/statistical/line-chart">
+                        <i class="bi bi-cash-coin mr-2"></i>
+                        Thống kê doanh thu
+                      </Link>
+                    </div>
                   </div>
+                  {/* <div
+                    className={`w-full rounded-md p-2 text-base  mb-1 line-clamp-2 text-gray-800
+                    ${
+                      selectedLiRef.current === "8.2"
+                        ? "bg-slate-100 text-gray-900"
+                        : ""
+                    }
+                     hover:bg-slate-100 hover:text-gray-900`}
+                    onClick={() => {
+                      handleSelect("8.2");
+                    }}
+                  >
+                    <Link to="/dashboard/statistical/line-chart">
+                      <i class="bi bi-cash-coin mr-2"></i>
+                      Thống kê tài khoản
+                    </Link>
+                  </div> */}
                   {/* <div className="w-full  rounded-md p-2 text-base  mb-1 line-clamp-2 text-gray-800 hover:bg-slate-100 hover:text-gray-900">
                   <Link to="/dashboard/statistical/product">Thống kê </Link>
                 </div> */}
                 </div>
+              ) : (
+                ""
               )}
 
               {/* </Link> */}
@@ -222,11 +227,8 @@ const AdminHome = ({ children, loadGetPro }) => {
             <Link to="/dashboard/account" className="text-base capitalize">
               <li
                 className={`px-4 cursor-pointer transition-all py-3 text-gray-800 flex items-center ${
-                  isSelect === "9" ? "bg-gray-400" : ""
+                  isAccount ? "bg-gray-400 text-white" : ""
                 } hover:bg-gray-400 hover:text-white`}
-                onClick={() => {
-                  setIsSelect("9");
-                }}
               >
                 <i className="bi bi-people-fill mr-2 inline-block text-lg"></i>{" "}
                 Quản lý tài khoản

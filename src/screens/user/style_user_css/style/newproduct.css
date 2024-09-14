@@ -163,7 +163,7 @@
   gap: 0.2rem;
   align-items: center;
   text-align: left;
-  /* height: 46px; */
+  height: 46px;
   margin: 0;
   font-size: 16px;
 }
@@ -238,10 +238,15 @@
 /* ----------------- */
 .newpro-showcase-actions {
   position: absolute;
+  right: 25px;
+  top: 1.5rem;
   font-size: 1rem;
-  transform: translateX(0);
+  transform: translateX(50px);
   transition: var(--transition-timing);
   z-index: 3;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
   opacity: 0;
 }
 

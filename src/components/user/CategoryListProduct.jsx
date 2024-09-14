@@ -1,7 +1,7 @@
 import StarRatings from "./StarRatings";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // import { addCart } from "../../store/reducer/cartReducer";
 import Spinner from "../Spinner";
 import Breadcrumb from "../Breadcrumb";
@@ -22,6 +22,8 @@ const CategoryListProduct = ({
   breadcrumbItems,
 }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const [itemProduct, setItemProduct] = useState({});
   const [closeDialog, setCloseDialog] = useState(false);
   const totalReview = (ratings) => {
@@ -41,6 +43,15 @@ const CategoryListProduct = ({
     toast.success("Đã thêm sản phẩm vào danh mục yêu thích của bạn");
   }
   //add_cart
+  useEffect(() => {
+    // Kiểm tra nếu URL chứa "#vitri"
+    if (location.hash === "#page-vitri") {
+      const vitriElement = document.getElementById("page-vitri");
+      if (vitriElement) {
+        vitriElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   return (
     <>
@@ -48,6 +59,7 @@ const CategoryListProduct = ({
         <div className="arrange_hr">
           <div>
             <div className="page_cateproduct_breadcrumb">
+              <div id="page-vitri"></div>
               <Breadcrumb
                 level1={breadcrumbItems?.level1}
                 level2={breadcrumbItems?.level2}

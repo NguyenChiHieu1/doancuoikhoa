@@ -32,20 +32,19 @@ const UserRegister = () => {
   const validateRegisterForm = (values) => {
     const list_errors = {};
     if (!validateName(values.name)) {
-      list_errors.name =
-        "Name is required and should be at least 3 characters.";
+      list_errors.name = "Vui lòng nhập tên và tên không chứa ký tự đặc biệt";
     }
     if (!validateFullName(values.fullName)) {
-      list_errors.fullName = "Full name is required.";
+      list_errors.fullName = "Vui lòng nhập họ tên đầy đủ";
     }
 
     if (!validateEmail(values.email)) {
-      list_errors.email = "Email is invalid.";
+      list_errors.email = "Vui lòng nhập email";
     }
 
     if (!validatePassword(values.password)) {
       list_errors.password =
-        "Password must be at least 8 characters long and include a number and a special character.";
+        "Mật khẩu phải dài ít nhất 8 ký tự và bao gồm số và một ký tự đặc biệt.";
     }
     setErrors({});
     return list_errors;
@@ -65,7 +64,11 @@ const UserRegister = () => {
   //register thành công
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setSuccess("Register successfull, please login account"));
+      dispatch(
+        setSuccess(
+          "Đăng ký tài khoản thanh công, vui lòng đăng nhập vào tài khoản theo thông tin mới tạo!!!"
+        )
+      );
       navigate("/user/login");
     }
   }, [isSuccess]);

@@ -40,20 +40,26 @@ const CreateBrands = () => {
   const handleFormSubmit = async (values) => {
     try {
       const formattedValues = { ...values };
-      await createBrand(formattedValues);
+      const res = await createBrand(formattedValues).unwrap();
+      if (res.success === true) {
+        toast.success("Tạo nhà cung cấp thành công");
+        navigate(-1);
+      } else {
+        toast.error("Tạo nhà cung cấp thất bại!!!");
+      }
     } catch (error) {
       toast.error("Lỗi tạo nhà cung cấp");
     }
   };
 
-  useEffect(() => {
-    if (response.isSuccess) {
-      toast.success("Thêm nhà cung cấp mới thành công !!!");
-      navigate(-1);
-    } else {
-      toast.error("Thêm nhà cung cấp mới thất bại !!!");
-    }
-  }, [response.isSuccess]);
+  // useEffect(() => {
+  //   if (response.isSuccess) {
+  //     toast.success("Thêm nhà cung cấp mới thành công !!!");
+  //     navigate(-1);
+  //   } else {
+  //     toast.error("Thêm nhà cung cấp mới thất bại !!!");
+  //   }
+  // }, [response.isSuccess]);
 
   return (
     <AdminHome>
@@ -176,7 +182,7 @@ const CreateBrands = () => {
                 <div className="flex justify-center">
                   <button
                     type="submit"
-                    className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-8"
+                    className="bg-indigo-600 text-white rounded-md px-6 py-2 font-semibold hover:bg-indigo-700 mt-2"
                   >
                     {!response.isLoading ? "Lưu lại" : <Spinner />}
                   </button>
